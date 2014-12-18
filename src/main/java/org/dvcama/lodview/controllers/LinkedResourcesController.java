@@ -42,14 +42,11 @@ public class LinkedResourcesController implements MessageSourceAware {
 	@ResponseBody
 	@RequestMapping(value = "/linkedResourceTitles", produces = "application/xml;charset=UTF-8")
 	public String resourceTitles(Model model, HttpServletRequest req, HttpServletResponse res, Locale locale, @RequestParam(value = "IRI") String IRI, @RequestParam(value = "abouts[]") String[] abouts) throws IOException, Exception {
-		System.out.println("---------------------------------------------------");
-		System.out.println(messageSource);
-		System.out.println("---------------------------------------------------");
 		return resourceTitles(model, conf, req, res, locale, IRI, abouts);
 	}
 
 	public String resourceTitles(Model model, ConfigurationBean conf, HttpServletRequest req, HttpServletResponse res, Locale locale, String IRI, String[] abouts) throws IOException, Exception {
-		System.out.println("LinkedResourcesController.resourceTitles() locale: "+locale.getLanguage() );
+	//	System.out.println("LinkedResourcesController.resourceTitles() locale: " + locale.getLanguage());
 		StringBuilder result = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<root>");
 		try {
 			ResultBean results = new ResourceBuilder(messageSource).buildPartialHtmlResource(IRI, abouts, locale, conf, conf.getTitleProperties());
@@ -81,7 +78,7 @@ public class LinkedResourcesController implements MessageSourceAware {
 
 	public String resourceInverses(Model model, ConfigurationBean conf, HttpServletRequest req, HttpServletResponse res, Locale locale, String IRI, String property, int start) throws IOException, Exception {
 		StringBuilder result = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<root>");
-		System.out.println("LinkedResourcesController.resourceInverses()");
+	//	System.out.println("LinkedResourcesController.resourceInverses()");
 		if (property.equals("")) {
 			/* counting inverse relations */
 			try {

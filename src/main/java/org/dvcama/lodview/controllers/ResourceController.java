@@ -67,26 +67,29 @@ public class ResourceController {
 	}
 
 	public Object resource(ConfigurationBean conf, Model model, HttpServletRequest req, HttpServletResponse res, Locale locale, String output, String forceIRI, String colorPair) throws UnsupportedEncodingException {
-		System.out.println("colorPaircolorPair " + colorPair);
-		System.out.println("ResourceController.resource() " + conf.getEndPointUrl());
+		// System.out.println("colorPaircolorPair " + colorPair);
+		// System.out.println("ResourceController.resource() " +
+		// conf.getEndPointUrl());
 		model.addAttribute("conf", conf);
 		model.addAttribute("colorPair", colorPair);
 
 		String IRIsuffix = new UrlPathHelper().getLookupPathForRequest(req).replaceAll("/lodview/", "/").replaceAll("^/", "");
-		System.out.println("IRIsuffix " + IRIsuffix);
+		// System.out.println("IRIsuffix " + IRIsuffix);
 
 		model.addAttribute("path", new UrlPathHelper().getContextPath(req).replaceAll("/lodview/", "/"));
 
 		String IRIprefix = conf.getIRInamespace().replaceAll("/$", "");
-		System.out.println("IRIprefix " + IRIprefix);
+		// System.out.println("IRIprefix " + IRIprefix);
 
 		String IRI = IRIprefix + "/" + IRIsuffix.replaceAll(" ", "%20");
 		if (forceIRI != null && !forceIRI.equals("")) {
 			IRI = forceIRI;
 		}
-
-		System.out.println("looking for " + IRI);
-		System.out.println("client locale " + locale.getLanguage());
+		System.out.println("####################################################################");
+		System.out.print("#################  ");
+		System.out.print("looking for " + IRI);
+		System.out.println("  ################# ");
+		// System.out.println("client locale " + locale.getLanguage());
 		model.addAttribute("locale", locale.getLanguage());
 
 		if (locale.getLanguage().equals("it")) {
@@ -97,11 +100,11 @@ public class ResourceController {
 			model.addAttribute("lodliveUrl", "http://en.lodlive.it?" + IRI.replaceAll("#", "%23"));
 		}
 
-		System.out.println("Accept " + req.getHeader("Accept"));
+		// System.out.println("Accept " + req.getHeader("Accept"));
 
 		AcceptList a = AcceptList.create(req.getHeader("Accept").split(","));
-		System.out.println("-- AcceptList: " + a);
-		System.out.println("-- OffertList: " + offeringRDF);
+		// System.out.println("-- AcceptList: " + a);
+		// System.out.println("-- OffertList: " + offeringRDF);
 
 		MediaType matchItem = AcceptList.match(offeringRDF, a);
 		Lang lang = RDFLanguages.contentTypeToLang(matchItem.getContentType());
@@ -119,14 +122,14 @@ public class ResourceController {
 			System.out.println("override content type " + matchItem.getContentType());
 		}
 
-		System.out.println("content type " + matchItem.getContentType());
-		System.out.println("lang " + lang);
+		// System.out.println("content type " + matchItem.getContentType());
+		// System.out.println("lang " + lang);
 
-		System.out.println("--------------");
+		// System.out.println("--------------");
 		try {
 			if (lang == null) {
 				matchItem = AcceptList.match(offeringResources, a);
-				System.out.println("matchItem " + matchItem);
+				// System.out.println("matchItem " + matchItem);
 				if (matchItem != null) {
 					// probably you are asking for an HTML page
 					model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
@@ -142,7 +145,7 @@ public class ResourceController {
 				return resourceRaw(conf, model, IRI, conf.getEndPointUrl(), matchItem.getContentType());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			if (e.getMessage() != null && e.getMessage().startsWith("404")) {
 				return new ErrorController(conf).error404(res, model, e.getMessage(), IRI, conf.getEndPointUrl());
 			} else {
@@ -158,7 +161,7 @@ public class ResourceController {
 	}
 
 	public ResponseEntity<String> resourceRaw(ConfigurationBean conf, Model model, @RequestParam(value = "IRI") String IRI, @RequestParam(value = "sparql") String sparql, @RequestParam(value = "contentType", defaultValue = "application/rdf+xml") String contentType) {
-		System.out.println("ResourceController.resourceRaw()");
+		// System.out.println("ResourceController.resourceRaw()");
 		contentType = contentType.replaceAll("([a-zA-Z]) ([a-zA-Z])", "$1+$2");
 		Lang lang = RDFLanguages.contentTypeToLang(contentType);
 		try {

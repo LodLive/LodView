@@ -13,8 +13,9 @@ import org.dvcama.lodview.bean.TripleBean;
 import org.dvcama.lodview.conf.ConfigurationBean;
 import org.dvcama.lodview.endpoint.SPARQLEndPoint;
 import org.dvcama.lodview.utils.Misc;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -71,7 +72,6 @@ public class ResourceBuilder {
 			}
 
 			if (conf.getTitleProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getTitleProperties().contains(tripleBean.getProperty().getProperty())) {
-				System.out.println(tripleBean.getLang());
 				if (tripleBean.getIRI().equals(IRI) && !betterTitleMatch && (result.getTitle() == null || result.getTitle().trim().equals("") || (tripleBean.getLang() != null && (preferredLanguage.equals(tripleBean.getLang()) || tripleBean.getLang().equals("en"))))) {
 					result.setTitle(tripleBean.getValue());
 					if (preferredLanguage.equals(tripleBean.getLang())) {
@@ -179,7 +179,6 @@ public class ResourceBuilder {
 		for (String about : abouts) {
 			StringBuilder sparqlQuery = new StringBuilder("select distinct ?o  ");
 			sparqlQuery.append("{ <" + about + "> ?filterProperty ?o. FILTER (" + filter + "))}  ");
-			System.out.println("ResourceBuilder.buildPartialHtmlResource() " + sparqlQuery.toString().replaceAll("\\|\\| \\)", ""));
 			List<String> sparqlQueries = new ArrayList<String>();
 			sparqlQueries.add(sparqlQuery.toString().replaceAll("\\|\\| \\)", ""));
 			try {

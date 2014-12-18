@@ -33,13 +33,13 @@ public class LodController {
 	public String resource(HttpServletRequest req, HttpServletResponse res, Locale locale, @RequestParam(value = "IRI") String IRI) throws IOException, Exception {
 
 		if (confLinked.getSkipDomains().contains(IRI.replaceAll("http[s]*://([^/]+)/.*", "$1"))) {
-			System.out.println("LodController.resource() - skip - " + IRI);
+		//	System.out.println("LodController.resource() - skip - " + IRI);
 			return "<root error=\"true\" about=\"" + StringEscapeUtils.escapeXml11(IRI) + "\"><title>" + //
 					StringEscapeUtils.escapeXml11(messageSource.getMessage("error.skipedDomain", null, "skiping this URI", locale)) + //
 					"</title><msg><![CDATA[skiping this URI, probably offline]]></msg></root>";
 		}
 		try {
-			System.out.println("LodController.resource() - load - " + IRI);
+			System.out.println("				LodController.resource() - load - " + IRI);
 			/* TODO: change this in UNION queries for better performance */
 			ResultBean results = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, confLinked, true);
 
@@ -100,7 +100,7 @@ public class LodController {
 			return result.toString();
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			System.out.println(IRI + " unable to retrieve data " + e.getMessage());
 			return "<root error=\"true\" about=\"" + StringEscapeUtils.escapeXml11(IRI) + "\"><title>" + //
 					messageSource.getMessage("error.linkedResourceUnavailable", null, "unable to retrieve data", locale) + //

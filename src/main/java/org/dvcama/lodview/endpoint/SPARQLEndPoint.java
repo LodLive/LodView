@@ -26,14 +26,15 @@ import com.hp.hpl.jena.rdf.model.Statement;
 public class SPARQLEndPoint {
 
 	public static List<TripleBean> doQuery(ConfigurationBean conf, String IRI, String aProperty, int start, List<String> queries, String filter, String overrideProperty) throws Exception {
-		System.out.println("executing query on " + conf.getEndPointUrl());
+		// System.out.println("executing query on " + conf.getEndPointUrl());
 		List<TripleBean> results = new ArrayList<TripleBean>();
 		HttpAuthenticator auth = null;
 		if (conf.getAuthPassword() != null && !conf.getAuthPassword().equals("")) {
 			auth = new SimpleAuthenticator(conf.getAuthUsername(), conf.getAuthPassword().toCharArray());
 		}
 		for (String query : queries) {
-			System.out.println("-- " + parseQuery(query, IRI, aProperty, start, filter));
+			// System.out.println("-- " + parseQuery(query, IRI, aProperty,
+			// start, filter));
 			QueryExecution qe = QueryExecutionFactory.sparqlService(conf.getEndPointUrl(), parseQuery(query, IRI, aProperty, start, filter), auth);
 			results = moreThenOneQuery(conf, qe, results, 0, overrideProperty);
 		}
@@ -98,14 +99,15 @@ public class SPARQLEndPoint {
 					}
 					results.add(rb);
 				} catch (Exception e) {
-					System.out.println("error? " + e.getMessage());
+					System.err.println("error? " + e.getMessage());
 					e.printStackTrace();
 				}
 			}
 		} catch (Exception ez) {
 			if (retry < 3) {
 				retry++;
-				System.out.println("query failed (" + ez.getMessage() + "), I'm giving another chance (" + retry + "/3)");
+				// System.out.println("query failed (" + ez.getMessage() +
+				// "), I'm giving another chance (" + retry + "/3)");
 				return moreThenOneQuery(conf, qe, results, retry, overrideProperty);
 			}
 			ez.printStackTrace();
@@ -128,7 +130,7 @@ public class SPARQLEndPoint {
 	}
 
 	public static List<TripleBean> doLocalQuery(ConfigurationBean conf, Model model, String IRI, String localProperty, int start, List<String> queries, String overrideProperty) throws Exception {
-		System.out.println("executing query on model based on " + IRI);
+		// System.out.println("executing query on model based on " + IRI);
 		List<TripleBean> results = new ArrayList<TripleBean>();
 
 		for (String query : queries) {
@@ -175,7 +177,7 @@ public class SPARQLEndPoint {
 					}
 					results.add(rb);
 				} catch (Exception e) {
-					System.out.println("error? " + e.getMessage());
+					System.err.println("error? " + e.getMessage());
 					e.printStackTrace();
 				}
 			}
@@ -189,7 +191,7 @@ public class SPARQLEndPoint {
 
 	public static Model extractData(ConfigurationBean conf, Model result, String IRI, String sparql, List<String> queries) throws Exception {
 		try {
-			System.out.println("executing query on " + sparql);
+			// System.out.println("executing query on " + sparql);
 			Resource subject = result.createResource(IRI);
 			for (String query : queries) {
 				QueryExecution qe = QueryExecutionFactory.sparqlService(sparql, parseQuery(query, IRI, null, -1, null));
@@ -214,7 +216,7 @@ public class SPARQLEndPoint {
 
 	public static Model extractLocalData(ConfigurationBean conf, Model result, String IRI, Model m, List<String> queries) throws Exception {
 		try {
-			System.out.println("executing query on IRI");
+			// System.out.println("executing query on IRI");
 			Resource subject = result.createResource(IRI);
 			for (String query : queries) {
 				QueryExecution qe = QueryExecutionFactory.create(parseQuery(query, IRI, null, -1, null), m);
@@ -239,8 +241,8 @@ public class SPARQLEndPoint {
 
 	private static String parseQuery(String query, String IRI, String property, int start, String filter) {
 		if (IRI != null) {
-			/* managing issues depending on "$" in some IRIs  */
-			query = query.replaceAll("\\$\\{IRI\\}", IRI.replaceAll("\\$","%24")).replaceAll("%24","\\$");
+			/* managing issues depending on "$" in some IRIs */
+			query = query.replaceAll("\\$\\{IRI\\}", IRI.replaceAll("\\$", "%24")).replaceAll("%24", "\\$");
 		}
 		if (property != null) {
 			query = query.replaceAll("\\$\\{PROPERTY\\}", property);
