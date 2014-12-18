@@ -3,11 +3,17 @@ LodView is a Java web application based on Spring and Jena, it's a tool able to 
 LodView is easy to configure and deploy for any developer and it dramatically improves the enduser’s experience in accessing HTML based representations of RDF resources.
 
 ## Why develop it (for free)
-
 We believe that the dereferencing layer has to be independent from the SPARQL endpoint implementation so, during these last years, we preferred using Pubby to other software for publishing our data. Probably you don't know this but you already know Pubby, it is used to publish dbpedia data and a lot of other Linked Open Data out there, sadly it is pretty old and its development appears to have stopped, so we created LodView taking inspiration from some of the features in it we really appreciated. 
 LodView shares Pubby philosophy; the configuration approach (an RDF file) and the basic technologies (we also use Apache Jena) are very similar, both interfaces even look somewhat alike, but we have made some important improvements according to the RDF 1.1 standard. We have added new features and changed the ones we didn’t like (such as the 303 redirection for HTML representation). 
 While developing LodLive we realized that there was real need for a great interface to spread linked data principles even more effectively, so we spent time designing an interface for LodView that would be easy to use and beautiful to experience. LodView is free to use for all and we hope that the LOD community may appreciate and enjoy our brand new piece of work. 
 LodView is an open source software, you may download it and use for it your own data publication but it is also a web service (http://lodview.it) useful to browse any resource published using a SPARQL endpoint or published according to the rules of the web of data (aka content negotiation and RDF).
+
+## Demo
+You can find some examples on http://lodview.it 
+
+## Installing instruction
+simple download the code and use maven to produce your war  
+use `mvn compile war:war` to make a war deployable in a servlet container such as Tomcat (you need at least Java 1.7 because of Jena)
 
 ## Some interesting features
 ##### Content negotiation and serialization
