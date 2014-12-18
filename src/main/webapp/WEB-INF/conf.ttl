@@ -1,4 +1,4 @@
-@prefix conf: <http://localhost:8080/#> .
+@prefix conf: <http://lodview.it/conf#> .
 @prefix meta: <http://example.org/metadata#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -54,9 +54,21 @@
 
 <> a conf:Configuration;
 
+## first of all
+## 	IRIs namespace we use to replace the webapp base (eg. http://localhost:8080/lodview/), an
+##	installation on dbpedia domain should use <http://dbpedia.org/resource/> 
+	
+	conf:IRInamespace <http://dbpedia.org/resource/> ;
+
 ## 	EndPoint
- 
-	conf:endpoint "";
+
+	conf:endpoint <http://dbpedia.org/sparql>;
+
+########## give it a try opening http://localhost:8080/lodview/Rome
+
+
+##  mode configurations
+ 	
 	conf:contentEncoding "UTF-8";
 	
 	## base64 HTTP authentication to the endpoint 
@@ -107,19 +119,11 @@
 ########################		configuring the webapp			########################
 ########################################################################################
 
-
-## 	IRIs namespace we use to replace the webapp base (eg. http://localhost:8080/lodview/), an
-##	installation on dbpedia domain should use <http://dbpedia.org/resource/> 
-	
-	conf:IRInamespace "http://dbpedia.org/resource/" ;
-	
-	
 ##	define how clients access your app, typically you have to specify your public domain
 ##	if you are using a proxy, set it at <auto> for testing, an installation on dbpedia
 ##	domain should use <http://dbpedia.org/resource/>
 
-	conf:publicUrlPrefix <http://dbpedia.org/resource/>; ## or <auto>
-  	
+	conf:publicUrlPrefix <auto>; ## or <auto>
 
 ##	static resources publishing point, "staticResources/" is needed if you are going 
 ##	to serve static content within the web application, probably  on a production  
