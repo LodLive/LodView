@@ -11,6 +11,8 @@ import org.apache.jena.atlas.web.AcceptList;
 import org.apache.jena.atlas.web.MediaType;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFLanguages;
+import org.dvcama.lodview.bean.ResultBean;
+import org.dvcama.lodview.bean.TripleBean;
 import org.dvcama.lodview.builder.ResourceBuilder;
 import org.dvcama.lodview.conf.ConfigurationBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,7 +135,9 @@ public class ResourceController {
 				if (matchItem != null) {
 					// probably you are asking for an HTML page
 					model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
-					model.addAttribute("results", new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf));
+					ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf); 
+					model.addAttribute("results", r);
+					enrichResponse(r,res);
 					return "resource";
 				} else {
 					return new ErrorController(conf).error406(res, model);
@@ -153,6 +157,23 @@ public class ResourceController {
 			}
 		}
 
+	}
+
+	private void enrichResponse(ResultBean r, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		res.addHeader("Link","<"+r.getMainIRI()+">; rel=\"about\"");
+		res.addHeader("Link","<"+r.getMainIRI()+"?output=application/rdf+xml>; rel=\"alternate\"; type=\"application/rdf+xml\"; title=\"Structured Descriptor Document (xml)\"");
+		res.addHeader("Link","<"+r.getMainIRI()+"?output=text/plain>; rel=\"alternate\"; type=\"text/plain\"; title=\"Structured Descriptor Document (ntriples)\"");
+		res.addHeader("Link","<"+r.getMainIRI()+"?output=text/turtle>; rel=\"alternate\"; type=\"text/turtle\"; title=\"Structured Descriptor Document (turtle)\"");
+		res.addHeader("Link","<"+r.getMainIRI()+"?output=application/ld+json>; rel=\"alternate\"; type=\"application/ld+json\"; title=\"Structured Descriptor Document (ld+json)\"");
+		
+		for (TripleBean t : r.getResources(r.getMainIRI()).get(r.getTypeProperty())) {
+			res.addHeader("Link","<"+t.getProperty().getProperty()+">; rel=\"type\"");	
+		}
+		
+
+		
+		
 	}
 
 	@RequestMapping(value = "/rawdata")
