@@ -111,6 +111,10 @@ hgroup h2>a.iri {
 	color:#fff;
 	margin-right: 8px;
 }  
+hgroup h2>a.iri:hover{
+	text-decoration: underline;
+}
+
 
 hgroup h2>span.istance {
 	float: none;
