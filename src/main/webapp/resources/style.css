@@ -103,11 +103,14 @@ hgroup h1 span {
 	opacity: 1;
 }
 
-hgroup h2>span.iri {
+
+
+hgroup h2>a.iri {
 	display: inline-block;
 	margin-bottom: 8px;
+	color:#fff;
 	margin-right: 8px;
-}
+}  
 
 hgroup h2>span.istance {
 	float: none;
