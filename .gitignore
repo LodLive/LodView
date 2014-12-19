@@ -15,6 +15,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+.springBeans
 target/
 
 # External tool builders
