@@ -88,9 +88,8 @@ public class ResourceController {
 			IRI = forceIRI;
 		}
 		System.out.println("####################################################################");
-		System.out.print("#################  ");
-		System.out.print("looking for " + IRI);
-		System.out.println("  ################# ");
+		System.out.println("#################  looking for " + IRI + "  ################# ");
+
 		// System.out.println("client locale " + locale.getLanguage());
 		model.addAttribute("locale", locale.getLanguage());
 
@@ -135,9 +134,9 @@ public class ResourceController {
 				if (matchItem != null) {
 					// probably you are asking for an HTML page
 					model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
-					ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf); 
+					ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf);
 					model.addAttribute("results", r);
-					enrichResponse(r,res);
+					enrichResponse(r, req, res);
 					return "resource";
 				} else {
 					return new ErrorController(conf).error406(res, model);
@@ -159,21 +158,22 @@ public class ResourceController {
 
 	}
 
-	private void enrichResponse(ResultBean r, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		res.addHeader("Link","<"+r.getMainIRI()+">; rel=\"about\"");
-		res.addHeader("Link","<"+r.getMainIRI()+"?output=application/rdf+xml>; rel=\"alternate\"; type=\"application/rdf+xml\"; title=\"Structured Descriptor Document (xml)\"");
-		res.addHeader("Link","<"+r.getMainIRI()+"?output=text/plain>; rel=\"alternate\"; type=\"text/plain\"; title=\"Structured Descriptor Document (ntriples)\"");
-		res.addHeader("Link","<"+r.getMainIRI()+"?output=text/turtle>; rel=\"alternate\"; type=\"text/turtle\"; title=\"Structured Descriptor Document (turtle)\"");
-		res.addHeader("Link","<"+r.getMainIRI()+"?output=application/ld+json>; rel=\"alternate\"; type=\"application/ld+json\"; title=\"Structured Descriptor Document (ld+json)\"");
-		
-		for (TripleBean t : r.getResources(r.getMainIRI()).get(r.getTypeProperty())) {
-			res.addHeader("Link","<"+t.getProperty().getProperty()+">; rel=\"type\"");	
-		}
-		
+	private void enrichResponse(ResultBean r, HttpServletRequest req, HttpServletResponse res) {
 
-		
-		
+		String publicUrl = r.getMainIRI();
+		res.addHeader("Link", "<" + publicUrl + ">; rel=\"about\"");
+		if (req.getParameter("IRI") != null) {
+			publicUrl = req.getRequestURL().toString()  + "?" + req.getQueryString() + "&";
+		} else {
+			publicUrl += "?";
+		}
+		res.addHeader("Link", "<" + publicUrl + "output=application%2Frdf%2Bxml>; rel=\"alternate\"; type=\"application/rdf+xml\"; title=\"Structured Descriptor Document (xml)\"");
+		res.addHeader("Link", "<" + publicUrl + "output=text%2Fplain>; rel=\"alternate\"; type=\"text/plain\"; title=\"Structured Descriptor Document (ntriples)\"");
+		res.addHeader("Link", "<" + publicUrl + "output=text%2Fturtle>; rel=\"alternate\"; type=\"text/turtle\"; title=\"Structured Descriptor Document (turtle)\"");
+		res.addHeader("Link", "<" + publicUrl + "output=application%2Fld%2Bjson>; rel=\"alternate\"; type=\"application/ld+json\"; title=\"Structured Descriptor Document (ld+json)\"");
+		for (TripleBean t : r.getResources(r.getMainIRI()).get(r.getTypeProperty())) {
+			res.addHeader("Link", "<" + t.getProperty().getProperty() + ">; rel=\"type\"");
+		}
 	}
 
 	@RequestMapping(value = "/rawdata")
