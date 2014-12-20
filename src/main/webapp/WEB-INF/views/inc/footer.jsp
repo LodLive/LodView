@@ -675,6 +675,8 @@
 		obj.error(function() {
 			$(this).attr("title", "<sp:message code='message.noImage' text='image not available, broken URL?' javaScriptEscape='true' />\n" + $(this).attr("src"));
 			$(this).attr("src", "${conf.getStaticResourceURL()}img/no_image" + (isRetina ? "@2x" : "") + ".png");
+			$(this).width(136);
+			$(this).height(136);
 			$(this).unwrap("a");
 		});
 	}
