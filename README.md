@@ -12,8 +12,7 @@ LodView is an open source software, you may download it and use for it your own 
 You can find some examples on http://lodview.it 
 
 ## Installing instruction
-simple download the code and use maven to produce your war  
-use `mvn compile war:war` to make a war deployable in a servlet container such as Tomcat (you need at least Java 1.7 because of Jena)
+See the wiki page https://github.com/dvcama/LodView/wiki
 
 ## Some interesting features
 ##### Content negotiation and serialization
