@@ -11,6 +11,9 @@ LodView is an open source software, you may download it and use for it your own 
 ## Demo
 You can find some examples on http://lodview.it 
 
+## who is using it
+list of known users https://github.com/dvcama/LodView/wiki/LodView-users
+
 ## Installing instruction
 See the wiki page https://github.com/dvcama/LodView/wiki
 
