@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>lodview</groupId>
 	<artifactId>lodview</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<packaging>war</packaging>
 	<name>lodview</name>
 	<description>lodview</description>
@@ -15,7 +14,6 @@
 		<org.slf4j-version>1.6.1</org.slf4j-version>
 	</properties>
 	<dependencies>
-
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>apache-jena-libs</artifactId>
@@ -95,8 +93,7 @@
 			</exclusions>
 		</dependency>
 
-		<!-- Jackson JSON Processor <dependency> <groupId>com.fasterxml.jackson.core</groupId> 
-			<artifactId>jackson-databind</artifactId> <version>2.4.1</version> </dependency> -->
+		<!-- Jackson JSON Processor <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> <version>2.4.1</version> </dependency> -->
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -109,15 +106,11 @@
 			<version>1.1.4.RELEASE</version>
 		</dependency>
 		<dependency>
-			<groupId>org.neo4j</groupId>
-			<artifactId>neo4j-cypher-compiler-2.1</artifactId>
-			<version>2.1.2</version>
-		</dependency>
-		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-jndi</artifactId>
 			<version>8.1.15.v20140411</version>
 		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
