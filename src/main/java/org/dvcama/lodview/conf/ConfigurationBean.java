@@ -21,7 +21,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	private Model confModel = null;
 	private ServletContext context;
 
-	private String confFile, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
+	private String confFile, homeUrl, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
 
 	private List<String> defaultQueries, defaultRawDataQueries, defaultInversesQueries, defaultInversesTest, defaultInversesCountQueries, typeProperties, imageProperties, linkingProperties, titleProperties, descriptionProperties, longitudeProperties, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null;
@@ -53,6 +53,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 		contentEncoding = getSingleConfValue("contentEncoding");
 		staticResourceURL = getSingleConfValue("staticResourceURL", "");
+		homeUrl = getSingleConfValue("homeUrl", "/");
 		staticResourceURL = staticResourceURL.replaceAll(".+/auto$", context.getContextPath() + "/staticResources/");
 
 		preferredLanguage = getSingleConfValue("preferredLanguage");
@@ -281,6 +282,14 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	public String toString() {
 		return "ConfigurationBean [confModel=" + confModel + ", context=" + context + ", confFile=" + confFile + ", EndPointUrl=" + EndPointUrl + ", IRInamespace=" + IRInamespace + ", contentEncoding=" + contentEncoding + ", staticResourceURL=" + staticResourceURL + ", preferredLanguage=" + preferredLanguage + ", publicUrlPrefix=" + publicUrlPrefix + ", authUsername=" + authUsername + ", authPassword=" + authPassword + ", defaultInverseBehaviour=" + defaultInverseBehaviour + ", defaultQueries=" + defaultQueries + ", defaultRawDataQueries=" + defaultRawDataQueries + ", defaultInversesQueries=" + defaultInversesQueries + ", defaultInversesTest=" + defaultInversesTest + ", defaultInversesCountQueries=" + defaultInversesCountQueries + ", typeProperties=" + typeProperties
 				+ ", imageProperties=" + imageProperties + ", linkingProperties=" + linkingProperties + ", titleProperties=" + titleProperties + ", descriptionProperties=" + descriptionProperties + ", longitudeProperties=" + longitudeProperties + ", latitudeProperties=" + latitudeProperties + ", colorPair=" + colorPair + ", skipDomains=" + skipDomains + ", rand=" + rand + "]";
+	}
+
+	public String getHomeUrl() {
+		return homeUrl;
+	}
+
+	public void setHomeUrl(String homeUrl) {
+		this.homeUrl = homeUrl;
 	}
 
 }

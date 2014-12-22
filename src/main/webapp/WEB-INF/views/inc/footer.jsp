@@ -29,7 +29,7 @@
 	};
 
 	$('#logo').click(function() {
-		document.location = '${conf.getPublicUrlPrefix()}';
+		document.location = '${conf.getHomeUrl()}';
 	});
 
 	function setColumnsSize(secondTrip) {

@@ -39,6 +39,6 @@
 	<script>
  
 	$('#logo').click(function() {
-		document.location = '${conf.getPublicUrlPrefix()}';
+		document.location = '${conf.getHomeUrl()}';
 	});</script>
 </body>

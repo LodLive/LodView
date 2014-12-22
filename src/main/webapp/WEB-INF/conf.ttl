@@ -125,6 +125,12 @@
 
 	conf:publicUrlPrefix <auto>; ## or <auto>
 
+
+##	home link (accessible from the banner)
+
+	conf:homeUrl <http://yoursitehome.com>;
+
+  	
 ##	static resources publishing point, "staticResources/" is needed if you are going 
 ##	to serve static content within the web application, probably  on a production  
 ##	environment you have to change "http://localhost:8080/lodview/" to something like 
