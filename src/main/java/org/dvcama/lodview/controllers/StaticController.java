@@ -38,7 +38,7 @@ public class StaticController {
 	public String home(HttpServletRequest req, HttpServletResponse res, Model model, Locale locale, @CookieValue(value = "colorPair", defaultValue = "") String colorPair) {
 		colorPair = conf.getRandomColorPair();
 		Cookie c = new Cookie("colorPair", colorPair);
-		c.setPath("/lodview/");
+		c.setPath("/");
 		res.addCookie(c);
 		model.addAttribute("colorPair", colorPair);
 		model.addAttribute("conf", conf);
@@ -53,7 +53,7 @@ public class StaticController {
 		if (colorPair.equals("")) {
 			colorPair = conf.getRandomColorPair();
 			Cookie c = new Cookie("colorPair", colorPair);
-			c.setPath("/lodview/");
+			c.setPath("/");
 			res.addCookie(c);
 		}
 		return lodviewmenu(req, res, model, locale, IRI, conf, colorPair);
@@ -62,7 +62,7 @@ public class StaticController {
 	@RequestMapping(value = { "/lodviewcolor", "/**/lodviewcolor" })
 	public ResponseEntity<String> lodviewcolor(Model model, HttpServletRequest req, HttpServletResponse res, Locale locale, @RequestParam(value = "colorPair") String colorPair) {
 		Cookie c = new Cookie("colorPair", colorPair);
-		c.setPath("/lodview/");
+		c.setPath("/");
 		res.addCookie(c);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}

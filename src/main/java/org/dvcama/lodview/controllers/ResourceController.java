@@ -62,7 +62,7 @@ public class ResourceController {
 		if (colorPair.equals("")) {
 			colorPair = conf.getRandomColorPair();
 			Cookie c = new Cookie("colorPair", colorPair);
-			c.setPath("/lodview/");
+			c.setPath("/");
 			res.addCookie(c);
 		}
 		return resource(conf, model, req, res, locale, output, "", colorPair);
