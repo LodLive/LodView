@@ -21,7 +21,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	private Model confModel = null;
 	private ServletContext context;
 
-	private String confFile, homeUrl, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
+	private String confFile, homeUrl, httpRedirectSuffix, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
 
 	private List<String> defaultQueries, defaultRawDataQueries, defaultInversesQueries, defaultInversesTest, defaultInversesCountQueries, typeProperties, imageProperties, linkingProperties, titleProperties, descriptionProperties, longitudeProperties, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null;
@@ -47,6 +47,8 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		authUsername = getSingleConfValue("authUsername");
 
 		IRInamespace = getSingleConfValue("IRInamespace", "<not provided>");
+		
+		httpRedirectSuffix = getSingleConfValue("httpRedirectSuffix", "");
 
 		publicUrlPrefix = getSingleConfValue("publicUrlPrefix", "");
 		publicUrlPrefix = publicUrlPrefix.replaceAll(".+/auto$", context.getContextPath() + "/");
@@ -290,6 +292,14 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	public void setHomeUrl(String homeUrl) {
 		this.homeUrl = homeUrl;
+	}
+
+	public String getHttpRedirectSuffix() {
+		return httpRedirectSuffix;
+	}
+
+	public void setHttpRedirectSuffix(String httpRedirectSuffix) {
+		this.httpRedirectSuffix = httpRedirectSuffix;
 	}
 
 }

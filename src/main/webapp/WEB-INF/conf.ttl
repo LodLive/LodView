@@ -67,6 +67,13 @@
 ########## give it a try opening http://localhost:8080/lodview/Rome
 
 
+## 	we don't like it so much, but you can set a prefix to activate 303 redirects
+##	to the HTML representation of the resources, live it blank if you want to 
+##  use the "pure content negotiation mode"
+	
+	conf:httpRedirectSuffix "/html"; ## or ""
+
+
 ##  mode configurations
  	
 	conf:contentEncoding "UTF-8";
