@@ -651,6 +651,15 @@ div#loadPanel>p {
 	color: #fff;
 }
 
+#images .errorImg{
+	width:136px;
+	height:136px;
+}
+.connected .errorImg{
+	width:250px;
+	height:250px;
+}
+
 #errorPage hgroup h1 {
 	font-size: 150px;
 	font-weight: 100;
