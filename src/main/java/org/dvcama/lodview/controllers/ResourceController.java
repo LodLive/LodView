@@ -296,8 +296,12 @@ public class ResourceController {
 		res.addHeader("Link", "<" + publicUrl + "output=text%2Fplain>; rel=\"alternate\"; type=\"text/plain\"; title=\"Structured Descriptor Document (ntriples)\"");
 		res.addHeader("Link", "<" + publicUrl + "output=text%2Fturtle>; rel=\"alternate\"; type=\"text/turtle\"; title=\"Structured Descriptor Document (turtle)\"");
 		res.addHeader("Link", "<" + publicUrl + "output=application%2Fld%2Bjson>; rel=\"alternate\"; type=\"application/ld+json\"; title=\"Structured Descriptor Document (ld+json)\"");
-		for (TripleBean t : r.getResources(r.getMainIRI()).get(r.getTypeProperty())) {
-			res.addHeader("Link", "<" + t.getProperty().getProperty() + ">; rel=\"type\"");
+		try {
+			for (TripleBean t : r.getResources(r.getMainIRI()).get(r.getTypeProperty())) {
+				res.addHeader("Link", "<" + t.getProperty().getProperty() + ">; rel=\"type\"");
+			}
+		} catch (Exception e) {
+			// no types at all
 		}
 	}
 

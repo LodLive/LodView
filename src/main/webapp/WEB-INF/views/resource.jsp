@@ -1,8 +1,10 @@
 <%@page session="true"%><%@taglib uri="http://www.springframework.org/tags" prefix="sp"%><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><html version="XHTML+RDFa 1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/MarkUp/SCHEMA/xhtml-rdfa-2.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/">
 <head data-color="${colorPair}" profile="http://www.w3.org/1999/xhtml/vocab">
-<title>${results.getTitle()} &mdash; LodView</title>
+<title>${results.getTitle()}&mdash; LodView</title>
+<link rel="canonical" href="${results.getMainIRI()}">
 <jsp:include page="inc/header.jsp"></jsp:include>
-</head><body id="top">
+</head>
+<body id="top">
 	<article>
 		<div id="logoBanner">
 			<div id="logo">
@@ -11,7 +13,9 @@
 		</div>
 		<header>
 			<hgroup>
-				<h1><span>${results.getTitle()}</span></h1>
+				<h1>
+					<span>${results.getTitle()}</span>
+				</h1>
 				<h2>
 					<a class="iri" href="${results.getMainIRI()}">${results.getMainIRI()}</a> <span class="istance"> <c:forEach end="1" items='${results.getResources(results.getMainIRI()).get(results.getTypeProperty())}' var="el">
 							<a title="&lt;${el.getValue()}&gt;" href="${el.getUrl()}" <c:if test="${!el.isLocal()}">target="_blank" </c:if>> <c:choose>
@@ -75,7 +79,6 @@
 			<c:set var="c2name" value="c2" scope="page"></c:set>
 			<c:set var="contentIRI" value="${results.getMainIRI()}" scope="page" />
 			<%@include file="func/contents.jsp"%>
-
 		</div>
 		<c:choose>
 			<c:when test="${results.getBnodes(results.getMainIRI())!=null && results.getBnodes(results.getMainIRI()).keySet().size()>0 }">
@@ -104,7 +107,6 @@
 							</c:forEach>
 						</div>
 					</c:forEach>
-
 					<%
 						/* second level of blank nodes */
 					%>
@@ -131,7 +133,6 @@
 							</c:forEach>
 						</c:forEach>
 					</c:forEach>
-
 					<%
 						/* third level of blank nodes */
 					%>
@@ -162,7 +163,6 @@
 							</c:forEach>
 						</c:forEach>
 					</c:forEach>
-
 				</div>
 			</c:when>
 			<c:otherwise>

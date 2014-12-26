@@ -7,9 +7,9 @@
 	document.write('</style>');
 </script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<meta property="og:title" content="${results.getTitle()} &mdash; LodView, giving data a new shape"/>
-<meta property="og:image" content="${conf.getStaticResourceURL()}img/lodview_sharer.png"/>
-<link rel="image_src" href="${conf.getStaticResourceURL()}img/lodview_sharer.png"/>
+<meta property="og:title" content="${results.getTitle()} &mdash; LodView, giving data a new shape">
+<meta property="og:image" content="${conf.getStaticResourceURL()}img/lodview_sharer.png">
+<link rel="image_src" href="${conf.getStaticResourceURL()}img/lodview_sharer.png">
 <meta name="twitter:title" content="${results.getTitle()} &mdash; LodView, giving data a new shape">
 <meta name="twitter:description" content="LodView is a powerful RDF viewer, IRI dereferencer and opensource SPARQL navigator">
 <link rel="icon" type="image/png" href="${conf.getStaticResourceURL()}img/favicon.png">
