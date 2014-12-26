@@ -1,0 +1,17 @@
+/* ***************** */
+/*  CUSTOM CSS HERE  */
+/* ***************** */
+.sp {
+	background-image: url(../img/lodview-sprite.png);
+	background-size: 1000px 600px;
+}
+
+div#logoBanner div#logo {
+	background-size: 134px 40px; 
+	background-image: url(../img/logo-header-lodview.png);
+	height: 80px;
+	background-position: left center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	width: 150px;
+}
