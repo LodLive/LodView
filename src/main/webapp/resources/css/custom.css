@@ -1,10 +1,6 @@
 /* ***************** */
 /*  CUSTOM CSS HERE  */
 /* ***************** */
-.sp {
-	background-image: url(../img/lodview-sprite.png);
-	background-size: 1000px 600px;
-}
 
 div#logoBanner div#logo {
 	background-size: 134px 40px; 
@@ -14,4 +10,11 @@ div#logoBanner div#logo {
 	background-repeat: no-repeat;
 	cursor: pointer;
 	width: 150px;
+}
+
+@media (-webkit-min-device-pixel-ratio : 2) , (min-resolution : 192dpi) {
+
+	div#logoBanner div#logo {
+		background-image: url(../img/logo-header-lodview@2x.png);
+	}
 }
