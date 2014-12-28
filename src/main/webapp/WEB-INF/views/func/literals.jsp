@@ -1,5 +1,5 @@
 <%@page session="true"%><c:forEach items='${data.keySet()}' var="iprop">
-	<label class="${c1name}"><a href="${iprop.getPropertyUrl()}"><c:choose>
+	<label class="${c1name}"><a data-title="${ontoBean.getEscapedValue('label',locale,iprop.getPropertyUrl())}"  data-description="${ontoBean.getEscapedValue('comment',locale,iprop.getPropertyUrl())}" href="${iprop.getPropertyUrl()}"><c:choose>
 				<c:when test='${iprop.getNsProperty().startsWith("null:")}'>&lt;${iprop.getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 				<c:otherwise>${iprop.getNsProperty().replaceAll(":",":<span>")}</span>
 				</c:otherwise>

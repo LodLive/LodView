@@ -1,0 +1,1440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns="http://dati.camera.it/ocd/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xml:base="http://dati.camera.it/ocd/" xmlns:ocd="http://dati.camera.it/ocd/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:bio="http://purl.org/vocab/bio/0.1/" xmlns:gn="http://www.geonames.org/ontology#" xmlns:voaf="http://labs.mondeca.com/vocab/voaf#" xmlns:vann="http://purl.org/vocab/vann/"
+	xmlns:cc="http://creativecommons.org/ns#">
+	<owl:Ontology rdf:about="http://dati.camera.it/ocd/">
+		<rdf:type rdf:resource="http://labs.mondeca.com/vocab/voaf#Vocabulary" />
+		<owl:imports rdf:resource="http://purl.org/dc/terms/" />
+		<owl:imports rdf:resource="http://www.w3.org/2004/02/skos/core" />
+		<owl:imports rdf:resource="http://purl.org/dc/elements/1.1/" />
+		<dc:title xml:lang="it">Ontologia Camera dei deputati</dc:title>
+		<dc:description xml:lang="it">L'ontologia Camera dei deputati è stata creata per descrivere tutte le risorse (persone, eventi, documenti) sia storiche che correnti, connesse alla Camera e alla sua attività</dc:description>
+		<dc:issued>2011-12-20</dc:issued>
+		<dcterms:modified>2012-04-26</dcterms:modified>
+		<dcterms:modified>2013-05-02</dcterms:modified>
+		<dc:rights>Camera dei deputati</dc:rights>
+		<cc:licence rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
+		<dc:publisher>Camera dei deputati</dc:publisher>
+		<dc:creator>Camera dei deputati</dc:creator>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.2</owl:versionInfo>
+		<vann:preferredNamespacePrefix>ocd</vann:preferredNamespacePrefix>
+		<skos:historyNote rdf:nodeID="vers1_2mod120130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod220130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod320130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod420130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod520130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod620130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod720130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod820130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod920130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod1020130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod1120130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod1220130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod1320130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod1420130502" />
+		<skos:historyNote rdf:nodeID="vers1_2mod1520140317" />
+	</owl:Ontology>
+	<rdf:Description rdf:nodeID="vers1_2mod1520140317">
+		<rdf:value>Aggiunta la classe post</rdf:value>
+		<dc:date>17 marzo 2014</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<rdf:Description rdf:nodeID="vers1_2mod120130502">
+		<rdf:value>Aggiunta la classe membroGoverno</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<rdf:Description rdf:nodeID="vers1_2mod220130502">
+		<rdf:value>Deprecata la classe incaricoGoverno</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<rdf:Description rdf:nodeID="vers1_2mod320130502">
+		<rdf:value>Aggiunta la proprietà rif_membroGoverno</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<rdf:Description rdf:nodeID="vers1_2mod420130502">
+		<rdf:value>Aggiunta le proprietà startDate e endDate subPropertyOf dc:date</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<rdf:Description rdf:nodeID="vers1_2mod520130502">
+		<rdf:value>Modificato il nome della proprietà ocd:rif_attocamera in ocd:rif_attoCamera</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<rdf:Description rdf:nodeID="vers1_2mod620130502">
+		<rdf:value>Aggiunta la classe votazione</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<rdf:Description rdf:nodeID="vers1_2mod720130502">
+		<rdf:value>Aggiunta la classe voto</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<rdf:Description rdf:nodeID="vers1_2mod820130502">
+		<rdf:value>Aggiunta la classe abbinamento</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<rdf:Description rdf:nodeID="vers1_2mod920130502">
+		<rdf:value>Aggiunta la classe assegnazione</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<rdf:Description rdf:nodeID="vers1_2mod1020130502">
+		<rdf:value>Aggiunta la classe richiestaParere</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+
+	<rdf:Description rdf:nodeID="vers1_2mod1220130502">
+		<rdf:value>Aggiunta la classe natura</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<rdf:Description rdf:nodeID="vers1_2mod1320130502">
+		<rdf:value>Aggiunta la classe luogo</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<rdf:Description rdf:nodeID="vers1_2mod1420130502">
+		<rdf:value>Aggiunta la proprietà rif_luogo</rdf:value>
+		<dc:date>2 maggio 2013</dc:date>
+		<dc:creator>Camera dei deputati</dc:creator>
+	</rdf:Description>
+	<owl:AllDisjointClasses>
+		<owl:members rdf:parseType="Collection">
+			<owl:Class rdf:about="organo" />
+			<owl:Class rdf:about="organoGoverno" />
+			<owl:Class rdf:about="dibattito" />
+			<owl:Class rdf:about="discussione" />
+			<owl:Class rdf:about="seduta" />
+			<owl:Class rdf:about="intervento" />
+			<owl:Class rdf:about="atto" />
+			<owl:Class rdf:about="richiestaParere" />
+
+			<owl:Class rdf:about="statoIter" />
+			<owl:Class rdf:about="abbinamento" />
+			<owl:Class rdf:about="assegnazione" />
+			<owl:Class rdf:about="natura" />
+			<owl:Class rdf:about="votazione" />
+			<owl:Class rdf:about="voto" />
+			<owl:Class rdf:about="membroGoverno" />
+			<owl:Class rdf:about="governo" />
+			<owl:Class rdf:about="elezione" />
+			<owl:Class rdf:about="sistemaElettorale" />
+			<owl:Class rdf:about="legislatura" />
+			<owl:Class rdf:about="presidenteCamera" />
+			<owl:Class rdf:about="presidenteConsiglioMinistri" />
+			<owl:Class rdf:about="senatore" />
+			<owl:Class rdf:about="mandatoCamera" />
+			<owl:Class rdf:about="mandatoSenato" />
+			<owl:Class rdf:about="ufficioParlamentare" />
+			<owl:Class rdf:about="gruppoParlamentare" />
+			<owl:Class rdf:about="componenteGruppoMisto" />
+			<owl:Class rdf:about="incarico" />
+			<owl:Class rdf:about="aic" />
+			<owl:Class rdf:about="luogo" />
+		</owl:members>
+	</owl:AllDisjointClasses>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/lavori">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lavori</rdfs:label>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/documenti">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">documenti</rdfs:label>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/persona">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">persona</rdfs:label>
+		<rdfs:comment xml:lang="it">è la classe che identifica la persona che ha svolto qualche ruolo all'interno della Camera dei deputati. La persona che ha un mandato parlamentare è anche un deputato. Ad una persona possono corripondere 0-n deputati.</rdfs:comment>
+		<owl:sameAs rdf:resource="http://xmlns.com/foaf/0.1/Person" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/organo">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">organo</rdfs:label>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/autore">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">autore</rdfs:label>
+		<rdfs:comment xml:lang="it">è la classe che identifica le persone autori di pubblicazioni presenti in BPR.</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/incarico">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">incarico</rdfs:label>
+		<rdfs:comment xml:lang="it">è la classe che identifica gli incarichi all'interno dei gruppi parlamentari</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/incaricoGoverno">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">incarico di Governo</rdfs:label>
+		<rdfs:comment xml:lang="it">è la classe che identifica gli incarichi governativi assegnati ai deputati</rdfs:comment>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa classe è deprecata nell'ultima versione del 2 maggio 2013. E' stata sostituita dalla classe membroGoverno</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/membroGoverno">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">membro di Governo</rdfs:label>
+		<rdfs:comment xml:lang="it">è la classe che identifica gli incarichi governativi assegnati ai deputati</rdfs:comment>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa classe è stata aggiunta nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/persona" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/deputato">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">deputato</rdfs:label>
+		<rdfs:comment xml:lang="it">La classe deputati comprende tutte le persone che hanno ricevuto un mandato parlamentare alla Camera</rdfs:comment>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/persona" />
+		<rdfs:isDefinedBy rdf:resource="http://www.camera.it/423?conoscerelacamera=2" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/aic">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">atti di indirizzo e controllo</rdfs:label>
+		<rdfs:comment xml:lang="it">è la classe che descrive le interrogazioni, domande che i parlamentari rivolgono al Governo per avere informazioni su fatti specifici e le interpellanze, domande che sollecitano chiarimenti sui motivi dell’azione politica del Governo</rdfs:comment>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/lavori" />
+		<rdfs:isDefinedBy rdf:resource="http://www.camera.it/205" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/bollettino">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">bollettino</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/lavori" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/legge">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">legge</rdfs:label>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/mandatoCamera">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mandato</rdfs:label>
+		<rdfs:comment xml:lang="it">La classe fa riferimento allo status di deputato assunto da una persona - candidato in elezioni politiche - in seguito ad un voto popolare</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/mandatoSenato">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mandato</rdfs:label>
+		<rdfs:comment xml:lang="it">La classe fa riferimento allo status di senatore assunto da una persona - candidato in elezioni politiche - in seguito ad un voto popolare</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/assemblea">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">assemblea</rdfs:label>
+		<rdfs:comment xml:lang="it">la classe fa riferimento al centro dell'attività della Camera, dove si esercita la funzione legislativa, si concede o si revoca la fiducia al Governo, si discutono gli atti di indirizzo, le interrogazioni e le interpellanze</rdfs:comment>
+		<rdfs:isDefinedBy rdf:resource="http://www.camera.it/734" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/legislatura">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">legislatura</rdfs:label>
+		<rdfs:comment xml:lang="it">La classe fa riferimento al periodo di durata del mandato parlamentare compreso fra le elezioni e lo scioglimento delle Camere. La legislatura si articola in sessioni e sedute</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/governo">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">governo</rdfs:label>
+		<rdfs:comment xml:lang="it">La classe fa riferimento all'istituzione cui è affidato dall'ordinamento giuridico l'esercizio della funzione esecutiva</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/organoGoverno">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">organo governativo</rdfs:label>
+		<rdfs:comment xml:lang="it">la classe fa riferimento agli organi monocratici o collegiali, necessari e non, che costituiscono il governo: Presidente del Consiglio, singoli Ministri,,Consiglio dei Ministri, Consiglio di Gabinetto, Comitati di Ministri e Comitati interministeriali, Vice-presidenti del Consiglio, Ministri senza portafoglio, Sottosegretari di Stato, Vice-ministri e Commissari straordinari</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/sistemaElettorale">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">sistema elettorale</rdfs:label>
+		<rdfs:comment xml:lang="it">La classe contiene le normative applicate nelle consultazioni elettorali dal regno di Sardegna alla Repubblica: maggioritario uninominale (1848 - 1880); maggioritario: scrutinio di lista (1882 - 1890); maggioritario: uninominale (1892 - 1913); proporzionale (1919 - 1921); lista unica (1929 - 1934);
+			proporzionale (1946 - 1993); misto: maggioritario e proporzionale (1994-2005); proporzionale con premio di maggioranza (2006-2011)
+		</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/normativa">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">normativa</rdfs:label>
+		<rdfs:comment xml:lang="it">la classe contiene le Gazzette ufficiale della Repubblica Italiana e dell'Unione Europea</rdfs:comment>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/documenti" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/giurisprudenza">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">giurisprudenza</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/documenti" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/presidenteCamera">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">presidente della Camera dei deputati</rdfs:label>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/presidenteConsiglioMinistri">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">presidente del Consiglio dei ministri</rdfs:label>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/presidenteRepubblica">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">presidente della Repubblica</rdfs:label>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/atto">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">atto camera</rdfs:label>
+		<rdfs:comment xml:lang="it"> la classe contiene proposte e disegni di legge</rdfs:comment>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/documenti" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/pubblicistica">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pubblicistica</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/documenti" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/dossier">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dossier</rdfs:label>
+		<rdfs:comment xml:lang="it">la classe contiene i dossier di documentazione, analisi e materiali predisposti dai Servizi di documentazione della Camera a supporto dell'attività parlamentare </rdfs:comment>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/documenti" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/cronologia">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cronologia</rdfs:label>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/dibattito">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dibattito</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/lavori" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/discussione">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">discussione</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/lavori" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/seduta">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">seduta</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/lavori" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/senatore">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">senatore</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/persona" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/DOC">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">doc</rdfs:label>
+		<rdfs:comment xml:lang="it">la classe contiene i documenti parlamentari stampati dalla Camera dei deputati, i cosiddetti "DOC" in numero romano: documenti e relazioni, trasmessi alla Camera dal Governo o da altri soggetti istituzionali ovvero predisposti da organi della Camera stessa</rdfs:comment>
+		<rdfs:isDefinedBy rdf:resource="http://www.camera.it/168" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/documentazione">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">documentazione</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/documenti" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/dottrina">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dottrina</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/documenti" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/post">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">post</rdfs:label>
+		<rdfs:comment xml:lang="it">brevi del servizio di Documentazione</rdfs:comment>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/documenti" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa classe è stata aggiunta il 17 marzo 2014</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/gruppoParlamentare">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">gruppo parlamentare</rdfs:label>
+		<rdfs:comment xml:lang="it">La classe fa riferimento ai gruppi dei partiti o movimenti politici rappresentati alla Camera. Secondo il Regolamento della Camera ogni deputato deve necessariamente appartenere ad un gruppo</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/risorsa_web">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">risorsa_web</rdfs:label>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/note">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">note</rdfs:label>
+		<rdfs:subClassOf rdf:resource="http://dati.camera.it/ocd/documenti" />
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/tipologia">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tipologia documentaria</rdfs:label>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/ufficioParlamentare">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ufficio Parlamentare</rdfs:label>
+		<rdfs:comment xml:lang="it">ufficioParlamentare è la classe che identifica tutte le cariche ricoperte dai deputati negli organi parlamentari</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/unitaOrganizzativa">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unità organizzativa</rdfs:label>
+		<rdfs:comment xml:lang="it">unitaOrganizzativa è la classe che identifica i dipartimenti/uffici in cui si struttura la Camera dei Deputati</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/componenteGruppoMisto">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">componente del Gruppo Misto</rdfs:label>
+		<rdfs:comment xml:lang="it">componenteGruppoMisto è la classe che identifica le compononeti di cui si compone il Gruppo Misto</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/lavoriPreparatoriLegge">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lavori preparatori</rdfs:label>
+		<rdfs:comment xml:lang="it">riferimento ai lavori preparatori di una legge</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/rispostaAIC">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">risposta scritta alle interrogazioni</rdfs:label>
+		<rdfs:comment xml:lang="it">classe usata per individuare le risposte scritte alle interrogazioni parlamentari</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/trasformazioneGruppo">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">trasformazione del Gruppo Parlamentare</rdfs:label>
+		<rdfs:comment xml:lang="it">classe per gestire scissioni, accorpamenti, promozioni o riduzione a componente dei Gruppi Parlamentari</rdfs:comment>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/elements/1.1/date" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/elements/1.1/type" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://dati.camera.it/ocd/rif_gruppoParlamentare" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/cambioDenominazione">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cambio denominazione del Gruppo Parlamentare</rdfs:label>
+		<rdfs:comment xml:lang="it">questa classe è utilizzata per gestire i cambi di denominazione del Gruppo Parlamentare</rdfs:comment>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/elements/1.1/date" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/elements/1.1/title" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/terms/alternative" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/elezione">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">elezione</rdfs:label>
+		<rdfs:comment xml:lang="it">elezione è la classe che identifica i dati di elezione di un sinoglo deputato (collegio, voti, sistema elettorale)</rdfs:comment>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/proclamazione">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proclamazione</rdfs:label>
+		<rdfs:comment xml:lang="it">questa classe è stata creata per gestire subentri e sostituzioni nel mandato camera</rdfs:comment>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/elements/1.1/type" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://dati.camera.it/ocd/rif_deputato" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/circoscrizionePlurieletto">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">circoscrizioni per plurieletti</rdfs:label>
+		<rdfs:comment xml:lang="it">questa classe è stata creata per gestire la descrizione di tutte le circoscrizione dei plurieletti</rdfs:comment>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/elements/1.1/coverage" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/adesioneGruppo">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">adesione del deputato al Gruppo Parlamentare</rdfs:label>
+		<rdfs:comment xml:lang="it">questa classe è stata creata per gestire le adesioni dei deputati ai gruppi parlamentari</rdfs:comment>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://dati.camera.it/ocd/rif_gruppoParlamentare" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/elements/1.1/date" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/adesioneGruppoMisto">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">adesione al Gruppo Misto</rdfs:label>
+		<rdfs:comment xml:lang="it">questa classe è stata creata per gestire le adesioni del Gruppo Misto</rdfs:comment>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://dati.camera.it/ocd/componente" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/elements/1.1/date" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/appartenenzaOrgano">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">appertenenza di un deputato ad un organo</rdfs:label>
+		<rdfs:comment xml:lang="it">questa classe è stata creata per descrivere i membri di un organo</rdfs:comment>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://dati.camera.it/ocd/rif_organo" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://dati.camera.it/ocd/rif_deputato" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/elements/1.1/date" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/elements/1.1/description" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/elements/1.1/type" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/composizioneOrgano">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">composizione di un organo parlamentare</rdfs:label>
+		<rdfs:comment xml:lang="it">questa classe è stata creata per descrivere i membri di un organo</rdfs:comment>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://dati.camera.it/ocd/rif_deputato" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+		<rdfs:subClassOf>
+			<owl:Restriction>
+				<owl:onProperty rdf:resource="http://purl.org/dc/elements/1.1/date" />
+				<owl:someValuesFrom rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" />
+			</owl:Restriction>
+		</rdfs:subClassOf>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/natura">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">natura</rdfs:label>
+		<rdfs:comment xml:lang="it">natura dell'atto camera</rdfs:comment>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/assegnazione">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">assegnazione</rdfs:label>
+		<rdfs:comment xml:lang="it">assegnazione dell'atto camera ad un organo</rdfs:comment>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/abbinamento">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">abbinamento</rdfs:label>
+		<rdfs:comment xml:lang="it">abbinamento di un atto camera con altri atti</rdfs:comment>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+
+	<owl:Class rdf:about="http://dati.camera.it/ocd/statoIter">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">stato iter</rdfs:label>
+		<rdfs:comment xml:lang="it">stato dell'iter dell'atto camera</rdfs:comment>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/richiestaParere">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">richiesta parere</rdfs:label>
+		<rdfs:comment xml:lang="it">richiesta del parere su un atto camera ad un organo</rdfs:comment>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/trasmissione">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">trasmissione</rdfs:label>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/versioneTestoAtto">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">versione testo atto camera</rdfs:label>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/intervento">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">intervento in una discussione</rdfs:label>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/allegatoDiscussione">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">allegato ad una discussione</rdfs:label>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/relatore">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">relatore di un atto camera</rdfs:label>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/votazione">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">votazione</rdfs:label>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/voto">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">voto del deputato in una votazione</rdfs:label>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+	<owl:Class rdf:about="http://dati.camera.it/ocd/luogo">
+		<rdfs:label xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">luogo</rdfs:label>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">classe aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:Class>
+	<!-- ========================== Object Property ============================ -->
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_sistemaElettorale">
+		<rdfs:label>riferimento al sistema elettorale</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/legislatura" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/elezione" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/sistemaElettorale" />
+		<rdfs:comment xml:lang="it">questa proprietà collega ogni legislatura ad un sistema elettorale</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/membro">
+		<rdfs:label>membro</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/deputato" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/appartenenzaOrgano" />
+		<rdfs:comment xml:lang="it">proprietà che collega un deputato ad un organo</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_mandatoCamera">
+		<rdfs:label>riferimento a mandato camera</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/deputato" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/persona" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/mandatoCamera" />
+		<rdfs:comment xml:lang="it">serve a collegare il deputato al mandato elettorale</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_mandatoSenato">
+		<rdfs:label>riferimento a mandato senato</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/senatore" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/persona" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/mandatoSenato" />
+		<rdfs:comment xml:lang="it">serve a collegare il deputato al mandato di senatore</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_deputato">
+		<rdfs:label>rierimento a deputato</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/persona" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/incarico" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/presidenteCamera" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/ufficioParlamentare" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/mandatoCamera" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/cronologia" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/discussione" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/intervento" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/relatore" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/voto" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/deputato" />
+		<rdfs:comment xml:lang="it">proprietà generica utilizzata per puntare alla risorsa deputato in vari punti dell'ontologia</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_presidenteConsiglioMinistri">
+		<rdfs:label>rierimento al Presidente del Consiglio dei ministri</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/governo" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/persona" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/presidenteConsiglioMinistri" />
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_persona">
+		<rdfs:label>riferimento a persona</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/discussione" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/membroGoverno" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/presidenteCamera" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/presidenteConsiglioMinistri" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/cronologia" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/persona" />
+		<rdfs:comment xml:lang="it">propreità generica utilizzata per puntare ad una risorsa persona</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/haMembro">
+		<rdfs:label>ha membro</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/organo" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/composizioneOrgano" />
+		<rdfs:comment xml:lang="it">propreità utilizzata per descrivere le composizioni degli organi parlamentari</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/fa_parte_della">
+		<rdfs:label>appartiene alla legislatura</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/deputato" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/legislatura" />
+		<rdfs:comment xml:lang="it">proprietà che collega una risorsa deputato ad una specifica legislatura</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_unitaOrganizzativa">
+		<rdfs:label>unità organizzativa</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/aic" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/atto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/DOC" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/documentazione" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/dottrina" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/risorsa_web" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/note" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/unitaOrganizzativa" />
+		<rdfs:comment xml:lang="it">puntamento dei documenti ad una unità organizzativa all'interno della struttura camera</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/aderisce">
+		<rdfs:label>aderisce</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/deputato" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/adesioneGruppo" />
+		<rdfs:comment xml:lang="it">adesione di un deputato ad un gruppo parlamentare</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_ufficioParlamentare">
+		<rdfs:label>riferimento ufficio parlamentare</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/organo" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/deputato" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/ufficioParlamentare" />
+		<rdfs:comment xml:lang="it">propreità che collega un organo agli uffici parlamentari</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_leg">
+		<rdfs:label>riferimento alla legislatura</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/mandatoCamera" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/organo" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/governo" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/assemblea" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/aic" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/atto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/cronologia" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/dibattito" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/DOC" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/documentazione" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/dottrina" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/elezione" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/giurisprudenza" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/gruppoParlamentare" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/incarico" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/membroGoverno" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/legge" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/risorsa_web" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/normativa" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/note" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/presidenteCamera" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/pubblicistica" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/sistemaElettorale" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/seduta" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/ufficioParlamentare" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/componenteGruppoMisto" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/legislatura" />
+		<rdfs:comment xml:lang="it">proprietà generica utilizzata ovunque tra le risorse per specificare l'appartenenza ad una legislatura</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_governo">
+		<rdfs:label>riferimento al governo</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/organoGoverno" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/legislatura" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/atto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/membroGoverno" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/DOC" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/presidenteConsiglioMinistri" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/governo" />
+		<rdfs:comment xml:lang="it">riferimento al Governo</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_dossier">
+		<rdfs:label>riferimento al dossier</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/atto" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/dossier" />
+		<rdfs:comment xml:lang="it">riferimento ad un altro dossier citato nell'atto camera</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_incaricoGoverno">
+		<rdfs:label>riferimento all'incarico di Governo</rdfs:label>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa proprietà è deprecata nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/deputato" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/governo" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/organoGoverno" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/persona" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/incaricoGoverno" />
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_membroGoverno">
+		<rdfs:label>riferimento al membro di Governo</rdfs:label>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa proprietà è stata aggiunta nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/deputato" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/governo" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/organoGoverno" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/persona" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/membroGoverno" />
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_organo">
+		<rdfs:label>riferimento all'organo</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/ufficioParlamentare" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/dibattito" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/DOC" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/seduta" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/assegnazione" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/richiestaParere" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/organo" />
+		<rdfs:comment xml:lang="it">puntamento all'organo parlamentare citato</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_discussione">
+		<rdfs:label>riferimento alla discussione</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/dibattito" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/discussione" />
+		<rdfs:comment xml:lang="it">un dabattito può avere più discussioni</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/siComponeDi">
+		<rdfs:label>si compone di</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/assemblea" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/componenteGruppoMisto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/legislatura" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/gruppoParlamentare" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/organo" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/deputato" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:range>
+		<rdfs:comment xml:lang="it">proprietà utilizzata per descrivere la composizione dei deputati nell'assemblea e nei gruppi e degli orgnao nelle legislature</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/nomina">
+		<rdfs:label>nomina</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/legislatura" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/assemblea" />
+		<rdfs:comment xml:lang="it">descrive la relazione tra legislatura e assemblea</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_organoGoverno">
+		<rdfs:label>riferimento all'organo di governo</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/membroGoverno" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/atto" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/organoGoverno" />
+		<rdfs:comment xml:lang="it">proprietà utilizzata all'interno degli incarichi di governo per puntare all'organo di governo</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_senatore">
+		<rdfs:label>riferimento al senatore</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/mandatoSenato" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/ufficioParlamentare" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/senatore" />
+		<rdfs:comment xml:lang="it">proprietà utilizzata all'interno degli incarichi di governo per puntare all'organo di governo</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_seduta">
+		<rdfs:label>riferimento alla seduta</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/discussione" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/aic" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/bollettino" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/votazione" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/seduta" />
+		<rdfs:comment xml:lang="it">in una seduta si svolgono più discussioni</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_elezione">
+		<rdfs:label>riferimento all'elezione</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/mandatoCamera" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/elezione" />
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/risposta">
+		<rdfs:label>riferimento alla risposta scritta all'interrogazione</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/aic" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/rispostaAIC" />
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_doc">
+		<rdfs:label>riferimento al doc</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/DOC" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/dibattito" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/DOC" />
+		<rdfs:comment xml:lang="it">un doc può fare riferimento ad un altro DOC</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_gruppoParlamentare">
+		<rdfs:label>riferimento al Gruppo parlamentare</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/componenteGruppoMisto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/incarico" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/voto" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/gruppoParlamentare" />
+		<rdfs:comment xml:lang="it">riferimento al Gruppo parlamentare</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_incarico">
+		<rdfs:label>riferimento all'incarico</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/gruppoParlamentare" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/deputato" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/incarico" />
+		<rdfs:comment xml:lang="it">riferimento all'incarico nel Gruppo parlamentare</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/lavoriPreparatori">
+		<rdfs:label>lavori preparatori</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/lavoriPreparatoriLegge" />
+		<rdfs:range>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/atto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/organoGoverno" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:range>
+	</owl:ObjectProperty>
+	<!--<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/presieduta_da"> <rdfs:label>presieduta da</rdfs:label> <rdfs:domain rdf:resource="http://dati.camera.it/ocd/seduta"/> <rdfs:range rdf:resource="http://dati.camera.it/ocd/deputato"/> <rdfs:comment xml:lang="it">proprietà che serve ad indicare da quale deputato è presieduta una seduta</rdfs:comment> </owl:ObjectProperty> -->
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/griglia">
+		<rdfs:label>griglia</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/aic" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/atto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/DOC" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/documentazione" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/dottrina" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/giurisprudenza" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/risorsa_web" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/normativa" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/note" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/pubblicistica" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+		<rdfs:comment xml:lang="it">riferimento ai concetti delle griglie tematiche di TheCa</rdfs:comment>
+		<!--da verificare -->
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/primo_firmatario">
+		<rdfs:label>primo firmatario</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/atto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/DOC" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/aic" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/deputato" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/membroGoverno" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:range>
+		<rdfs:comment xml:lang="it">indica il primo firmatario del documento</rdfs:comment>
+		<!--da verificare -->
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/altro_firmatario">
+		<rdfs:label>altro firmatario</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/atto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/aic" />
+					<!--<owl:Class rdf:about="http://dati.camera.it/ocd/gruppo"/> -->
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/deputato" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/membroGoverno" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:range>
+		<rdfs:comment xml:lang="it">indica gli altri firmatari del documento</rdfs:comment>
+		<!--da verificare -->
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_attoCamera">
+		<rdfs:label>riferimento all'atto camera</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/atto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/cronologia" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/dibattito" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/documentazione" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/lavoriPreparatoriLegge" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/atto" />
+		<rdfs:comment xml:lang="it">riferimento agli altri atti camera citati</rdfs:comment>
+		<!--da verificare -->
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/tipoProclamazione">
+		<rdfs:label>tipologia proclamazione</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/mandatoCamera" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/proclamazione" />
+		<rdfs:comment xml:lang="it">propreità utilizzata per descrivere la tipologia di proclamazione legata ad un mandato elettorale (per sostituzione, subentro, ...)</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_bollettino">
+		<rdfs:label>riferimento al bollettino</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/seduta" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/bollettino" />
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/plurieletto">
+		<rdfs:label>plurieletto</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/elezione" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/circoscrizionePlurieletto" />
+		<rdfs:comment xml:lang="it">proprietà utilizzata per descrivere tutte le circoscrizioni di elezione di un plurieletto</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/componente">
+		<rdfs:label>componente</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/adesioneGruppo" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/adesioneGruppoMisto" />
+		<rdfs:comment xml:lang="it">proprietà utilizzata per descrivere l'adesione di un deputato ad una componente del gruppo misto</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/destinatario">
+		<rdfs:label>componente</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/aic" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/organoGoverno" />
+		<rdfs:comment xml:lang="it">proprietà che designa l'organo di Governo destinatario</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/diventa">
+		<rdfs:label>diventa</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/gruppoParlamentare" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/componenteGruppoMisto" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/trasformazioneGruppo" />
+		<rdfs:comment xml:lang="it">propreità per gestire le trasformazione dei gruppi parlamentari</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/denominazione">
+		<rdfs:label>denominazione</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/gruppoParlamentare" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/componenteGruppoMisto" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/cambioDenominazione" />
+		<rdfs:comment xml:lang="it">proprietà utilizzata per gestire i cambi di denominazione</rdfs:comment>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_natura">
+		<rdfs:label>riferimento alla natura dell'atto camera</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/atto" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/natura" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_assegnazione">
+		<rdfs:label>riferimento all'assegnazione dell'atto camera</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/atto" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/assegnazione" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_abbinamento">
+		<rdfs:label>riferimento all'abbinamento dell'atto camera con altri atti</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/atto" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/abbinamento" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_richiestaParere">
+		<rdfs:label>riferimento alla richesta dei pareri su un atto camera</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/atto" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/richiestaParere" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_statoIter">
+		<rdfs:label>riferimento allo stato iter di un atto camera</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/atto" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/statoIter" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_trasmissione">
+		<rdfs:label>riferimento alla trasmissione di un atto camera all'altro ramo del parlamento</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/atto" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/trasmissione" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_intervento">
+		<rdfs:label>riferimento all'intervento del deputato o del membro di governo in una discussione</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/discussione" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/intervento" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_allegatoDiscussione">
+		<rdfs:label>riferimento all'allegato di una discussione</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/discussione" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/allegatoDiscussione" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_votazione">
+		<rdfs:label>riferimento alla votazione</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/voto" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/votazione" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_luogo">
+		<rdfs:label>riferimento al luogo</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/persona" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/luogo" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/stralciatoIn">
+		<rdfs:label>stralciato in</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/atto" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/atto" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_versioneTestoAtto">
+		<rdfs:label>riferimento alla versione del testo dell'atto camera</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/assegnazione" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/abbinamento" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/richiestaParere" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/atto" />
+
+					<owl:Class rdf:about="http://dati.camera.it/ocd/statoIter" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/versioneTestoAtto" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/rif_dibattito">
+		<rdfs:label>riferimento al dibattito</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/assegnazione" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/richiestaParere" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/dibattito" />
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:ObjectProperty>
+
+	<owl:ObjectProperty rdf:about="http://dati.camera.it/ocd/attoPortante">
+		<rdfs:label>atto portante</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/abbinamento" />
+		<rdfs:range rdf:resource="http://dati.camera.it/ocd/atto" />
+
+	</owl:ObjectProperty>
+
+
+	<!-- =============Datatype Propertues ============= -->
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/startDate">
+		<rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/date" />
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/aic" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/componenteGruppoMisto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/governo" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/gruppoParlamentare" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/incarico" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/legislatura" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/mandatoCamera" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/mandatoSenato" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/membroGoverno" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/dibattito" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/organo" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/presidenteConsiglioMinistri" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/sistemaElettorale" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/ufficioParlamentare" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/sessioneLegislatura" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date" />
+		<rdfs:label>data inizio</rdfs:label>
+		<rdfs:comment xml:lang="it">estremo iniziale di un range di date</rdfs:comment>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/endDate">
+		<rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/date" />
+		<rdfs:label>data fine</rdfs:label>
+		<rdfs:comment xml:lang="it">estremo finale di un range di date</rdfs:comment>
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">proprietà aggiunta nella versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/aic" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/componenteGruppoMisto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/governo" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/gruppoParlamentare" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/incarico" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/legislatura" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/mandatoCamera" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/mandatoSenato" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/membroGoverno" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/dibattito" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/organo" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/presidenteConsiglioMinistri" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/sistemaElettorale" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/ufficioParlamentare" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/sessioneLegislatura" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/dicastero">
+		<rdfs:label>dicastero</rdfs:label>
+		<rdfs:comment xml:lang="it">booleano per indicare se si tratta di un dicastero</rdfs:comment>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/organoGoverno" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/carica">
+		<rdfs:label>dicastero</rdfs:label>
+		<rdfs:comment xml:lang="it">identifica la tipologia della carica all'interno dell'Ufficio parlamentare</rdfs:comment>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/ufficioParlamentare" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/interim">
+		<rdfs:label>interim</rdfs:label>
+		<rdfs:comment xml:lang="it">utilizzata per gestire le cariche ad interim</rdfs:comment>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean" />
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/membroGoverno" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/incaricoGovernativo">
+		<rdfs:label>incarico governativo</rdfs:label>
+		<rdfs:comment xml:lang="it">per indicare la qualifica di incarico di Governo ricporta</rdfs:comment>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/membroGoverno" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/iniziativa">
+		<rdfs:label>iniziativa</rdfs:label>
+		<rdfs:comment xml:lang="it">per indicare se l'atto camera è di iniziativa popolare, parlamentare o mista</rdfs:comment>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/atto" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/costituzionale">
+		<rdfs:label>costituzionale</rdfs:label>
+		<rdfs:comment xml:lang="it">per indicare se un atto camera è costituzionale o ordinario</rdfs:comment>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean" />
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/atto" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/concluso">
+		<rdfs:label>costituzionale</rdfs:label>
+		<rdfs:comment xml:lang="it">per indicare lo status di un atto di indirizzo e controllo</rdfs:comment>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean" />
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/aic" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/convalida">
+		<rdfs:label>data di convalida</rdfs:label>
+		<rdfs:comment xml:lang="it">data di convalida del mandato camera</rdfs:comment>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date" />
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/mandatoCamera" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/opzione">
+		<rdfs:label>data di opzione</rdfs:label>
+		<rdfs:comment xml:lang="it">data di opzione in una elezione</rdfs:comment>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date" />
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/elezione" />
+	</owl:DatatypeProperty>
+	<!--from geogname ontology -->
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/name">
+		<rdfs:label>nome del luogo</rdfs:label>
+		<rdfs:comment xml:lang="it">nome del luogo</rdfs:comment>
+		<rdfs:subPropertyOf rdf:resource="http://www.geonames.org/ontology#name" />
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/luogo" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/parentADM1">
+		<rdfs:label>ADM1</rdfs:label>
+		<rdfs:comment xml:lang="it">primo livello di divisione amministrativa</rdfs:comment>
+		<rdfs:subPropertyOf rdf:resource="http://www.geonames.org/ontology#parentADM1" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/luogo" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/parentADM2">
+		<rdfs:label>ADM2</rdfs:label>
+		<rdfs:comment xml:lang="it">secondo livello di divisione amministrativa</rdfs:comment>
+		<rdfs:subPropertyOf rdf:resource="http://www.geonames.org/ontology#parentADM2" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/luogo" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/parentADM3">
+		<rdfs:label>ADM3</rdfs:label>
+		<rdfs:comment xml:lang="it">terzo livello di divisione amministrativa</rdfs:comment>
+		<rdfs:subPropertyOf rdf:resource="http://www.geonames.org/ontology#parentADM3" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/luogo" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/parentCountry">
+		<rdfs:label xml:lang="it">parentCountry</rdfs:label>		
+		<rdfs:label >parentCountry2</rdfs:label>
+		<rdfs:comment xml:lang="it">nazione</rdfs:comment>
+		<rdfs:comment xml:lang="en">country</rdfs:comment>
+		<rdfs:subPropertyOf rdf:resource="http://www.geonames.org/ontology#parentCountry" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/luogo" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/lista">
+		<rdfs:label>lista</rdfs:label>
+		<rdfs:comment xml:lang="it">Lista di appartenenza</rdfs:comment>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/elezione" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/lex">
+		<rdfs:label>legge</rdfs:label>
+		<rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI" />
+		<rdfs:comment xml:lang="it">riferimento esterno alla norma ufficiale</rdfs:comment>
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/membroConsulta">
+		<rdfs:label>membro</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/persona" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/tipoElezione">
+		<rdfs:label>tipo di elezione</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/elezione" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/ruolo">
+		<rdfs:label>ruolo</rdfs:label>
+		<rdfs:comment xml:lang="it">ruolo ricoperto</rdfs:comment>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/atto" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/deputato" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/incarico" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/persona" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/motivoTermine">
+		<rdfs:label>motivo termine mandato</rdfs:label>
+		<rdfs:domain>
+			<owl:Class>
+				<owl:unionOf rdf:parseType="Collection">
+					<owl:Class rdf:about="http://dati.camera.it/ocd/membroGoverno" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/mandatoCamera" />
+					<owl:Class rdf:about="http://dati.camera.it/ocd/mandatoSenato" />
+				</owl:unionOf>
+			</owl:Class>
+		</rdfs:domain>
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+		<rdfs:comment xml:lang="it">motivo termine del mandato</rdfs:comment>
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/favorevoli">
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:label>voti favorevoli</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/votazione" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/contrari">
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:label>voti contrari</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/votazione" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/votanti">
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:label>numero votanti</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/votazione" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/astenuti">
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:label>numero astenuti</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/votazione" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/presenti">
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:label>numero presenti</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/votazione" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/maggioranza">
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:label>numero maggioranza</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/votazione" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/votazioneSegreta">
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:label>votazione segreta</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/votazione" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/richiestaFiducia">
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:label>richiesta della fiducia</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/votazione" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/votazioneFinale">
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:label>votazione finale</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/votazione" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/approvato">
+		<owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Questa proprietà è stata inserita nell'ultima versione del 2 maggio 2013</owl:versionInfo>
+		<rdfs:label>approvato</rdfs:label>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/votazione" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean" />
+	</owl:DatatypeProperty>
+	<owl:DatatypeProperty rdf:about="http://dati.camera.it/ocd/tipoTesto">
+		<rdfs:label>tipo testo</rdfs:label>
+		<dc:description>tipo di testo risultante dall'abbinamento</dc:description>
+		<rdfs:domain rdf:resource="http://dati.camera.it/ocd/abbinamento" />
+		<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+	</owl:DatatypeProperty>
+</rdf:RDF>
