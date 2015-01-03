@@ -1,12 +1,10 @@
 <%@page session="true"%><%@taglib uri="http://www.springframework.org/tags" prefix="sp"%><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><html version="XHTML+RDFa 1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/MarkUp/SCHEMA/xhtml-rdfa-2.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/">
 <head data-color="${colorPair}" profile="http://www.w3.org/1999/xhtml/vocab">
-<title>${results.getTitle()}&mdash; LodView</title>
-<link rel="canonical" href="${results.getMainIRI()}">
+<title>${results.getTitle()} &mdash; LodView</title>
 <jsp:include page="inc/header.jsp"></jsp:include>
-</head>
-<body id="top">
+</head><body id="top">
 	<article>
-		<div id="logoBanner">
+		<div id="logoBanner"> 
 			<div id="logo">
 				<!-- placeholder for logo -->
 			</div>
@@ -33,7 +31,7 @@
 			<c:choose>
 				<c:when test="${results.getDescriptionProperty() != null}">
 					<div id="abstract">
-						<label class="c1"><a data-title="${ontoBean.getEscapedValue('label',locale,results.getDescriptionProperty().getPropertyUrl())}"  data-description="${ontoBean.getEscapedValue('comment',locale,results.getDescriptionProperty().getPropertyUrl())}" href="${results.getDescriptionProperty().getPropertyUrl()}"> <c:choose>
+						<label class="c1"><a data-title="${results.getDescriptionProperty().getLabel()}"  data-description="${results.getDescriptionProperty().getComment()}" href="${results.getDescriptionProperty().getPropertyUrl()}"> <c:choose>
 									<c:when test='${results.getDescriptionProperty().getNsProperty().startsWith("null:")}'>&lt;${results.getDescriptionProperty().getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 									<c:otherwise>${results.getDescriptionProperty().getNsProperty().replaceAll(":",":<span>")}</span>
 									</c:otherwise>
@@ -89,7 +87,7 @@
 						/* first level of blank nodes */
 					%>
 					<c:forEach items='${results.getBnodes(results.getMainIRI()).keySet()}' var="prop">
-						<label class="c1"><a data-title="${ontoBean.getEscapedValue('label',locale,prop.getPropertyUrl())}"  data-description="${ontoBean.getEscapedValue('comment',locale,prop.getPropertyUrl())}"  href="${prop.getPropertyUrl()}"><c:choose>
+						<label class="c1"><a data-title="${prop.getLabel()}"  data-description="${prop.getComment()}"  href="${prop.getPropertyUrl()}"><c:choose>
 									<c:when test='${prop.getNsProperty().startsWith("null:")}'>&lt;${prop.getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 									<c:otherwise>${prop.getNsProperty().replaceAll(":",":<span>")}</span>
 									</c:otherwise>
@@ -114,7 +112,7 @@
 						<c:forEach items='${results.getBnodes(results.getMainIRI()).get(prop1)}' var="iel1">
 							<c:set var="acontentIRI" value="${iel1.getValue()}" scope="page" />
 							<c:forEach items='${results.getBnodes(acontentIRI).keySet()}' var="prop">
-								<label class="c1"><a data-title="${ontoBean.getEscapedValue('label',locale,prop.getPropertyUrl())}"  data-description="${ontoBean.getEscapedValue('comment',locale,prop.getPropertyUrl())}" href="${prop.getPropertyUrl()}"><c:choose>
+								<label class="c1"><a data-title="${prop.getLabel()}"  data-description="${prop.getCooment()}"><c:choose>
 											<c:when test='${prop.getNsProperty().startsWith("null:")}'>&lt;${prop.getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 											<c:otherwise>${prop.getNsProperty().replaceAll(":",":<span>")}</span>
 											</c:otherwise>
@@ -143,7 +141,7 @@
 								<c:forEach items='${results.getBnodes(iel1.getValue()).get(prop2)}' var="iel2">
 									<c:set var="acontentIRI" value="${iel2.getValue()}" scope="page" />
 									<c:forEach items='${results.getBnodes(acontentIRI).keySet()}' var="prop">
-										<label class="c1"><a data-title="${ontoBean.getEscapedValue('label',locale,prop.getPropertyUrl())}"  data-description="${ontoBean.getEscapedValue('comment',locale,prop.getPropertyUrl())}" href="${prop.getPropertyUrl()}"><c:choose>
+										<label class="c1"><a data-title="${prop.getLabel()}"  data-description="${prop.getComment()}" href="${prop.getPropertyUrl()}"><c:choose>
 													<c:when test='${prop.getNsProperty().startsWith("null:")}'>&lt;${prop.getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 													<c:otherwise>${prop.getNsProperty().replaceAll(":",":<span>")}</span>
 													</c:otherwise>

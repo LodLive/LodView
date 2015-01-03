@@ -296,7 +296,7 @@
 						var count = $(this).find("count").text();
 						var msg = "<sp:message code='label.inverseProperty' text='is {0} of' javaScriptEscape='true' />";
 						// TODO: add link!
-						msg = msg.replace(/\{0\}/, "<a title=\"&lt;" + $(this).attr("about") + "&gt;\">" + IRI);
+						msg = msg.replace(/\{0\}/, "<a data-description=\""+ $(this).attr("propertycomment")+"\"  data-title=\""+ $(this).attr("propertylabel")+"\" title=\"&lt;" + $(this).attr("about") + "&gt;\">" + IRI);
 
 						var el = $("<label class=\"c1\" title=\"" + $(this).attr("about") + "\">" + msg + "</label>");
 						var anchor = $("<a href=\"#openIt\" data-property=\"" + $(this).attr("about") + "\">" + count + " " + (count == 1 ? "<sp:message code='label.resource' text='resource' javaScriptEscape='true'/>" : "<sp:message code='label.resources' text='resources' javaScriptEscape='true'/>") + "</a>");
@@ -671,6 +671,7 @@
 		});
 	}
 
+
 	function setErrorImage(obj) {
 		obj.error(function() {
 			$(this).attr("title", "<sp:message code='message.noImage' text='image not available, broken URL?' javaScriptEscape='true' />\n" + $(this).attr("src"));
@@ -679,6 +680,7 @@
 			$(this).unwrap("a");
 		});
 	}
+
 
 	function rNavigator() {
 		$('#navigator').find('.top').hover(function() {

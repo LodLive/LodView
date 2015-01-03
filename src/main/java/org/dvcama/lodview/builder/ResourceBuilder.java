@@ -8,13 +8,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.jena.riot.Lang;
+import org.dvcama.lodview.bean.OntologyBean;
 import org.dvcama.lodview.bean.ResultBean;
 import org.dvcama.lodview.bean.TripleBean;
 import org.dvcama.lodview.conf.ConfigurationBean;
 import org.dvcama.lodview.endpoint.SPARQLEndPoint;
 import org.dvcama.lodview.utils.Misc;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
 import com.hp.hpl.jena.rdf.model.Model;
@@ -32,15 +31,15 @@ public class ResourceBuilder {
 		this.messageSource = messageSource;
 	}
 
-	public ResultBean buildHtmlResource(String IRI, Locale locale, ConfigurationBean conf) throws Exception {
-		return buildHtmlResource(IRI, locale, conf, false);
+	public ResultBean buildHtmlResource(String IRI, Locale locale, ConfigurationBean conf, OntologyBean ontoBean) throws Exception {
+		return buildHtmlResource(IRI, locale, conf, ontoBean, false);
 	}
 
-	public ResultBean buildHtmlResource(String IRI, Locale locale, ConfigurationBean conf, boolean localMode) throws Exception {
+	public ResultBean buildHtmlResource(String IRI, Locale locale, ConfigurationBean conf, OntologyBean ontoBean, boolean localMode) throws Exception {
 		ResultBean result = new ResultBean();
 		List<String> images = new ArrayList<String>();
 		List<String> linking = new ArrayList<String>();
-
+		SPARQLEndPoint se = new SPARQLEndPoint(conf, ontoBean, locale.getLanguage());
 		result.setMainIRI(IRI);
 
 		String preferredLanguage = conf.getPreferredLanguage();
@@ -59,9 +58,9 @@ public class ResourceBuilder {
 			} catch (Exception e) {
 				throw new Exception(messageSource.getMessage("error.noContentNegotiation", null, "sorry but content negotiation is not supported by the IRI", locale));
 			}
-			triples = SPARQLEndPoint.doLocalQuery(conf, m, IRI, conf.getDefaultQueries());
+			triples = se.doLocalQuery(m, IRI, conf.getDefaultQueries());
 		} else {
-			triples = SPARQLEndPoint.doQuery(conf, IRI, conf.getDefaultQueries(), null);
+			triples = se.doQuery(IRI, conf.getDefaultQueries(), null);
 		}
 		boolean betterTitleMatch = false, betterDescrMatch = false;
 		for (TripleBean tripleBean : triples) {
@@ -121,7 +120,9 @@ public class ResourceBuilder {
 		String result = "empty content";
 		Model model = ModelFactory.createDefaultModel();
 		model.setNsPrefixes(conf.getPrefixes());
-		model = SPARQLEndPoint.extractData(conf, model, IRI, sparql, conf.getDefaultRawDataQueries());
+
+		SPARQLEndPoint se = new SPARQLEndPoint(conf, null, null);
+		model = se.extractData(model, IRI, sparql, conf.getDefaultRawDataQueries());
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		RDFWriter rdfWriter = model.getWriter(lang.getName());
@@ -137,7 +138,9 @@ public class ResourceBuilder {
 		String result = "empty content";
 		Model model = ModelFactory.createDefaultModel();
 		model.setNsPrefixes(conf.getPrefixes());
-		model = SPARQLEndPoint.extractLocalData(conf, model, IRI, m, conf.getDefaultRawDataQueries());
+
+		SPARQLEndPoint se = new SPARQLEndPoint(conf, null, null);
+		model = se.extractLocalData(model, IRI, m, conf.getDefaultRawDataQueries());
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		RDFWriter rdfWriter = model.getWriter(lang.getName());
@@ -149,8 +152,9 @@ public class ResourceBuilder {
 		return result;
 	}
 
-	public ResultBean buildPartialHtmlResource(String IRI, String[] abouts, Locale locale, ConfigurationBean conf, List<String> filterProperties) throws Exception {
+	public ResultBean buildPartialHtmlResource(String IRI, String[] abouts, Locale locale, ConfigurationBean conf, OntologyBean ontoBean, List<String> filterProperties) throws Exception {
 
+		SPARQLEndPoint se = new SPARQLEndPoint(conf, ontoBean, locale.getLanguage());
 		ResultBean result = new ResultBean();
 		List<TripleBean> literals = new ArrayList<TripleBean>();
 
@@ -191,9 +195,9 @@ public class ResourceBuilder {
 					} catch (Exception e) {
 						throw new Exception(messageSource.getMessage("error.noContentNegotiation", null, "sorry but content negotiation is not supported by the IRI", locale));
 					}
-					triples.addAll(SPARQLEndPoint.doLocalQuery(conf, m, about, sparqlQueries, about));
+					triples.addAll(se.doLocalQuery(m, about, sparqlQueries, about));
 				} else {
-					triples.addAll(SPARQLEndPoint.doQuery(conf, null, sparqlQueries, about));
+					triples.addAll(se.doQuery(null, sparqlQueries, about));
 				}
 
 			} catch (Exception e) {
@@ -232,8 +236,10 @@ public class ResourceBuilder {
 		return result;
 	}
 
-	public ResultBean buildHtmlInverseResource(String IRI, String property, int start, Locale locale, ConfigurationBean conf) throws Exception {
+	public ResultBean buildHtmlInverseResource(String IRI, String property, int start, Locale locale, ConfigurationBean conf, OntologyBean ontoBean) throws Exception {
 		ResultBean result = new ResultBean();
+
+		SPARQLEndPoint se = new SPARQLEndPoint(conf, ontoBean, locale.getLanguage());
 		String preferredLanguage = conf.getPreferredLanguage();
 		if (preferredLanguage.equals("auto")) {
 			preferredLanguage = locale.getLanguage();
@@ -251,9 +257,9 @@ public class ResourceBuilder {
 				} catch (Exception e) {
 					throw new Exception(messageSource.getMessage("error.noContentNegotiation", null, "sorry but content negotiation is not supported by the IRI", locale));
 				}
-				triples = SPARQLEndPoint.doLocalQuery(conf, m, IRI, conf.getDefaultInversesCountQueries());
+				triples = se.doLocalQuery(m, IRI, conf.getDefaultInversesCountQueries());
 			} else {
-				triples = SPARQLEndPoint.doQuery(conf, IRI, conf.getDefaultInversesCountQueries(), null);
+				triples = se.doQuery(IRI, conf.getDefaultInversesCountQueries(), null);
 			}
 
 			for (TripleBean tripleBean : triples) {
@@ -277,9 +283,9 @@ public class ResourceBuilder {
 				} catch (Exception e) {
 					throw new Exception(messageSource.getMessage("error.noContentNegotiation", null, "sorry but content negotiation is not supported by the IRI", locale));
 				}
-				triples = SPARQLEndPoint.doLocalQuery(conf, m, IRI, property, start, conf.getDefaultInversesQueries(), null);
+				triples = se.doLocalQuery(m, IRI, property, start, conf.getDefaultInversesQueries(), null);
 			} else {
-				triples = SPARQLEndPoint.doQuery(conf, IRI, property, start, conf.getDefaultInversesQueries(), null, null);
+				triples = se.doQuery(IRI, property, start, conf.getDefaultInversesQueries(), null, null);
 			}
 
 			Map<String, TripleBean> controlList = new HashMap<String, TripleBean>();
@@ -302,7 +308,7 @@ public class ResourceBuilder {
 		return result;
 	}
 
-	public ResultBean buildHtmlInverseResource(String IRI, Locale locale, ConfigurationBean conf) throws Exception {
-		return buildHtmlInverseResource(IRI, null, -1, locale, conf);
+	public ResultBean buildHtmlInverseResource(String IRI, Locale locale, ConfigurationBean conf, OntologyBean ontoBean) throws Exception {
+		return buildHtmlInverseResource(IRI, null, -1, locale, conf, ontoBean);
 	}
 }

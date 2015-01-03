@@ -27,13 +27,14 @@ public class LodController {
 
 	@Autowired
 	private MessageSource messageSource;
+ 
 
 	@ResponseBody
 	@RequestMapping(value = { "/linkedResource", "/lodview/linkedResource" }, produces = "application/xml;charset=UTF-8")
 	public String resource(HttpServletRequest req, HttpServletResponse res, Locale locale, @RequestParam(value = "IRI") String IRI) throws IOException, Exception {
 
 		if (confLinked.getSkipDomains().contains(IRI.replaceAll("http[s]*://([^/]+)/.*", "$1"))) {
-		//	System.out.println("LodController.resource() - skip - " + IRI);
+			// System.out.println("LodController.resource() - skip - " + IRI);
 			return "<root error=\"true\" about=\"" + StringEscapeUtils.escapeXml11(IRI) + "\"><title>" + //
 					StringEscapeUtils.escapeXml11(messageSource.getMessage("error.skipedDomain", null, "skiping this URI", locale)) + //
 					"</title><msg><![CDATA[skiping this URI, probably offline]]></msg></root>";
@@ -41,7 +42,7 @@ public class LodController {
 		try {
 			System.out.println("				LodController.resource() - load - " + IRI);
 			/* TODO: change this in UNION queries for better performance */
-			ResultBean results = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, confLinked, true);
+			ResultBean results = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, confLinked, null, true);
 
 			StringBuilder result = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<root about=\"" + StringEscapeUtils.escapeXml11(IRI) + "\">");
 
@@ -65,7 +66,7 @@ public class LodController {
 					}
 				}
 			}
-			/* 
+			/*
 			 * List<TripleBean> descrProperties =
 			 * results.getLiterals(IRI).get(results.getDescriptionProperty());
 			 * if (descrProperties != null) { boolean betterDescrMatch = false;
@@ -100,7 +101,7 @@ public class LodController {
 			return result.toString();
 
 		} catch (Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			System.out.println(IRI + " unable to retrieve data " + e.getMessage());
 			return "<root error=\"true\" about=\"" + StringEscapeUtils.escapeXml11(IRI) + "\"><title>" + //
 					messageSource.getMessage("error.linkedResourceUnavailable", null, "unable to retrieve data", locale) + //

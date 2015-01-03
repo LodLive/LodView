@@ -3,6 +3,8 @@ package org.dvcama.lodview.bean;
 public class PropertyBean {
 
 	private String nsProperty = null, property = null, propertyUrl = null;
+	private String label = "";
+	private String comment = "";
 
 	public String getPropertyUrl() {
 		return propertyUrl;
@@ -63,6 +65,22 @@ public class PropertyBean {
 		} else if (!propertyUrl.equals(other.propertyUrl))
 			return false;
 		return true;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 }

@@ -24,7 +24,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
@@ -43,7 +42,6 @@ public class ResourceController {
 
 	@Autowired
 	OntologyBean ontoBean;
-
 
 	final AcceptList offeringRDF = new AcceptList("text/turtle, application/turtle, " //
 			+ "application/x-turtle, application/rdf+xml, " //
@@ -175,7 +173,7 @@ public class ResourceController {
 						return new RedirectView(redirectUrl, true);
 					} else {
 						model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
-						ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf);
+						ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
 						model.addAttribute("results", r);
 						model.addAttribute("ontoBean", ontoBean);
 						enrichResponse(r, req, res);
@@ -267,7 +265,7 @@ public class ResourceController {
 				if (matchItem != null) {
 					// probably you are asking for an HTML page
 					model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
-					ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf);
+					ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
 					model.addAttribute("results", r);
 					enrichResponse(r, req, res);
 					return "resource";
