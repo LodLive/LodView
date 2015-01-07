@@ -4,7 +4,8 @@
 <jsp:include page="inc/header.jsp"></jsp:include>
 </head><body id="top">
 	<article>
-		<div id="logoBanner"> 
+		<div id="logoBanner">
+			<jsp:include page="inc/menu.jsp"></jsp:include>
 			<div id="logo">
 				<!-- placeholder for logo -->
 			</div>
@@ -31,7 +32,7 @@
 			<c:choose>
 				<c:when test="${results.getDescriptionProperty() != null}">
 					<div id="abstract">
-						<label class="c1"><a data-title="${results.getDescriptionProperty().getLabel()}"  data-description="${results.getDescriptionProperty().getComment()}" href="${results.getDescriptionProperty().getPropertyUrl()}"> <c:choose>
+						<label class="c1"><a data-label="${results.getDescriptionProperty().getLabel()}"  data-comment="${results.getDescriptionProperty().getComment()}" href="${results.getDescriptionProperty().getPropertyUrl()}"> <c:choose>
 									<c:when test='${results.getDescriptionProperty().getNsProperty().startsWith("null:")}'>&lt;${results.getDescriptionProperty().getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 									<c:otherwise>${results.getDescriptionProperty().getNsProperty().replaceAll(":",":<span>")}</span>
 									</c:otherwise>
@@ -87,7 +88,7 @@
 						/* first level of blank nodes */
 					%>
 					<c:forEach items='${results.getBnodes(results.getMainIRI()).keySet()}' var="prop">
-						<label class="c1"><a data-title="${prop.getLabel()}"  data-description="${prop.getComment()}"  href="${prop.getPropertyUrl()}"><c:choose>
+						<label class="c1"><a data-label="${prop.getLabel()}"  data-comment="${prop.getComment()}"  href="${prop.getPropertyUrl()}"><c:choose>
 									<c:when test='${prop.getNsProperty().startsWith("null:")}'>&lt;${prop.getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 									<c:otherwise>${prop.getNsProperty().replaceAll(":",":<span>")}</span>
 									</c:otherwise>
@@ -112,7 +113,7 @@
 						<c:forEach items='${results.getBnodes(results.getMainIRI()).get(prop1)}' var="iel1">
 							<c:set var="acontentIRI" value="${iel1.getValue()}" scope="page" />
 							<c:forEach items='${results.getBnodes(acontentIRI).keySet()}' var="prop">
-								<label class="c1"><a data-title="${prop.getLabel()}"  data-description="${prop.getCooment()}"><c:choose>
+								<label class="c1"><a data-label="${prop.getLabel()}"  data-comment="${prop.getCooment()}"><c:choose>
 											<c:when test='${prop.getNsProperty().startsWith("null:")}'>&lt;${prop.getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 											<c:otherwise>${prop.getNsProperty().replaceAll(":",":<span>")}</span>
 											</c:otherwise>
@@ -141,7 +142,7 @@
 								<c:forEach items='${results.getBnodes(iel1.getValue()).get(prop2)}' var="iel2">
 									<c:set var="acontentIRI" value="${iel2.getValue()}" scope="page" />
 									<c:forEach items='${results.getBnodes(acontentIRI).keySet()}' var="prop">
-										<label class="c1"><a data-title="${prop.getLabel()}"  data-description="${prop.getComment()}" href="${prop.getPropertyUrl()}"><c:choose>
+										<label class="c1"><a data-label="${prop.getLabel()}"  data-comment="${prop.getComment()}" href="${prop.getPropertyUrl()}"><c:choose>
 													<c:when test='${prop.getNsProperty().startsWith("null:")}'>&lt;${prop.getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 													<c:otherwise>${prop.getNsProperty().replaceAll(":",":<span>")}</span>
 													</c:otherwise>

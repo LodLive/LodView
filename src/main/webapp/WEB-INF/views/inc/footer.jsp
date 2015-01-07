@@ -80,6 +80,9 @@
 		});
 		imagesInWidget();
 
+		/* adding info tooltips */
+		infoTooltip('init');
+
 		/* footer functions */
 		footer();
 
@@ -260,6 +263,40 @@
 		});
 	}
 
+	function infoTooltip(act, obj) {
+		if (act === 'init') {
+			$('[data-label]').each(function() {
+				if ($(this).attr('data-label')) {
+					var iph = $('<span class="iph"></span>');
+					$(this).before(iph);
+					$(this).parent().hover(function() {
+						infoTooltip('showInfoPoint', $(this));
+					}, function() {
+						infoTooltip('remove', $(this));
+					});
+				}
+			})
+		} else if (act === 'showInfoPoint') {
+			var i = $('<span class="i"><span class="sp"></span></span>');
+			obj.prepend(i);
+			i.fadeIn('fast');
+			i.hover(function() {
+				infoTooltip('show', obj);
+			}, function() {
+				infoTooltip('remove', obj);
+			});
+		} else if (act === 'show') {
+			var data = obj.children('[data-label]');
+			var t = $('<div class="tooltip" style="width:'+col1+'px">' + data.attr("data-label") + (data.attr("data-comment") ? '<br /><br />' + data.attr("data-comment") : '') + '</div>');
+			obj.prepend(t);
+			t.fadeIn('fast');
+		} else if (act === 'remove') {
+			var p = obj.parent();
+			p.find('.tooltip').remove();
+			p.find('.i').remove();
+		}
+	}
+
 	function getInverses() {
 		lMessage("<sp:message code='message.loadingConnected' text='loading connected resource titles' javaScriptEscape='true'/>");
 		var invCont = $('#inverses');
@@ -296,7 +333,7 @@
 						var count = $(this).find("count").text();
 						var msg = "<sp:message code='label.inverseProperty' text='is {0} of' javaScriptEscape='true' />";
 						// TODO: add link!
-						msg = msg.replace(/\{0\}/, "<a data-description=\""+ $(this).attr("propertycomment")+"\"  data-title=\""+ $(this).attr("propertylabel")+"\" title=\"&lt;" + $(this).attr("about") + "&gt;\">" + IRI);
+						msg = msg.replace(/\{0\}/, "<a data-comment=\"" + $(this).attr("propertycomment") + "\"  data-label=\"" + $(this).attr("propertylabel") + "\" title=\"&lt;" + $(this).attr("about") + "&gt;\">" + IRI);
 
 						var el = $("<label class=\"c1\" title=\"" + $(this).attr("about") + "\">" + msg + "</label>");
 						var anchor = $("<a href=\"#openIt\" data-property=\"" + $(this).attr("about") + "\">" + count + " " + (count == 1 ? "<sp:message code='label.resource' text='resource' javaScriptEscape='true'/>" : "<sp:message code='label.resources' text='resources' javaScriptEscape='true'/>") + "</a>");
@@ -671,7 +708,6 @@
 		});
 	}
 
-
 	function setErrorImage(obj) {
 		obj.error(function() {
 			$(this).attr("title", "<sp:message code='message.noImage' text='image not available, broken URL?' javaScriptEscape='true' />\n" + $(this).attr("src"));
@@ -680,7 +716,6 @@
 			$(this).unwrap("a");
 		});
 	}
-
 
 	function rNavigator() {
 		$('#navigator').find('.top').hover(function() {
