@@ -125,6 +125,9 @@ public class ResourceBuilder {
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		RDFWriter rdfWriter = model.getWriter(lang.getName());
+		rdfWriter.setProperty("showXMLDeclaration","true");
+		rdfWriter.setProperty("relativeURIs","");
+
 		rdfWriter.write(model, baos, conf.getIRInamespace());
 
 		byte[] resultByteArray = baos.toByteArray();
@@ -141,6 +144,9 @@ public class ResourceBuilder {
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		RDFWriter rdfWriter = model.getWriter(lang.getName());
+		rdfWriter.setProperty("showXMLDeclaration","true");
+		rdfWriter.setProperty("relativeURIs","");
+
 		rdfWriter.write(model, baos, conf.getIRInamespace());
 
 		byte[] resultByteArray = baos.toByteArray();
