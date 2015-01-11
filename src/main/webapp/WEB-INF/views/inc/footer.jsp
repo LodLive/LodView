@@ -80,6 +80,9 @@
 		});
 		imagesInWidget();
 
+		/* adding info tooltips */
+		infoTooltip('init');
+
 		/* footer functions */
 		footer();
 
@@ -260,6 +263,69 @@
 		});
 	}
 
+	function infoTooltip(act, obj) {
+		if (act === 'init') {
+			$('[data-label]').each(function() {
+				if ($(this).attr('data-label')) {
+					var iph = $('<span class="iph"></span>');
+					$(this).before(iph);
+					$(this).parent().hover(function() {
+						infoTooltip('showInfoPoint', $(this));
+					}, function() {
+						infoTooltip('remove', $(this));
+					});
+					/* 	$(this).parent().on('mousemove', function() {
+							infoTooltip('checkInfoPoint', $(this));
+						}); */
+				}
+			});
+		} else if (act === 'checkInfoPoint') {
+			if (obj.find('i').length == 0) {
+				var i = $('<span class="i"><span class="sp"></span></span>');
+				obj.prepend(i);
+				i.hover(function() {
+					infoTooltip('show', obj);
+				}, function() {
+					infoTooltip('remove', obj);
+				});
+			}
+		} else if (act === 'showInfoPoint') {
+			var i = $('<span class="i"><span class="sp"></span></span>');
+			obj.prepend(i);
+			i.show();
+			i.hover(function() {
+				infoTooltip('show', obj);
+			}, function() {
+				infoTooltip('remove', obj);
+			});
+		} else if (act === 'show') {
+			var data = obj.children('[data-label]');
+			var t = $('<div class="tooltip" style="display:block;visibility:hidden"><strong>' + data.attr("data-label") + '</strong>' + (data.attr("data-comment") ? '<br />' + data.attr("data-comment") : '') + '</div>');
+			obj.prepend(t);
+			var th = obj.position().top - $(window).scrollTop() + t.height();
+			var wh = window.innerHeight - 50;
+			if (th > wh) {
+				t.css({
+					marginTop : '-'+(t.height()+23)+'px'
+				});
+			}
+			t.css({
+				display : 'none',
+				visibility : 'visible'
+			}); 
+		
+			t.show();
+		} else if (act === 'remove') {
+			var p = obj.parent();
+			p.find('.tooltip').fadeOut('fast', function() {
+				$(this).remove();
+			});
+			p.find('.i').fadeOut('fast', function() {
+				$(this).remove();
+			});
+		}
+	}
+
 	function getInverses() {
 		lMessage("<sp:message code='message.loadingConnected' text='loading connected resource titles' javaScriptEscape='true'/>");
 		var invCont = $('#inverses');
@@ -296,7 +362,7 @@
 						var count = $(this).find("count").text();
 						var msg = "<sp:message code='label.inverseProperty' text='is {0} of' javaScriptEscape='true' />";
 						// TODO: add link!
-						msg = msg.replace(/\{0\}/, "<a title=\"&lt;" + $(this).attr("about") + "&gt;\">" + IRI);
+						msg = msg.replace(/\{0\}/, "<a data-comment=\"" + $(this).attr("propertycomment") + "\"  data-label=\"" + $(this).attr("propertylabel") + "\" title=\"&lt;" + $(this).attr("about") + "&gt;\">" + IRI);
 
 						var el = $("<label class=\"c1\" title=\"" + $(this).attr("about") + "\">" + msg + "</label>");
 						var anchor = $("<a href=\"#openIt\" data-property=\"" + $(this).attr("about") + "\">" + count + " " + (count == 1 ? "<sp:message code='label.resource' text='resource' javaScriptEscape='true'/>" : "<sp:message code='label.resources' text='resources' javaScriptEscape='true'/>") + "</a>");

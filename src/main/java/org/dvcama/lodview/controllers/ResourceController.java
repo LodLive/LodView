@@ -11,6 +11,7 @@ import org.apache.jena.atlas.web.AcceptList;
 import org.apache.jena.atlas.web.MediaType;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFLanguages;
+import org.dvcama.lodview.bean.OntologyBean;
 import org.dvcama.lodview.bean.ResultBean;
 import org.dvcama.lodview.bean.TripleBean;
 import org.dvcama.lodview.builder.ResourceBuilder;
@@ -39,6 +40,9 @@ public class ResourceController {
 	@Autowired
 	ConfigurationBean conf;
 
+	@Autowired
+	OntologyBean ontoBean;
+
 	final AcceptList offeringRDF = new AcceptList("text/turtle, application/turtle, " //
 			+ "application/x-turtle, application/rdf+xml, " //
 			+ "application/rdf+json, application/ld+json, " //
@@ -54,8 +58,9 @@ public class ResourceController {
 
 	}
 
-	public ResourceController(MessageSource messageSource) {
+	public ResourceController(MessageSource messageSource, OntologyBean ontoBean) {
 		this.messageSource = messageSource;
+		this.ontoBean = ontoBean;
 	}
 
 	@RequestMapping(value = { "{path:(?!staticResources).*$}", "{path:(?!staticResources).*$}/**" })
@@ -168,8 +173,9 @@ public class ResourceController {
 						return new RedirectView(redirectUrl, true);
 					} else {
 						model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
-						ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf);
+						ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
 						model.addAttribute("results", r);
+						model.addAttribute("ontoBean", ontoBean);
 						enrichResponse(r, req, res);
 						return "resource";
 					}
@@ -259,7 +265,7 @@ public class ResourceController {
 				if (matchItem != null) {
 					// probably you are asking for an HTML page
 					model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
-					ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf);
+					ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
 					model.addAttribute("results", r);
 					enrichResponse(r, req, res);
 					return "resource";
@@ -301,7 +307,7 @@ public class ResourceController {
 				res.addHeader("Link", "<" + t.getProperty().getProperty() + ">; rel=\"type\"");
 			}
 		} catch (Exception e) {
-			// no types at all
+			// TODO: handle exception
 		}
 	}
 

@@ -9,4 +9,10 @@
 	<bean id="confLinked" class="org.dvcama.lodview.conf.ConfigurationBean">
 		<property name="confFile" value="conf-linked.ttl" />
 	</bean>
- </beans>
+
+	<bean id="ontoBean" class="org.dvcama.lodview.bean.OntologyBean">
+		<property name="ontoDir" value="ontologies" />
+	</bean>
+
+
+</beans>

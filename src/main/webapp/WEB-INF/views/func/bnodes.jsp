@@ -1,5 +1,5 @@
 <%@page session="true" %><c:forEach items='${data.keySet()}' var="aprop">
-	<label class="${c1name}"><a href="${aprop.getPropertyUrl()}"><c:choose>
+	<label class="${c1name}"><a data-label="${aprop.getLabel()}"  data-comment="${aprop.getComment()}" href="${aprop.getPropertyUrl()}"><c:choose>
 				<c:when test='${aprop.getNsProperty().startsWith("null:")}'>&lt;${aprop.getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 				<c:otherwise>${aprop.getNsProperty().replaceAll(":",":<span>")}</span>
 				</c:otherwise>

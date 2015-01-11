@@ -1,21 +1,18 @@
 <%@page session="true"%><%@taglib uri="http://www.springframework.org/tags" prefix="sp"%><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><html version="XHTML+RDFa 1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/MarkUp/SCHEMA/xhtml-rdfa-2.xsd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:foaf="http://xmlns.com/foaf/0.1/">
 <head data-color="${colorPair}" profile="http://www.w3.org/1999/xhtml/vocab">
-<title>${results.getTitle()}&mdash; LodView</title>
-<link rel="canonical" href="${results.getMainIRI()}">
+<title>${results.getTitle()} &mdash; LodView</title>
 <jsp:include page="inc/header.jsp"></jsp:include>
-</head>
-<body id="top">
+</head><body id="top">
 	<article>
 		<div id="logoBanner">
+			<jsp:include page="inc/menu.jsp"></jsp:include>
 			<div id="logo">
 				<!-- placeholder for logo -->
 			</div>
 		</div>
 		<header>
 			<hgroup>
-				<h1>
-					<span>${results.getTitle()}</span>
-				</h1>
+				<h1><span>${results.getTitle()}</span></h1>
 				<h2>
 					<a class="iri" href="${results.getMainIRI()}">${results.getMainIRI()}</a> <span class="istance"> <c:forEach end="1" items='${results.getResources(results.getMainIRI()).get(results.getTypeProperty())}' var="el">
 							<a title="&lt;${el.getValue()}&gt;" href="${el.getUrl()}" <c:if test="${!el.isLocal()}">target="_blank" </c:if>> <c:choose>
@@ -31,11 +28,11 @@
 						<a title="view resource on lodlive" target="_blank" href="${lodliveUrl }"></a>
 					</div>
 				</h2>
-			</hgroup>
+			</hgroup> 
 			<c:choose>
 				<c:when test="${results.getDescriptionProperty() != null}">
 					<div id="abstract">
-						<label class="c1"><a href="${results.getDescriptionProperty().getPropertyUrl()}"> <c:choose>
+						<label class="c1"><a data-label="${results.getDescriptionProperty().getLabel()}"  data-comment="${results.getDescriptionProperty().getComment()}" href="${results.getDescriptionProperty().getPropertyUrl()}"> <c:choose>
 									<c:when test='${results.getDescriptionProperty().getNsProperty().startsWith("null:")}'>&lt;${results.getDescriptionProperty().getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 									<c:otherwise>${results.getDescriptionProperty().getNsProperty().replaceAll(":",":<span>")}</span>
 									</c:otherwise>
@@ -79,6 +76,7 @@
 			<c:set var="c2name" value="c2" scope="page"></c:set>
 			<c:set var="contentIRI" value="${results.getMainIRI()}" scope="page" />
 			<%@include file="func/contents.jsp"%>
+
 		</div>
 		<c:choose>
 			<c:when test="${results.getBnodes(results.getMainIRI())!=null && results.getBnodes(results.getMainIRI()).keySet().size()>0 }">
@@ -90,7 +88,7 @@
 						/* first level of blank nodes */
 					%>
 					<c:forEach items='${results.getBnodes(results.getMainIRI()).keySet()}' var="prop">
-						<label class="c1"><a href="${prop.getPropertyUrl()}"><c:choose>
+						<label class="c1"><a data-label="${prop.getLabel()}"  data-comment="${prop.getComment()}"  href="${prop.getPropertyUrl()}"><c:choose>
 									<c:when test='${prop.getNsProperty().startsWith("null:")}'>&lt;${prop.getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 									<c:otherwise>${prop.getNsProperty().replaceAll(":",":<span>")}</span>
 									</c:otherwise>
@@ -107,6 +105,7 @@
 							</c:forEach>
 						</div>
 					</c:forEach>
+
 					<%
 						/* second level of blank nodes */
 					%>
@@ -114,7 +113,7 @@
 						<c:forEach items='${results.getBnodes(results.getMainIRI()).get(prop1)}' var="iel1">
 							<c:set var="acontentIRI" value="${iel1.getValue()}" scope="page" />
 							<c:forEach items='${results.getBnodes(acontentIRI).keySet()}' var="prop">
-								<label class="c1"><a href="${prop.getPropertyUrl()}"><c:choose>
+								<label class="c1"><a data-label="${prop.getLabel()}"  data-comment="${prop.getCooment()}"><c:choose>
 											<c:when test='${prop.getNsProperty().startsWith("null:")}'>&lt;${prop.getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 											<c:otherwise>${prop.getNsProperty().replaceAll(":",":<span>")}</span>
 											</c:otherwise>
@@ -133,6 +132,7 @@
 							</c:forEach>
 						</c:forEach>
 					</c:forEach>
+
 					<%
 						/* third level of blank nodes */
 					%>
@@ -142,7 +142,7 @@
 								<c:forEach items='${results.getBnodes(iel1.getValue()).get(prop2)}' var="iel2">
 									<c:set var="acontentIRI" value="${iel2.getValue()}" scope="page" />
 									<c:forEach items='${results.getBnodes(acontentIRI).keySet()}' var="prop">
-										<label class="c1"><a href="${prop.getPropertyUrl()}"><c:choose>
+										<label class="c1"><a data-label="${prop.getLabel()}"  data-comment="${prop.getComment()}" href="${prop.getPropertyUrl()}"><c:choose>
 													<c:when test='${prop.getNsProperty().startsWith("null:")}'>&lt;${prop.getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 													<c:otherwise>${prop.getNsProperty().replaceAll(":",":<span>")}</span>
 													</c:otherwise>
@@ -163,6 +163,7 @@
 							</c:forEach>
 						</c:forEach>
 					</c:forEach>
+
 				</div>
 			</c:when>
 			<c:otherwise>
