@@ -4,8 +4,7 @@
 <jsp:include page="inc/header.jsp"></jsp:include>
 </head><body id="top">
 	<article>
-		<div id="logoBanner">
-			<jsp:include page="inc/menu.jsp"></jsp:include>
+		<div id="logoBanner"> 
 			<div id="logo">
 				<!-- placeholder for logo -->
 			</div>
