@@ -23,8 +23,7 @@ public class OntologyBean implements ServletContextAware {
 	private ServletContext context;
 	private Model model;
 
-	public void init() {
-		// TODO Auto-generated method stub
+	public void init() { 
 		File ontoDirFile = new File(ontoDir);
 		if (!ontoDirFile.isAbsolute()) {
 			ontoDirFile = new File(context.getRealPath("/") + "/WEB-INF/" + ontoDir);
@@ -99,7 +98,7 @@ public class OntologyBean implements ServletContextAware {
 		while (iter.hasNext()) {
 			RDFNode node = iter.nextNode();
 			Literal l = node.asLiteral();
-			System.out.println(IRI + " " + preferredLanguage + " --> " + l.getLanguage() + " --> " + l.getLexicalForm());
+			//System.out.println(IRI + " " + preferredLanguage + " --> " + l.getLanguage() + " --> " + l.getLexicalForm());
 			if (!betterTitleMatch && (result.equals(defaultValue) || l.getLanguage().equals("en") || l.getLanguage().equals(preferredLanguage))) {
 				if (preferredLanguage.equals(l.getLanguage())) {
 					betterTitleMatch = true;
