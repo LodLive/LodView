@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>lodview</groupId>
 	<artifactId>lodview</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.1.0</version>
 	<packaging>war</packaging>
 	<name>lodview</name>
 	<description>lodview</description>

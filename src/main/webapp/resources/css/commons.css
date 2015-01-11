@@ -788,6 +788,7 @@ footer {
 	left:-20px;
 	z-index: 9;
 	display:none;
+	cursor:help;
 }
 .i span{
 	display: inline-block;
@@ -808,12 +809,13 @@ footer {
 	line-height: 15px;
 	font-size: 12px;
 	color: #fff;
-	padding: 15px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	padding: 10px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 	position:absolute; 
-	left:21px;
-	width:150px;
+	left:8px;
+	margin-top:22px;
+	width:250px;
 	z-index: 9;
 }

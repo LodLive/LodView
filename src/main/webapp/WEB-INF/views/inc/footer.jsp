@@ -274,12 +274,25 @@
 					}, function() {
 						infoTooltip('remove', $(this));
 					});
+					/* 	$(this).parent().on('mousemove', function() {
+							infoTooltip('checkInfoPoint', $(this));
+						}); */
 				}
-			})
+			});
+		} else if (act === 'checkInfoPoint') {
+			if (obj.find('i').length == 0) {
+				var i = $('<span class="i"><span class="sp"></span></span>');
+				obj.prepend(i);
+				i.hover(function() {
+					infoTooltip('show', obj);
+				}, function() {
+					infoTooltip('remove', obj);
+				});
+			}
 		} else if (act === 'showInfoPoint') {
 			var i = $('<span class="i"><span class="sp"></span></span>');
 			obj.prepend(i);
-			i.fadeIn('fast');
+			i.show();
 			i.hover(function() {
 				infoTooltip('show', obj);
 			}, function() {
@@ -287,13 +300,29 @@
 			});
 		} else if (act === 'show') {
 			var data = obj.children('[data-label]');
-			var t = $('<div class="tooltip" style="width:'+col1+'px">' + data.attr("data-label") + (data.attr("data-comment") ? '<br /><br />' + data.attr("data-comment") : '') + '</div>');
+			var t = $('<div class="tooltip" style="display:block;visibility:hidden"><strong>' + data.attr("data-label") + '</strong>' + (data.attr("data-comment") ? '<br />' + data.attr("data-comment") : '') + '</div>');
 			obj.prepend(t);
-			t.fadeIn('fast');
+			var th = obj.position().top - $(window).scrollTop() + t.height();
+			var wh = window.innerHeight - 50;
+			if (th > wh) {
+				t.css({
+					marginTop : '-'+(t.height()+23)+'px'
+				});
+			}
+			t.css({
+				display : 'none',
+				visibility : 'visible'
+			}); 
+		
+			t.show();
 		} else if (act === 'remove') {
 			var p = obj.parent();
-			p.find('.tooltip').remove();
-			p.find('.i').remove();
+			p.find('.tooltip').fadeOut('fast', function() {
+				$(this).remove();
+			});
+			p.find('.i').fadeOut('fast', function() {
+				$(this).remove();
+			});
 		}
 	}
 
