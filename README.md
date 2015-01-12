@@ -11,7 +11,7 @@ LodView is an open source software, you may download it and use for it your own 
 ## Demo
 You can find some examples on http://lodview.it 
 
-## who is using it
+## Who is using it
 list of known users https://github.com/dvcama/LodView/wiki/LodView-users
 
 ## Installing instruction
@@ -26,8 +26,9 @@ LodView allows you to publish RDF data offering a lot of different serialization
 LodView interface uses a very few words (labels and system messages) all managed with a language configuration file. It's able to use the client locale to manage not only the interface language but also the RDF literal values for a full i18n experience. You also have the possibility to override your default locale using 'locale' parameter.  (eg. http://yourIRI?locale=fr) 
 We will appreciate any help in translating LodView, please commit your translation using GitHub or send us the translation file (https://github.com/dvcama/LodView/blob/master/src/main/resources/messages_en.properties)
 
-##### Information on used properties
-LodView provides info about every property found on the resource, just hover on the property to get a "info tooltip" that shows label and comment from the referring ontology (according to the locale of the client).
+##### Information about used properties
+LodView provides info about every property found in the resource, just hover on the property to get a "info tooltip" that shows label and comment from the referring ontology (according to the locale of the client).  
+See also: https://github.com/dvcama/LodView/wiki/how-to%3A-populate-info-tooltip
 
 ##### Object properties
 In order to help humans understand the meaning of a resource, LodView shows the label of every object property it has found according to the locale of the client.
