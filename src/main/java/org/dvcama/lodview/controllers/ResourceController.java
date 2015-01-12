@@ -1,6 +1,7 @@
 package org.dvcama.lodview.controllers;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Locale;
 
 import javax.servlet.http.Cookie;
@@ -165,6 +166,12 @@ public class ResourceController {
 					if (redirect && !redirected) {
 						String redirectUrl = (new UrlPathHelper().getLookupPathForRequest(req).replaceAll("/lodview/", "/").replaceAll("^/", "")) + conf.getHttpRedirectSuffix();
 						// preventing redirect of model attributes
+						String[] redirectUrlArray = redirectUrl.split("/");
+						redirectUrl = "";
+						for (String string : redirectUrlArray) {
+							redirectUrl += URLEncoder.encode(string, "UTF-8") + "/";
+						}
+						redirectUrl = redirectUrl.replaceAll("/$", "");
 						model.remove("colorPair");
 						model.remove("path");
 						model.remove("lodliveUrl");
