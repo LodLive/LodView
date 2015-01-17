@@ -112,7 +112,7 @@
 						<c:forEach items='${results.getBnodes(results.getMainIRI()).get(prop1)}' var="iel1">
 							<c:set var="acontentIRI" value="${iel1.getValue()}" scope="page" />
 							<c:forEach items='${results.getBnodes(acontentIRI).keySet()}' var="prop">
-								<label class="c1"><a data-label="${prop.getLabel()}"  data-comment="${prop.getCooment()}"><c:choose>
+								<label class="c1"><a data-label="${prop.getLabel()}"  data-comment="${prop.getComment()}"><c:choose>
 											<c:when test='${prop.getNsProperty().startsWith("null:")}'>&lt;${prop.getProperty().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;</c:when>
 											<c:otherwise>${prop.getNsProperty().replaceAll(":",":<span>")}</span>
 											</c:otherwise>
