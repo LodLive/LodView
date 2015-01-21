@@ -164,7 +164,7 @@ public class ResourceController {
 				if (matchItem != null) {
 					// probably you are asking for an HTML page
 					if (redirect && !redirected) {
-						String redirectUrl = (new UrlPathHelper().getLookupPathForRequest(req).replaceAll("/lodview/", "/").replaceAll("^/", "")) + conf.getHttpRedirectSuffix();
+						String redirectUrl = (new UrlPathHelper().getLookupPathForRequest(req)) + conf.getHttpRedirectSuffix();
 						// preventing redirect of model attributes
 						String[] redirectUrlArray = redirectUrl.split("/");
 						redirectUrl = "";
@@ -176,7 +176,7 @@ public class ResourceController {
 						model.remove("path");
 						model.remove("lodliveUrl");
 						model.remove("locale");
-						System.out.println((new UrlPathHelper().getLookupPathForRequest(req).replaceAll("/lodview/", "/").replaceAll("^/", "")) + " --------- " + conf.getHttpRedirectSuffix());
+						System.out.println(redirectUrl);
 						return new RedirectView(redirectUrl, true);
 					} else {
 						model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
