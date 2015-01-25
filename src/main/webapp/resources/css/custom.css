@@ -2,7 +2,7 @@
 /*  CUSTOM CSS HERE  */
 /* ***************** */
 div#logoBanner div#logo {
-	background-size: 134px 40px; 
+	background-size: 134px 40px;
 	background-image: url(../img/logo-header-lodview.png);
 	height: 80px;
 	background-position: left center;
@@ -12,8 +12,26 @@ div#logoBanner div#logo {
 }
 
 @media ( -webkit-min-device-pixel-ratio : 2) , ( min-resolution : 192dpi) {
- 
 	div#logoBanner div#logo {
 		background-image: url(../img/logo-header-lodview@2x.png);
 	}
+}
+
+/* ********************************** */
+/*  CUSTOM FOOTER, HIDDEN BY DEFAULT  */
+/* ********************************** */
+#customFooter {
+	display: none;
+}
+
+/* useful to add information about the project partners (logo) */
+#customFooter #credits {
+	height: 78px;
+	background: #e9e9e9;
+}
+
+/* useful to add a custom menu */
+#customFooter menu {
+	height: 38px;
+	background: #d4d4d4;
 }

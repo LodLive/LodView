@@ -178,6 +178,7 @@
 			</h3>
 			<div class="masonry"></div>
 		</div>
+	<jsp:include page="inc/custom_footer.jsp"></jsp:include>
 	</article>
 	<jsp:include page="inc/footer.jsp"></jsp:include>
 	<div id="loadPanel">
