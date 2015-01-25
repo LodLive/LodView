@@ -21,6 +21,7 @@
 		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 	</c:if>
 </c:if>
+<link rel="canonical" href="${results.getMainIRI()}" >
 <script src="${conf.getStaticResourceURL()}masonry.pkgd.min.js"></script>
 <script src="${conf.getStaticResourceURL()}modernizr-custom.min.js"></script>
 <c:set var="color1" value='${colorPair.replaceAll("-.+","") }' scope="page" />
