@@ -17,6 +17,9 @@
 		</ul>
 	</div>
 </footer>
+<c:if test="${not empty conf.getLicense()}">
+	<div id="license"><div>${conf.getLicense()}</div></div>
+</c:if>
 <script>
 	var col1 = 0;
 	var col3 = 0;

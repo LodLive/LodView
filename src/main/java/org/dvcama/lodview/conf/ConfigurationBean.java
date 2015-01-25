@@ -21,7 +21,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	private Model confModel = null;
 	private ServletContext context;
 
-	private String confFile, homeUrl, httpRedirectSuffix, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
+	private String confFile, homeUrl, license, httpRedirectSuffix, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
 
 	private List<String> defaultQueries, defaultRawDataQueries, defaultInversesQueries, defaultInversesTest, defaultInversesCountQueries, typeProperties, imageProperties, linkingProperties, titleProperties, descriptionProperties, longitudeProperties, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null;
@@ -76,6 +76,8 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 		defaultInverseBehaviour = getSingleConfValue("defaultInverseBehaviour", defaultInverseBehaviour);
 
+		license = getSingleConfValue("license", "");
+		
 		colorPair = getMultiConfValue("colorPair");
 		skipDomains = getMultiConfValue("skipDomains");
 	}
@@ -224,6 +226,10 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	public String getPreferredLanguage() {
 		return preferredLanguage;
+	}
+
+	public String getLicense() {
+		return license;
 	}
 
 	public List<String> getColorPair() {

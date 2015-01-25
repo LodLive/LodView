@@ -179,6 +179,9 @@
 					"#86b692-#749f7e" , "#528775-#477565" , "#6d8058-#5e6f4c" , "#a1a72e-#8c9128" ,
 					"#c77e20-#ad6e1c" ;
 	
+## license information (will be added at the very end of the page)
+
+	conf:license	"" ; ## eg. "Licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>Creative Commons Attribution 4.0 International</a> (CC BY 4.0)" ;	
 					
 ##	just a marker to insert a point on the last row
 	
