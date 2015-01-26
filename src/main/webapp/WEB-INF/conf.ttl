@@ -171,18 +171,33 @@
 	
 	conf:preferredLanguage	"auto"; ## eg. "en" or "it"
 
-
-## interface colors, choose a pair or a list for random colors
-
-	conf:colorPair 	"#c3a116-#ac8c13" , "#914848-#7d3e3e" , "#8a4e6a-#77435c" , "#ac8cb0-#967999" ,
-					"#715287-#624775" , "#606592-#53577e" , "#7eb9be-#6da2a7" , "#5b8a97-#4f7783" , 
-					"#86b692-#749f7e" , "#528775-#477565" , "#6d8058-#5e6f4c" , "#a1a72e-#8c9128" ,
-					"#c77e20-#ad6e1c" ;
-	
 ## license information (will be added at the very end of the page)
 
 	conf:license	"" ; ## eg. "Licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>Creative Commons Attribution 4.0 International</a> (CC BY 4.0)" ;	
-					
+			
+####	## interface colors, choose a pair or a list for random colors
+####	
+####	conf:colorPair 	"#c3a116-#ac8c13" , "#914848-#7d3e3e" , "#8a4e6a-#77435c" , "#ac8cb0-#967999" ,
+####					"#715287-#624775" , "#606592-#53577e" , "#7eb9be-#6da2a7" , "#5b8a97-#4f7783" , 
+####					"#86b692-#749f7e" , "#528775-#477565" , "#6d8058-#5e6f4c" , "#a1a72e-#8c9128" ,
+####					"#c77e20-#ad6e1c" ;
+	
+####	##	just a marker to insert a point on the last row
+	
+####	conf:last	".".
+	
+	
+## or bind classes and colors
+ 	
+ 	conf:colorPair  conf:byClass;
+			
 ##	just a marker to insert a point on the last row
 	
 	conf:last	".".
+	
+## uncomment only if you configured "colors by class"
+	
+	foaf:Person				conf:hasColorPair	"#c3a116-#ac8c13".
+	dbpedia-owl:Place		conf:hasColorPair	"#715287-#624775".
+	conf:unmatchingClasses	conf:hasColorPair	"#c77e20-#ad6e1c".
+	

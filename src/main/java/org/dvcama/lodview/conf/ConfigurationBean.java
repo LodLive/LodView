@@ -3,6 +3,7 @@ package org.dvcama.lodview.conf;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -15,6 +16,8 @@ import org.springframework.web.context.ServletContextAware;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.ResIterator;
+import com.hp.hpl.jena.rdf.model.Resource;
 
 public class ConfigurationBean implements ServletContextAware, Cloneable {
 
@@ -25,6 +28,8 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	private List<String> defaultQueries, defaultRawDataQueries, defaultInversesQueries, defaultInversesTest, defaultInversesCountQueries, typeProperties, imageProperties, linkingProperties, titleProperties, descriptionProperties, longitudeProperties, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null;
+	private Map<String, String> colorPairMatcher = null;
+
 	Random rand = new Random();
 
 	public ConfigurationBean() throws IOException, Exception {
@@ -47,7 +52,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		authUsername = getSingleConfValue("authUsername");
 
 		IRInamespace = getSingleConfValue("IRInamespace", "<not provided>");
-		
+
 		httpRedirectSuffix = getSingleConfValue("httpRedirectSuffix", "");
 
 		publicUrlPrefix = getSingleConfValue("publicUrlPrefix", "");
@@ -77,9 +82,29 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		defaultInverseBehaviour = getSingleConfValue("defaultInverseBehaviour", defaultInverseBehaviour);
 
 		license = getSingleConfValue("license", "");
-		
+
 		colorPair = getMultiConfValue("colorPair");
+
+		if (colorPair != null && colorPair.size() == 1 && colorPair.get(0).startsWith("http://")) {
+			colorPairMatcher = populateColorPairMatcher();
+		}
+
 		skipDomains = getMultiConfValue("skipDomains");
+	}
+
+	private Map<String, String> populateColorPairMatcher() {
+		Map<String, String> result = new HashMap<String, String>();
+		ResIterator iter = confModel.listSubjectsWithProperty(confModel.createProperty(confModel.getNsPrefixURI("conf"), "hasColorPair"));
+		while (iter.hasNext()) {
+			Resource res = iter.next();
+			NodeIterator values = confModel.listObjectsOfProperty(res, confModel.createProperty(confModel.getNsPrefixURI("conf"), "hasColorPair"));
+			while (values.hasNext()) {
+				RDFNode node = values.next();
+				result.put(res.toString(), node.toString());
+				break;
+			}
+		}
+		return result;
 	}
 
 	private String getSingleConfValue(String prop) {
@@ -275,6 +300,10 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	public void setDefaultInverseBehaviour(String defaultInverseBehaviour) {
 		this.defaultInverseBehaviour = defaultInverseBehaviour;
+	}
+
+	public Map<String, String> getColorPairMatcher() {
+		return colorPairMatcher;
 	}
 
 	@Override
