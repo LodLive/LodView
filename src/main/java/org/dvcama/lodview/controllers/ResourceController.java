@@ -2,6 +2,7 @@ package org.dvcama.lodview.controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.Cookie;
@@ -80,7 +81,6 @@ public class ResourceController {
 		// System.out.println("ResourceController.resource() " +
 		// conf.getEndPointUrl());
 		model.addAttribute("conf", conf);
-		model.addAttribute("colorPair", colorPair);
 
 		String IRIsuffix = new UrlPathHelper().getLookupPathForRequest(req).replaceAll("/lodview/", "/");
 		// System.out.println("IRIsuffix " + IRIsuffix +
@@ -184,6 +184,7 @@ public class ResourceController {
 						model.addAttribute("results", r);
 						model.addAttribute("ontoBean", ontoBean);
 						enrichResponse(r, req, res);
+						model.addAttribute("colorPair", color(colorPair, r));
 						return "resource";
 					}
 				} else {
@@ -275,6 +276,7 @@ public class ResourceController {
 					ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
 					model.addAttribute("results", r);
 					enrichResponse(r, req, res);
+					model.addAttribute("colorPair", color(colorPair, r));
 					return "resource";
 				} else {
 					return new ErrorController(conf).error406(res, model);
@@ -294,6 +296,22 @@ public class ResourceController {
 			}
 		}
 
+	}
+
+	private String color(String colorPair, ResultBean r) { 
+		if (conf.getColorPairMatcher() != null && conf.getColorPairMatcher().size() > 0) {
+			List<TripleBean> m = r.getResources(r.getMainIRI()).get(r.getTypeProperty());
+			for (String key : conf.getColorPairMatcher().keySet()) {
+				for (TripleBean tripleBean : m) {
+					if (tripleBean.getValue().equals(key)) {
+						colorPair = conf.getColorPairMatcher().get(key);
+						return colorPair;
+					}
+				}
+			}
+			return conf.getColorPairMatcher().get("http://lodview.it/conf#otherClasses");
+		}
+		return colorPair;
 	}
 
 	private void enrichResponse(ResultBean r, HttpServletRequest req, HttpServletResponse res) {
