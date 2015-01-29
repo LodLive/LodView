@@ -18,6 +18,7 @@ import org.dvcama.lodview.bean.ResultBean;
 import org.dvcama.lodview.bean.TripleBean;
 import org.dvcama.lodview.builder.ResourceBuilder;
 import org.dvcama.lodview.conf.ConfigurationBean;
+import org.dvcama.lodview.utils.Misc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -181,10 +182,10 @@ public class ResourceController {
 					} else {
 						model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
 						ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
-						model.addAttribute("results", r);
+						model.addAttribute("results", Misc.guessClass(r,conf,ontoBean));
 						model.addAttribute("ontoBean", ontoBean);
 						enrichResponse(r, req, res);
-						model.addAttribute("colorPair", color(colorPair, r));
+						model.addAttribute("colorPair", Misc.guessColor(colorPair, r, conf));
 						return "resource";
 					}
 				} else {
@@ -274,9 +275,9 @@ public class ResourceController {
 					// probably you are asking for an HTML page
 					model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
 					ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
-					model.addAttribute("results", r);
+					model.addAttribute("results", Misc.guessClass(r,conf,ontoBean));
 					enrichResponse(r, req, res);
-					model.addAttribute("colorPair", color(colorPair, r));
+					model.addAttribute("colorPair", Misc.guessColor(colorPair, r, conf));
 					return "resource";
 				} else {
 					return new ErrorController(conf).error406(res, model);
@@ -296,22 +297,6 @@ public class ResourceController {
 			}
 		}
 
-	}
-
-	private String color(String colorPair, ResultBean r) { 
-		if (conf.getColorPairMatcher() != null && conf.getColorPairMatcher().size() > 0) {
-			List<TripleBean> m = r.getResources(r.getMainIRI()).get(r.getTypeProperty());
-			for (String key : conf.getColorPairMatcher().keySet()) {
-				for (TripleBean tripleBean : m) {
-					if (tripleBean.getValue().equals(key)) {
-						colorPair = conf.getColorPairMatcher().get(key);
-						return colorPair;
-					}
-				}
-			}
-			return conf.getColorPairMatcher().get("http://lodview.it/conf#otherClasses");
-		}
-		return colorPair;
 	}
 
 	private void enrichResponse(ResultBean r, HttpServletRequest req, HttpServletResponse res) {

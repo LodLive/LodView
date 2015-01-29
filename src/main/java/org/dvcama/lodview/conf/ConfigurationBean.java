@@ -26,8 +26,8 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	private String confFile, homeUrl, license, httpRedirectSuffix, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
 
-	private List<String> defaultQueries, defaultRawDataQueries, defaultInversesQueries, defaultInversesTest, defaultInversesCountQueries, typeProperties, imageProperties, linkingProperties, titleProperties, descriptionProperties, longitudeProperties, latitudeProperties = null;
-	private List<String> colorPair = null, skipDomains = null;
+	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null, defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null, imageProperties = null, linkingProperties = null, titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
+	private List<String> colorPair = null, skipDomains = null, mainOntologiesPrefixes = null;
 	private Map<String, String> colorPairMatcher = null;
 
 	Random rand = new Random();
@@ -80,6 +80,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		defaultInversesCountQueries = getMultiConfValue("defaultInversesCountQueries");
 
 		defaultInverseBehaviour = getSingleConfValue("defaultInverseBehaviour", defaultInverseBehaviour);
+		mainOntologiesPrefixes = getMultiConfValue("mainOntologiesPrefixes");
 
 		license = getSingleConfValue("license", "");
 
@@ -335,6 +336,14 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	public void setHttpRedirectSuffix(String httpRedirectSuffix) {
 		this.httpRedirectSuffix = httpRedirectSuffix;
+	}
+
+	public List<String> getMainOntologiesPrefixes() {
+		return mainOntologiesPrefixes;
+	}
+
+	public void setMainOntologiesPrefixes(List<String> mainOntologiesPrefixes) {
+		this.mainOntologiesPrefixes = mainOntologiesPrefixes;
 	}
 
 }
