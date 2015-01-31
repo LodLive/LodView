@@ -19,6 +19,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#>.
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix yago: <http://dbpedia.org/class/yago/>.
+@prefix georss: <http://www.georss.org/georss/>.
 
 <> a conf:Configuration;
 
@@ -126,8 +127,8 @@
 								
 	conf:imageProperties		foaf:depiction;
 								
-	conf:longitudeProperties	geo:long;
-	conf:latitudeProperties		geo:lat;
+	conf:longitudeProperties	property:longitudineDecimale;
+	conf:latitudeProperties		property:latitudineDecimale;
 	conf:linkingProperties		owl:sameAs;
 
 
@@ -145,7 +146,7 @@
 
 ## license information (will be added at the very end of the page)
 
-	conf:license	"Licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>Creative Commons Attribution 4.0 International</a> (CC BY 4.0)" ;  	
+	conf:license	"This content was extracted from <a href='http://it.wikipedia.org/wiki/Tim_Berners-Lee'>Wikipedia</a> and is licensed under the <a href='http://creativecommons.org/licenses/by-sa/3.0/'>Creative Commons Attribution-ShareAlike 3.0 Unported License</a>" ;  	
 			
 ####	## interface colors, choose a pair or a list for random colors
 ####	
