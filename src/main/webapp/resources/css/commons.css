@@ -117,6 +117,7 @@ hgroup h2>span.istance {
 	margin-left: -8px;
 }
 
+
 hgroup h2 {
 	font-size: 16px;
 	padding: 8px 0 24px 0;
@@ -129,14 +130,20 @@ hgroup h2>span a {
 	display: inline-block;
 	margin-left: 8px;
 	margin-top: 2px;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 	letter-spacing: .7;
-	font-size: 11px;
+	font-size: 13px;
 }
 
 hgroup h2>span a span {
 	color: #fff;
 	font-weight: 500;
+}
+
+hgroup h2>span.istance a span.istanceOf{
+	font-size:11px;
+	text-transform: uppercase;
+	font-weight: 300;
 }
 
 header div#abstract {
@@ -540,9 +547,13 @@ div#lodCloud .connected img.main {
 	line-height: 1px;
 }
 
-aside.empty, #bnodes.empty, #directs.empty, #inverses.empty, #lodCloud.empty, #abstract.empty {
+aside.empty, #bnodes.empty, #directs.empty, #inverses.empty,  #abstract.empty {
 	padding: 0;
 	min-height: 10px;
+}
+#lodCloud.empty{
+	padding: 0;
+	min-height: 5px;
 }
 
 #inverses.empty {
@@ -824,7 +835,7 @@ footer {
 	line-height:20px;
 	font-family: 'Roboto', sans-serif;
 	font-weight: 300;
-	font-size: 14px;
+	font-size: 12px;
 	float:left;
 	width:100%;
 	background:#fff;
@@ -834,7 +845,49 @@ footer {
 }
 #license div a{
 	font-weight: 500;	
+	color:#222222
 }
 #license div a:hover{
 	text-decoration:underline;	
+}
+
+/* ********************************** */
+/*  CUSTOM FOOTER, HIDDEN BY DEFAULT  */
+/* ********************************** */
+#customFooter {
+	display: none;
+}
+
+/* useful to add information about the project partners (logo) */
+#customFooter #credits {
+	height: 86px;
+	background: #e9e9e9;
+}
+
+#customFooter #credits div {
+	padding: 24px 0 0 24px;
+}
+
+/* useful to add a custom navigation menu */
+#customFooter menu {
+	height: 43px;
+	background: #d4d4d4;
+}
+
+#customFooter menu li {
+	margin: 0 -8px 0 0;
+	padding: 0 0 0 24px;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+	font-size: 12px;
+	display:inline-block;
+	line-height:43px;
+}
+
+#customFooter menu li a {
+	color: #000;
+}
+
+#customFooter menu li a:hover {
+	text-decoration: underline;
 }
