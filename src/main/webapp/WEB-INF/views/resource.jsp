@@ -13,11 +13,11 @@
 			<hgroup>
 				<h1><span>${results.getTitle()}</span></h1>
 				<h2>
-					<a class="iri" href="${results.getMainIRI()}">${results.getMainIRI()}</a> <span class="istance"> <c:forEach end="1" items='${results.getResources(results.getMainIRI()).get(results.getTypeProperty())}' var="el">
+					<a class="iri" href="${results.getMainIRI()}">${results.getMainIRI()}</a> <span class="istance"> <c:forEach end="0" items='${results.getResources(results.getMainIRI()).get(results.getTypeProperty())}' var="el">
 							<a title="&lt;${el.getValue()}&gt;" href="${el.getUrl()}" <c:if test="${!el.isLocal()}">target="_blank" </c:if>> <c:choose>
 									<c:when test='${el.getNsValue().startsWith("null:")}'>&lt;${el.getValue().replaceAll("([#/])([^#/]+)$","$1<span>$2")}</span>&gt;
 					</c:when>
-					<c:otherwise>${el.getNsValue().replaceAll(":",":<span>")}</span>
+					<c:otherwise><span class="istanceOf"><sp:message code='label.anEntityOfType' text='an entity of type' />:</span> ${el.getNsValue().replaceAll(".+:","<span>")}</span>
 					</c:otherwise>
 					</c:choose>
 					</a>

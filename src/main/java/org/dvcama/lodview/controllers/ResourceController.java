@@ -198,7 +198,7 @@ public class ResourceController {
 				return resourceRaw(conf, model, IRI, conf.getEndPointUrl(), matchItem.getContentType());
 			}
 		} catch (Exception e) {
-			// e.printStackTrace();
+			 e.printStackTrace();
 			if (e.getMessage() != null && e.getMessage().startsWith("404")) {
 				return new ErrorController(conf).error404(res, model, e.getMessage(), IRI, conf.getEndPointUrl());
 			} else {
@@ -289,7 +289,7 @@ public class ResourceController {
 				return resourceRaw(conf, model, IRI, conf.getEndPointUrl(), matchItem.getContentType());
 			}
 		} catch (Exception e) {
-			// e.printStackTrace();
+			 e.printStackTrace();
 			if (e.getMessage() != null && e.getMessage().startsWith("404")) {
 				return new ErrorController(conf).error404(res, model, e.getMessage(), IRI, conf.getEndPointUrl());
 			} else {

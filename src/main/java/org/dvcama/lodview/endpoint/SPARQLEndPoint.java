@@ -114,7 +114,7 @@ public class SPARQLEndPoint {
 					results.add(rb);
 				} catch (Exception e) {
 					System.err.println("error? " + e.getMessage());
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		} catch (Exception ez) {
