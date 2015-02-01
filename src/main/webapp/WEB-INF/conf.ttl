@@ -146,6 +146,12 @@
  	
 	conf:staticResourceURL <auto>;
 	
+##  choosing the lower class in hierarchy to put it on the top right of the page
+##	put in mainOntologies the prefixes you need to filter the resource's classes
+##	you need also to add the ontology file in WEB-INF/ontologies
+##	leave conf:mainOntologies blank if you don't want lodlive do this job 
+
+##	conf:mainOntologiesPrefixes	 YOUR-PREFIX:;	
 
 ##	document specific property used in the HTML resource page, it's possible to use
 ##	prefixes or not
@@ -179,6 +185,11 @@
 					"#86b692-#749f7e" , "#528775-#477565" , "#6d8058-#5e6f4c" , "#a1a72e-#8c9128" ,
 					"#c77e20-#ad6e1c" ;
 	
+#### or bind classes and colors
+## 	
+## 	conf:colorPair  conf:byClass;
+
+	
 ## license information (will be added at the very end of the page)
 
 	conf:license	"" ; ## eg. "Licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>Creative Commons Attribution 4.0 International</a> (CC BY 4.0)" ;	
@@ -186,3 +197,12 @@
 ##	just a marker to insert a point on the last row
 	
 	conf:last	".".
+			
+#### uncomment only if you have configured "colors by class"
+##
+##	<http://dbpedia.org/ontology/Person>		conf:hasColorPair	"#c3a116-#ac8c13".
+##	ontology:Place	conf:hasColorPair	"#715287-#624775". 
+##	<http://dbpedia.org/ontology/Work>		conf:hasColorPair	"#914848-#7d3e3e". 
+##	<http://dbpedia.org/ontology/Organisation>	conf:hasColorPair	"#6d8058-#5e6f4c". 
+##	<http://dbpedia.org/ontology/Event>	conf:hasColorPair	"#5b8a97-#4f7783". 
+##	<http://lodview.it/conf#otherClasses>	conf:hasColorPair	"#528775-#477565". 

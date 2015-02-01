@@ -2,6 +2,7 @@ package org.dvcama.lodview.controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.Cookie;
@@ -17,6 +18,7 @@ import org.dvcama.lodview.bean.ResultBean;
 import org.dvcama.lodview.bean.TripleBean;
 import org.dvcama.lodview.builder.ResourceBuilder;
 import org.dvcama.lodview.conf.ConfigurationBean;
+import org.dvcama.lodview.utils.Misc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
@@ -80,7 +82,6 @@ public class ResourceController {
 		// System.out.println("ResourceController.resource() " +
 		// conf.getEndPointUrl());
 		model.addAttribute("conf", conf);
-		model.addAttribute("colorPair", colorPair);
 
 		String IRIsuffix = new UrlPathHelper().getLookupPathForRequest(req).replaceAll("/lodview/", "/");
 		// System.out.println("IRIsuffix " + IRIsuffix +
@@ -181,9 +182,10 @@ public class ResourceController {
 					} else {
 						model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
 						ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
-						model.addAttribute("results", r);
+						model.addAttribute("results", Misc.guessClass(r,conf,ontoBean));
 						model.addAttribute("ontoBean", ontoBean);
 						enrichResponse(r, req, res);
+						model.addAttribute("colorPair", Misc.guessColor(colorPair, r, conf));
 						return "resource";
 					}
 				} else {
@@ -196,7 +198,7 @@ public class ResourceController {
 				return resourceRaw(conf, model, IRI, conf.getEndPointUrl(), matchItem.getContentType());
 			}
 		} catch (Exception e) {
-			// e.printStackTrace();
+			 e.printStackTrace();
 			if (e.getMessage() != null && e.getMessage().startsWith("404")) {
 				return new ErrorController(conf).error404(res, model, e.getMessage(), IRI, conf.getEndPointUrl());
 			} else {
@@ -273,8 +275,9 @@ public class ResourceController {
 					// probably you are asking for an HTML page
 					model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
 					ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
-					model.addAttribute("results", r);
+					model.addAttribute("results", Misc.guessClass(r,conf,ontoBean));
 					enrichResponse(r, req, res);
+					model.addAttribute("colorPair", Misc.guessColor(colorPair, r, conf));
 					return "resource";
 				} else {
 					return new ErrorController(conf).error406(res, model);
@@ -286,7 +289,7 @@ public class ResourceController {
 				return resourceRaw(conf, model, IRI, conf.getEndPointUrl(), matchItem.getContentType());
 			}
 		} catch (Exception e) {
-			// e.printStackTrace();
+			 e.printStackTrace();
 			if (e.getMessage() != null && e.getMessage().startsWith("404")) {
 				return new ErrorController(conf).error404(res, model, e.getMessage(), IRI, conf.getEndPointUrl());
 			} else {
