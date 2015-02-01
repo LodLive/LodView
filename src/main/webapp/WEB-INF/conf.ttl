@@ -146,6 +146,12 @@
  	
 	conf:staticResourceURL <auto>;
 	
+##  choosing the lower class in hierarchy to put it on the top right of the page
+##	put in mainOntologies the prefixes you need to filter the resource's classes
+##	you need also to add the ontology file in WEB-INF/ontologies
+##	leave conf:mainOntologies blank if you don't want lodlive do this job 
+
+##	conf:mainOntologiesPrefixes	 YOUR-PREFIX:;	
 
 ##	document specific property used in the HTML resource page, it's possible to use
 ##	prefixes or not
