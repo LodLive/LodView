@@ -39,6 +39,9 @@ We don't like blank nodes, but they are used sometimes so we  have managed them 
 ##### Inverse relations managing 
 Inverse relations are an interesting descriptive part of a resource. Very often inverse relations are as valuable and informative as direct relations, and sometimes there are too many of them  to be shown all in one go on the HTML page. LodView collects the inverse resources showing them in collapsed boxes; it also provides information about the used inverse properties and the total count of elements that share them without transferring all the data at once but using light on-demand Ajax calls instead.
 
+##### Colors and user experience
+Lodview is beautiful and colorful: you can let it randomize the colors of the interface or set your own colors or even bind classes to specific colors to make all "peoples" orange and all "organizations" green.
+
 ##### Resource widget
 LodView provides (and will provide) various widgets for displaying multimedia contents, thesaurus hierarchies, external connected resources and geographical information.
 
