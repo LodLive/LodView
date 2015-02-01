@@ -2,8 +2,8 @@
 /*  CUSTOM CSS HERE  */
 /* ***************** */
 div#logoBanner div#logo {
-	background-size: 89px 60px;
-	background-image: url(../img/custom/dbpedia-italia.png);
+	background-size: 134px 40px;
+	background-image: url(../img/logo-header-lodview.png);
 	height: 80px;
 	background-position: left center;
 	background-repeat: no-repeat;
@@ -13,7 +13,7 @@ div#logoBanner div#logo {
 
 @media ( -webkit-min-device-pixel-ratio : 2) , ( min-resolution : 192dpi) {
 	div#logoBanner div#logo {
-		background-image: url(../img/custom/dbpedia-italia@2x.png);
+		background-image: url(../img/logo-header-lodview@2x.png);
 	}
 }
 
