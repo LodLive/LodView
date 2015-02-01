@@ -2,7 +2,6 @@ package org.dvcama.lodview.controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.Cookie;
