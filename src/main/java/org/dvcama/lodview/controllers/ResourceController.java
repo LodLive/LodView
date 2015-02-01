@@ -148,7 +148,7 @@ public class ResourceController {
 				matchItem = AcceptList.match(offeringRDF, a);
 				lang = RDFLanguages.contentTypeToLang(matchItem.getContentType());
 			} catch (Exception e) {
-				return new ErrorController(conf).error406(res, model);
+				return new ErrorController(conf).error406(res, model, colorPair);
 			}
 			System.out.println("override content type " + matchItem.getContentType());
 		}
@@ -181,14 +181,14 @@ public class ResourceController {
 					} else {
 						model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
 						ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
-						model.addAttribute("results", Misc.guessClass(r,conf,ontoBean));
+						model.addAttribute("results", Misc.guessClass(r, conf, ontoBean));
 						model.addAttribute("ontoBean", ontoBean);
 						enrichResponse(r, req, res);
 						model.addAttribute("colorPair", Misc.guessColor(colorPair, r, conf));
 						return "resource";
 					}
 				} else {
-					return new ErrorController(conf).error406(res, model);
+					return new ErrorController(conf).error406(res, model, colorPair);
 				}
 			} else {
 				// return "forward:/rawdata?IRI=" + IRI + "&sparql=" +
@@ -197,11 +197,11 @@ public class ResourceController {
 				return resourceRaw(conf, model, IRI, conf.getEndPointUrl(), matchItem.getContentType());
 			}
 		} catch (Exception e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 			if (e.getMessage() != null && e.getMessage().startsWith("404")) {
-				return new ErrorController(conf).error404(res, model, e.getMessage(), IRI, conf.getEndPointUrl());
+				return new ErrorController(conf).error404(res, model, e.getMessage(), colorPair, IRI, conf.getEndPointUrl());
 			} else {
-				return new ErrorController(conf).error500(res, model, e.getMessage(), IRI, conf.getEndPointUrl());
+				return new ErrorController(conf).error500(res, model, e.getMessage(), colorPair, IRI, conf.getEndPointUrl());
 			}
 		}
 
@@ -257,7 +257,7 @@ public class ResourceController {
 				matchItem = AcceptList.match(offeringRDF, a);
 				lang = RDFLanguages.contentTypeToLang(matchItem.getContentType());
 			} catch (Exception e) {
-				return new ErrorController(conf).error406(res, model);
+				return new ErrorController(conf).error406(res, model, colorPair);
 			}
 			System.out.println("override content type " + matchItem.getContentType());
 		}
@@ -274,12 +274,12 @@ public class ResourceController {
 					// probably you are asking for an HTML page
 					model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
 					ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
-					model.addAttribute("results", Misc.guessClass(r,conf,ontoBean));
+					model.addAttribute("results", Misc.guessClass(r, conf, ontoBean));
 					enrichResponse(r, req, res);
 					model.addAttribute("colorPair", Misc.guessColor(colorPair, r, conf));
 					return "resource";
 				} else {
-					return new ErrorController(conf).error406(res, model);
+					return new ErrorController(conf).error406(res, model, colorPair);
 				}
 			} else {
 				// return "forward:/rawdata?IRI=" + IRI + "&sparql=" +
@@ -288,11 +288,11 @@ public class ResourceController {
 				return resourceRaw(conf, model, IRI, conf.getEndPointUrl(), matchItem.getContentType());
 			}
 		} catch (Exception e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 			if (e.getMessage() != null && e.getMessage().startsWith("404")) {
-				return new ErrorController(conf).error404(res, model, e.getMessage(), IRI, conf.getEndPointUrl());
+				return new ErrorController(conf).error404(res, model, e.getMessage(), colorPair, IRI, conf.getEndPointUrl());
 			} else {
-				return new ErrorController(conf).error500(res, model, e.getMessage(), IRI, conf.getEndPointUrl());
+				return new ErrorController(conf).error500(res, model, e.getMessage(), colorPair, IRI, conf.getEndPointUrl());
 			}
 		}
 
