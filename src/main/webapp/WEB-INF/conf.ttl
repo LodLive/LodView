@@ -1,25 +1,56 @@
 @prefix conf: <http://lodview.it/conf#> .
-@prefix airpedia-confidence: <http://airpedia.org/typeWithConfidence#>.
-@prefix airpedia: <http://airpedia.org/>.
-@prefix category: <http://it.dbpedia.org/resource/Categoria:>.
-@prefix dc: <http://purl.org/dc/elements/1.1/>.
-@prefix dcterms: <http://purl.org/dc/terms/>.
-@prefix dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#>.
-@prefix foaf: <http://xmlns.com/foaf/0.1/>.
-@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>.
-@prefix gml: <http://www.opengis.net/gml/>.
-@prefix ontology: <http://dbpedia.org/ontology/>.
-@prefix owl: <http://www.w3.org/2002/07/owl#>.
-@prefix property: <http://it.dbpedia.org/property/>.
-@prefix prov: <http://www.w3.org/ns/prov#>.
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix resource: <http://it.dbpedia.org/resource/>.
-@prefix schema-org: <http://schema.org/>.
-@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-@prefix yago: <http://dbpedia.org/class/yago/>.
-@prefix georss: <http://www.georss.org/georss/>.
+@prefix meta: <http://example.org/metadata#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> . 
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix ocd: <http://dati.camera.it/ocd/> . 
+@prefix units: <http://dbpedia.org/units/> .
+@prefix geonames: <http://www.geonames.org/ontology#> .  
+@prefix void: <http://rdfs.org/ns/void#> . 
+@prefix dbpedia-owl: <http://dbpedia.org/ontology/> .
+@prefix yago: <http://dbpedia.org/class/yago/> .
+@prefix gml: <http://www.opengis.net/gml/> .
+@prefix dbpedia: <http://dbpedia.org/resource/> .
+@prefix dbpprop: <http://dbpedia.org/property/> .
+@prefix metalex: <http://www.metalex.eu/metalex/2008-05-02#> .
+@prefix frbr: <http://purl.org/vocab/frbr/core#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix schema-org: <http://schema.org/> .
+@prefix dwc: <http://rs.tdwg.org/dwc/terms/> .
+@prefix ibc: <http://dati.ibc.it/ibc/> .
+@prefix bio: <http://purl.org/vocab/bio/0.1/> .
+@prefix ods: <http://lod.xdams.org/ontologies/ods/> .
+@prefix shoah: <http://dati.cdec.it/lod/shoah/> . 
+@prefix bibo: <http://purl.org/ontology/bibo/> . 
+@prefix org: <http://www.w3.org/ns/org#> . 
+@prefix bbc: <http://www.bbc.co.uk/ontologies/coreconcepts/> .
+@prefix npg: <http://ns.nature.com/terms/> .
+@prefix prism21: <http://prismstandard.org/namespaces/basic/2.1/> .
+@prefix rso: <http://www.researchspace.org/ontology/> .
+@prefix crm: <http://erlangen-crm.org/current/> .
+@prefix bmuseum: <http://collection.britishmuseum.org/id/ontology/> .
+@prefix bbc: <http://www.bbc.co.uk/ontologies/> .
+@prefix po: <http://purl.org/ontology/po/> .
+@prefix lgdo: <http://linkedgeodata.org/ontology/capital> .
+@prefix oad: <http://lod.xdams.org/reload/oad/> .
+@prefix crm-owl: <http://purl.org/NET/crm-owl#> .
+@prefix aemetonto:	<http://aemet.linkeddata.es/ontology/> .
+@prefix bibleontology:	<http://bibleontology.com/property#> .
+@prefix cdoc:	<http://www.cidoc-crm.org/cidoc-crm#> .
+@prefix cc:	<http://creativecommons.org/ns#> .
+@prefix prov:	<http://www.w3.org/ns/prov#> .
+@prefix skos-xl:	<http://www.w3.org/2008/05/skos-xl#> .
+@prefix muninn:	<http://rdf.muninn-project.org/ontologies/documents#> .
+@prefix eac-cpf:	<http://archivi.ibc.regione.emilia-romagna.it/ontology/eac-cpf/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix claros: <http://purl.org/NET/Claros/vocab#> .
+@prefix crm120111: <http://erlangen-crm.org/120111/> .
 
 <> a conf:Configuration;
 
@@ -27,11 +58,11 @@
 ## 	IRIs namespace we use to replace the webapp base (eg. http://localhost:8080/lodview/), an
 ##	installation on dbpedia domain should use <http://dbpedia.org/resource/> 
 	
-	conf:IRInamespace <http://it.dbpedia.org/resource/> ;
+	conf:IRInamespace <http://dbpedia.org/resource/> ;
 
 ## 	EndPoint
 
-	conf:endpoint <http://it.dbpedia.org/sparql>;
+	conf:endpoint <http://dbpedia.org/sparql>;
 
 ########## give it a try opening http://localhost:8080/lodview/Rome
 
@@ -40,7 +71,7 @@
 ##	to the HTML representation of the resources, live it blank if you want to 
 ##  use the "pure content negotiation mode"
 	
-	conf:httpRedirectSuffix ".html"; ## or ""
+	conf:httpRedirectSuffix "/html"; ## or ""
 
 
 ##  mode configurations
@@ -104,7 +135,7 @@
 
 ##	home link (accessible from the banner)
 
-	conf:homeUrl <http://it.dbpedia.org>;
+	conf:homeUrl <http://yoursitehome.com>;
 
   	
 ##	static resources publishing point, "staticResources/" is needed if you are going 
@@ -121,58 +152,51 @@
 
 	conf:typeProperties			rdf:type;
 	
-	conf:titleProperties		dc:title , dcterms:title, rdfs:label ;  
+	conf:titleProperties		dc:title , dcterms:title, rdfs:label , <http://www.w3.org/2004/02/skos/core#prefLabel> , 
+								<http://www.w3.org/2008/05/skos-xl#prefLabel> , <http://www.w3.org/2009/08/skos-reference/skos.html#prefLabel> , 
+								gn:officialName , gn:name , rdf:value , foaf:surname , <http://purl.org/collections/nl/am/title> ;  
 								
-	conf:descriptionProperties	rdfs:comment , dc:description , dcterms:description , <http://dbpedia.org/ontology/abstract>;
+	conf:descriptionProperties	rdfs:comment , dc:description , dcterms:description , 
+								dc:description , skos:definition ,  <http://dbpedia.org/ontology/abstract>;
 								
-	conf:imageProperties		foaf:depiction;
+	conf:imageProperties		foaf:depiction , <http://erlangen-crm.org/120111/P138i_has_representation> , crm-owl:P138i_has_representation ,
+								<http://www.researchspace.org/ontology/FR138i_representation>;
 								
-	conf:longitudeProperties	property:longitudineDecimale;
-	conf:latitudeProperties		property:latitudineDecimale;
-	conf:linkingProperties		owl:sameAs;
-
-
-##  choosing the lower class in hierarchy to put it on the top right of the page
-##	put in mainOntologies the prefixes you need to filter the resource's classes
-##	you need also to add the ontology file in WEB-INF/ontologies
-##	leave conf:mainOntologies blank if you don't want lodlive do this job 
-
-	conf:mainOntologiesPrefixes	 ontology:;
+	conf:longitudeProperties	geo:long;
+	conf:latitudeProperties		geo:lat;
+	conf:linkingProperties		owl:sameAs , skos:exactMatch , gn:locatedIn ,  <http://www.bbc.co.uk/ontologies/coreconcepts/sameAs>;
 
 
 ##	preferred language for title and description ("auto" for delegate to the client)
 	
 	conf:preferredLanguage	"auto"; ## eg. "en" or "it"
 
+
+## interface colors, choose a pair or a list for random colors
+
+	conf:colorPair 	"#c3a116-#ac8c13" , "#914848-#7d3e3e" , "#8a4e6a-#77435c" , "#ac8cb0-#967999" ,
+					"#715287-#624775" , "#606592-#53577e" , "#7eb9be-#6da2a7" , "#5b8a97-#4f7783" , 
+					"#86b692-#749f7e" , "#528775-#477565" , "#6d8058-#5e6f4c" , "#a1a72e-#8c9128" ,
+					"#c77e20-#ad6e1c" ;
+	
+#### or bind classes and colors
+## 	
+## 	conf:colorPair  conf:byClass;
+
+	
 ## license information (will be added at the very end of the page)
 
-	conf:license	"This content was extracted from <a href='http://it.wikipedia.org/wiki/Tim_Berners-Lee'>Wikipedia</a> and is licensed under the <a href='http://creativecommons.org/licenses/by-sa/3.0/'>Creative Commons Attribution-ShareAlike 3.0 Unported License</a>" ;  	
-			
-####	## interface colors, choose a pair or a list for random colors
-####	
-####	conf:colorPair 	"#c3a116-#ac8c13" , "#914848-#7d3e3e" , "#8a4e6a-#77435c" , "#ac8cb0-#967999" ,
-####					"#715287-#624775" , "#606592-#53577e" , "#7eb9be-#6da2a7" , "#5b8a97-#4f7783" , 
-####					"#86b692-#749f7e" , "#528775-#477565" , "#6d8058-#5e6f4c" , "#a1a72e-#8c9128" ,
-####					"#c77e20-#ad6e1c" ;
-	
-####	##	just a marker to insert a point on the last row
-	
-####	conf:last	".".
-	
-	
-## or bind classes and colors
- 	
- 	conf:colorPair  conf:byClass;
-			
+	conf:license	"" ; ## eg. "Licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>Creative Commons Attribution 4.0 International</a> (CC BY 4.0)" ;	
+					
 ##	just a marker to insert a point on the last row
 	
 	conf:last	".".
-	
-## uncomment only if you have configured "colors by class"
-
-	<http://dbpedia.org/ontology/Person>		conf:hasColorPair	"#c3a116-#ac8c13".
-	ontology:Place	conf:hasColorPair	"#715287-#624775". 
-	<http://dbpedia.org/ontology/Work>		conf:hasColorPair	"#914848-#7d3e3e". 
-	<http://dbpedia.org/ontology/Organisation>	conf:hasColorPair	"#6d8058-#5e6f4c". 
-	<http://dbpedia.org/ontology/Event>	conf:hasColorPair	"#5b8a97-#4f7783". 
-	<http://lodview.it/conf#otherClasses>	conf:hasColorPair	"#528775-#477565". 
+			
+#### uncomment only if you have configured "colors by class"
+##
+##	<http://dbpedia.org/ontology/Person>		conf:hasColorPair	"#c3a116-#ac8c13".
+##	ontology:Place	conf:hasColorPair	"#715287-#624775". 
+##	<http://dbpedia.org/ontology/Work>		conf:hasColorPair	"#914848-#7d3e3e". 
+##	<http://dbpedia.org/ontology/Organisation>	conf:hasColorPair	"#6d8058-#5e6f4c". 
+##	<http://dbpedia.org/ontology/Event>	conf:hasColorPair	"#5b8a97-#4f7783". 
+##	<http://lodview.it/conf#otherClasses>	conf:hasColorPair	"#528775-#477565". 
