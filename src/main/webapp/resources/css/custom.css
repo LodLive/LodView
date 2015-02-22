@@ -2,8 +2,8 @@
 /*  CUSTOM CSS HERE  */
 /* ***************** */
 div#logoBanner div#logo {
-	background-size: 134px 40px;
-	background-image: url(../img/logo-header-lodview.png);
+	background-size: 89px 60px;
+	background-image: url(../img/custom/dbpedia-italia.png);
 	height: 80px;
 	background-position: left center;
 	background-repeat: no-repeat;
@@ -13,7 +13,7 @@ div#logoBanner div#logo {
 
 @media ( -webkit-min-device-pixel-ratio : 2) , ( min-resolution : 192dpi) {
 	div#logoBanner div#logo {
-		background-image: url(../img/logo-header-lodview@2x.png);
+		background-image: url(../img/custom/dbpedia-italia@2x.png);
 	}
 }
 
@@ -21,5 +21,48 @@ div#logoBanner div#logo {
 /*  CUSTOM FOOTER, HIDDEN BY DEFAULT  */
 /* ********************************** */
 #customFooter {
-	display: hidden;
-} 
+	display: block;
+}
+#customFooter #credits div{
+	padding:21px 0 0 19px;
+}
+
+#customFooter menu {
+	
+}
+
+#customFooter #credits a {
+	margin-right: 32px;
+	height: 44px;
+	display: inline-block;
+}
+
+#customFooter #credits a.sd {
+	width: 154px;
+	background-size: 154px 44px;
+	background-image: url(../img/custom/spaziodati.png);
+}
+
+#customFooter #credits a.fbk {
+	width: 140px;
+	background-size: 140px 44px;
+	background-image: url(../img/custom/fondazione-kessler.png);
+}
+
+#customFooter #credits a.tix {
+	width: 132px;
+	background-size: 132px 44px;
+	background-image: url(../img/custom/top-ix.png);
+}
+
+@media ( -webkit-min-device-pixel-ratio : 2) , ( min-resolution : 192dpi) {
+	#customFooter #credits a.sd {
+		background-image: url(../img/custom/spaziodati@2x.png);
+	}
+	#customFooter #credits a.fbk {
+		background-image: url(../img/custom/fondazione-kessler@2x.png);
+	}
+	#customFooter #credits a.tix {
+		background-image: url(../img/custom/top-ix@2x.png);
+	}
+}
