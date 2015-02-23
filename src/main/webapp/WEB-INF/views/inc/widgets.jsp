@@ -12,7 +12,6 @@
 					<a href="${item}" target="_new"><img src="${item}"></a>
 				</c:forEach>
 			</div>
- 
 		</c:if>
 		<%
 			/* drawing a map */
