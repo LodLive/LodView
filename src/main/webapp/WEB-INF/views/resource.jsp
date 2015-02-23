@@ -38,7 +38,6 @@
 						<c:when test="${results.getDescriptionProperty() != null}">
 							<c:forEach items='${results.getLiterals(results.getMainIRI()).get(results.getDescriptionProperty())}' var="el">
 								<div  >${el.getValue()}</div>
- 
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
