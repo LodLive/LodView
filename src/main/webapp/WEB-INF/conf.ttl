@@ -112,7 +112,7 @@
 	
 	conf:titleProperties		dc:title , dcterms:title, rdfs:label ;  
 								
-	conf:descriptionProperties	rdfs:comment , dc:description , dcterms:description , <http://dbpedia.org/ontology/abstract>;
+	conf:descriptionProperties	rdfs:comment , dc:description , dcterms:description , <http://dbpedia.org/ontology/abstract> , <http://it.dbpedia.org/property/contenuto>;
 								
 	conf:imageProperties		foaf:depiction;
 								
