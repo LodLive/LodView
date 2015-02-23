@@ -37,7 +37,7 @@
 					<c:choose>
 						<c:when test="${results.getDescriptionProperty() != null}">
 							<c:forEach items='${results.getLiterals(results.getMainIRI()).get(results.getDescriptionProperty())}' var="el">
-								<div class="lang ${el.getLang()}" data-lang="${el.getLang()}">${el.getValue()}</div>
+								<div  >${el.getValue()}</div>
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
