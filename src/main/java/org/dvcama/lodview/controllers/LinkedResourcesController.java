@@ -15,6 +15,7 @@ import org.dvcama.lodview.bean.ResultBean;
 import org.dvcama.lodview.bean.TripleBean;
 import org.dvcama.lodview.builder.ResourceBuilder;
 import org.dvcama.lodview.conf.ConfigurationBean;
+import org.dvcama.lodview.utils.Misc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
@@ -63,7 +64,7 @@ public class LinkedResourcesController implements MessageSourceAware {
 				for (TripleBean tripleBean : literals.get(key)) {
 					result.append("<resource about=\"" + StringEscapeUtils.escapeXml11(tripleBean.getProperty().getProperty()) + //
 							"\" nsabout=\"" + StringEscapeUtils.escapeXml11(tripleBean.getProperty().getNsProperty()) + //
-							"\"><title><![CDATA[" + StringEscapeUtils.escapeHtml4(tripleBean.getValue()) + //
+							"\"><title><![CDATA[" + StringEscapeUtils.escapeHtml4(Misc.stripHTML(tripleBean.getValue())) + //
 							"]]></title></resource>\n");
 				}
 			}
@@ -100,7 +101,7 @@ public class LinkedResourcesController implements MessageSourceAware {
 									+ "about=\"" + StringEscapeUtils.escapeXml11(tripleBean.getProperty().getProperty()) + "\" " //
 									+ "nsabout=\"" + StringEscapeUtils.escapeXml11(tripleBean.getProperty().getNsProperty()) + "\" " //
 									+ "propertyurl=\"" + StringEscapeUtils.escapeXml11(tripleBean.getProperty().getPropertyUrl()) + "\" " //
-									+ "propertylabel=\"" + StringEscapeUtils.escapeXml11(tripleBean.getProperty().getLabel()) + "\" " //
+									+ "propertylabel=\"" + StringEscapeUtils.escapeXml11(Misc.stripHTML(tripleBean.getProperty().getLabel())) + "\" " //
 									+ "propertycomment=\"" + StringEscapeUtils.escapeXml11(tripleBean.getProperty().getComment()) + "\" " //
 									+ "><count><![CDATA[" + StringEscapeUtils.escapeHtml4(tripleBean.getValue()) + "]]></count></resource>\n");
 						}

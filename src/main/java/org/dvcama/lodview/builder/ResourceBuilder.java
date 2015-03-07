@@ -72,7 +72,7 @@ public class ResourceBuilder {
 
 			if (conf.getTitleProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getTitleProperties().contains(tripleBean.getProperty().getProperty())) {
 				if (tripleBean.getIRI().equals(IRI) && !betterTitleMatch && (result.getTitle() == null || result.getTitle().trim().equals("") || (tripleBean.getLang() != null && (preferredLanguage.equals(tripleBean.getLang()) || tripleBean.getLang().equals("en"))))) {
-					result.setTitle(tripleBean.getValue());
+					result.setTitle(Misc.stripHTML(tripleBean.getValue()));
 					if (preferredLanguage.equals(tripleBean.getLang())) {
 						betterTitleMatch = true;
 					}

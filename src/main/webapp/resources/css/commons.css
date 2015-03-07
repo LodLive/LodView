@@ -151,6 +151,15 @@ header div#abstract {
 	color: #fff;
 }
 
+header div#abstract .value a {
+	text-decoration: underline;
+	color: #fff;
+}
+
+header div#abstract .value a:hover {
+	text-decoration: none
+}
+
 header div#abstract label {
 	padding: 0 24px 0 0;
 }

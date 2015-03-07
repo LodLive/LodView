@@ -16,7 +16,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
-public class Misc {
+public class Misc { 
 
 	public static String toNsResource(String iri, ConfigurationBean conf) {
 		if (iri != null && !iri.equals("")) {
@@ -103,7 +103,7 @@ public class Misc {
 			return r;
 
 		} catch (Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 		return r;
 	}
@@ -124,6 +124,13 @@ public class Misc {
 			}
 		}
 		return false;
+	}
+
+	public static String stripHTML(String value) {
+
+		value = value.replaceAll("</?\\w[^>]*>", "");
+
+		return value;
 	}
 
 }
