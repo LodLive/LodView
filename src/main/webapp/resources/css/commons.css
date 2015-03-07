@@ -659,6 +659,7 @@ div#loadPanel>p {
 #images .errorImg {
 	width: 136px;
 	height: 136px;
+	margin-right:8px;
 }
 
 .connected .errorImg {
