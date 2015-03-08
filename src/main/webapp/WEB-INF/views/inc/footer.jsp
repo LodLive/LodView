@@ -18,7 +18,9 @@
 	</div>
 </footer>
 <c:if test="${not empty conf.getLicense()}">
-	<div id="license"><div>${conf.getLicense()}</div></div>
+	<div id="license">
+		<div>${conf.getLicense()}</div>
+	</div>
 </c:if>
 <script>
 	var col1 = 0;
@@ -57,6 +59,7 @@
 		});
 		$('.c3').each(function() {
 			var s = $(this).width();
+			fu
 			if (s > col3) {
 				col3 = s;
 			}
@@ -80,6 +83,8 @@
 		betterHeader();
 		$(window).on('resize', function() {
 			betterHeader();
+			var img = $('body').find('img.hover');
+			zoomHelper(img);
 		});
 		imagesInWidget();
 
@@ -117,19 +122,101 @@
 			imagesInWidget(true);
 		});
 	});
+	function zoomHelper(img) {
+		var w = img.naturalWidth();
+		var h = img.naturalHeight();
+		var ww = window.innerWidth - 100;
+		var wh = window.innerHeight - 100;
 
+		// image bigger than the window
+		if (w > ww) {
+			h = ww * h / w;
+			w = ww;
+		}
+		if (h > wh) {
+			w = wh * w / h;
+			h = wh;
+		}
+		img.css({
+			width : w,
+			height : h,
+			opacity : 1,
+			left : '50%',
+			top : '50%',
+			marginLeft : -(w / 2),
+			marginTop : -(h / 2)
+		});
+	}
 	function imagesInWidget(forceLoad) {
 		if (forceLoad) {
 			$('#widgets>div#images>a>img').load();
 		} else {
 			$('#widgets>div#images>a>img').load(function() {
 				var w = $(this).width();
+				var h = $(this).height();
 				$(this).parent().animate({
 					minWidth : w
 				}, 'slow', 'swing');
+				var a = $(this).parent();
+				var anchor = a.attr("href");
+				if (anchor) {
+					var tools = $('<div class="imgTools" style="width:'+w+'px;height:'+h+'px;"></div>')
+					var zoom = $('<span class="zoom sp" style="margin-left:' + (w / 2 - 15) + 'px;"></span>');
+					var open = $('<span class="open sp" style="margin-top:' + (h / 2 - 15 - 19) + 'px;margin-left:' + (w / 2 - 7) + 'px;"></span>');
+					tools.append(open);
+					tools.append(zoom);
+					open.click(function() {
+						window.open($(this).parent().attr("data-href"));
+					});
+					zoom.click(function() {
+						full($(this).parent().parent().find('img').clone());
+					});
+					tools.attr("data-href", anchor);
+					a.removeAttr("href");
+					a.css({
+						'cursor' : 'default'
+					});
+					a.prepend(tools);
+					a.hover(function() {
+						$(this).find('.imgTools').stop().fadeIn('fast');
+					}, function() {
+						$(this).find('.imgTools').stop().fadeOut('fast');
+					});
+				}
 			});
 		}
 	}
+
+	function full(img) {
+		img.addClass('hover');
+		$('body').find('.hover').remove();
+		var layer = $('<div id="hover" class="hover"></div>');
+		layer.click(function() {
+			$('body').find('div.hover').fadeOut(350, function() {
+				$(this).remove()
+			})
+			$('body').find('img.hover').fadeOut(200, function() {
+				$(this).remove()
+			})
+		});
+		img.click(function() {
+			$('body').find('div.hover').fadeOut(350, function() {
+				$(this).remove()
+			})
+			$('body').find('img.hover').fadeOut(200, function() {
+				$(this).remove()
+			})
+		});
+		$('body').append(layer);
+		layer.fadeIn(300, function() {
+			$('body').append(img);
+			img.show();
+			img.fadeTo(0, 0);
+			zoomHelper(img);
+		});
+
+	}
+
 	function betterHeader() {
 		var IRI = $('h2>.iri');
 		var istance = $('h2>.istance');
@@ -151,7 +238,6 @@
 			});
 		}
 	}
-
 	function connectedResourceTitles() {
 		lMessage("<sp:message code='message.loadingInverses' text='loading inverse relations' javaScriptEscape='true'/>", 'open');
 		var abouts = [];
@@ -309,14 +395,14 @@
 			var wh = window.innerHeight - 50;
 			if (th > wh) {
 				t.css({
-					marginTop : '-'+(t.height()+23)+'px'
+					marginTop : '-' + (t.height() + 23) + 'px'
 				});
 			}
 			t.css({
 				display : 'none',
 				visibility : 'visible'
-			}); 
-		
+			});
+
 			t.show();
 		} else if (act === 'remove') {
 			var p = obj.parent();
@@ -850,6 +936,28 @@
 					}
 				});
 			});
+		}
+		// adding naturalWidth and naturalHeight to images
+		function img(url) {
+			var i = new Image;
+			i.src = url;
+			return i;
+		}
+		var props = [ 'Width', 'Height' ], prop;
+		while (prop = props.pop()) {
+			(function(natural, prop) {
+				$.fn[natural] = (natural in new Image()) ? function() {
+					return this[0][natural];
+				} : function() {
+					var node = this[0], img, value;
+
+					if (node.tagName.toLowerCase() === 'img') {
+						img = new Image();
+						img.src = node.src, value = img[prop];
+					}
+					return value;
+				};
+			}('natural' + prop, prop.toLowerCase()));
 		}
 	}
 </script>
