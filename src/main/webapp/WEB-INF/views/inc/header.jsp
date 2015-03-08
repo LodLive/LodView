@@ -5,7 +5,7 @@
 	document.write('.c2{visibility:hidden}');
 	document.write('</style>');
 </script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="${conf.getStaticResourceURL()}jquery.min.js"></script>
 <meta property="og:title" content="${results.getTitle()} &mdash; LodView, giving data a new shape">
 <meta property="og:image" content="${conf.getStaticResourceURL()}img/lodview_sharer.png">
 <link rel="image_src" href="${conf.getStaticResourceURL()}img/lodview_sharer.png">
@@ -15,8 +15,8 @@
 <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,500&subset=latin-ext,latin,greek-ext,greek,cyrillic-ext,vietnamese,cyrillic' rel='stylesheet' type='text/css'>
 <c:if test='${results.getLatitude()!=null && !results.getLatitude().equals("")}'>
 <!-- managing maps  -->
-<link rel="stylesheet" href="${conf.getStaticResourceURL()}css/leaflet.css" />
-<script src="${conf.getStaticResourceURL()}leaflet.js"></script>
+<link rel="stylesheet" href="${conf.getStaticResourceURL()}leaflet/leaflet.css" />
+<script src="${conf.getStaticResourceURL()}leaflet/leaflet.js"></script>
 
 </c:if>
 <link rel="canonical" href="${results.getMainIRI()}" >
