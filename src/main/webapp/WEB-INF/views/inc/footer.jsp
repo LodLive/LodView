@@ -137,15 +137,17 @@
 			w = wh * w / h;
 			h = wh;
 		}
+
 		img.css({
 			width : w,
 			height : h,
-			opacity : 1,
+			opacity : 0,
 			left : '50%',
 			top : '50%',
 			marginLeft : -(w / 2),
 			marginTop : -(h / 2)
 		});
+		img.fadeTo(300,1);
 	}
 	function imagesInWidget(forceLoad) {
 		if (forceLoad) {
