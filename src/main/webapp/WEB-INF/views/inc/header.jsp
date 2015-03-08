@@ -14,11 +14,10 @@
 <link rel="icon" type="image/png" href="${conf.getStaticResourceURL()}img/favicon.png">
 <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,500&subset=latin-ext,latin,greek-ext,greek,cyrillic-ext,vietnamese,cyrillic' rel='stylesheet' type='text/css'>
 <c:if test='${results.getLatitude()!=null && !results.getLatitude().equals("")}'>
-	<c:if test='${results.getLongitude()!=null && !results.getLongitude().equals("")}'>
-		<!-- managing maps  -->
-		<link rel="stylesheet" href="${conf.getStaticResourceURL()}css/leaflet.css" />
-		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-	</c:if>
+<!-- managing maps  -->
+<link rel="stylesheet" href="${conf.getStaticResourceURL()}css/leaflet.css" />
+<script src="${conf.getStaticResourceURL()}leaflet.js"></script>
+
 </c:if>
 <link rel="canonical" href="${results.getMainIRI()}" >
 <script src="${conf.getStaticResourceURL()}masonry.pkgd.min.js"></script>
