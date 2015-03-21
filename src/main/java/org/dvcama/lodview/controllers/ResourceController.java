@@ -164,7 +164,7 @@ public class ResourceController {
 				if (matchItem != null) {
 					// probably you are asking for an HTML page
 					if (redirect && !redirected) {
-						String redirectUrl = (new UrlPathHelper().getLookupPathForRequest(req)) + conf.getHttpRedirectSuffix();
+						String redirectUrl = conf.getHttpRedirectSuffix();
 						// preventing redirect of model attributes
 						String[] redirectUrlArray = redirectUrl.split("/");
 						redirectUrl = "";
@@ -172,12 +172,14 @@ public class ResourceController {
 							redirectUrl += URLEncoder.encode(string, "UTF-8") + "/";
 						}
 						redirectUrl = redirectUrl.replaceAll("/$", "");
-						model.remove("colorPair");
-						model.remove("path");
-						model.remove("lodliveUrl");
-						model.remove("locale");
-						System.out.println(redirectUrl);
-						return new RedirectView(redirectUrl, true, false);
+
+						RedirectView r = new RedirectView();
+						r.setExposeModelAttributes(false);
+						r.setContentType("text/html");
+						r.setHttp10Compatible(false);
+						r.setUrl(req.getRequestURL() + redirectUrl);
+
+						return r;
 					} else {
 						model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
 						ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
