@@ -84,7 +84,8 @@
 		$(window).on('resize', function() {
 			betterHeader();
 			var img = $('body').find('img.hover');
-			zoomHelper(img);
+			if (img.length > 0)
+				zoomHelper(img);
 		});
 		imagesInWidget();
 
@@ -147,7 +148,7 @@
 			marginLeft : -(w / 2),
 			marginTop : -(h / 2)
 		});
-		img.fadeTo(300,1);
+		img.fadeTo(300, 1);
 	}
 	function imagesInWidget(forceLoad) {
 		if (forceLoad) {
