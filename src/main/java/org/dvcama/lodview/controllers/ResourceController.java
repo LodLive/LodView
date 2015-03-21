@@ -177,7 +177,7 @@ public class ResourceController {
 						model.remove("lodliveUrl");
 						model.remove("locale");
 						System.out.println(redirectUrl);
-						return new RedirectView(redirectUrl, true);
+						return new RedirectView(redirectUrl, true, false);
 					} else {
 						model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
 						ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
