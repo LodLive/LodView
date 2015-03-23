@@ -25,7 +25,8 @@ LodView allows you to publish RDF data offering a lot of different serialization
 ##### Internationalization and content language
 Available languages: english, italian and slovak.  
 LodView interface uses a very few words (labels and system messages) all managed with a language configuration file. It's able to use the client locale to manage not only the interface language but also the RDF literal values for a full i18n experience. You also have the possibility to override your default locale using 'locale' parameter.  (eg. http://yourIRI?locale=fr) 
-We will appreciate any help in translating LodView, please commit your translation using GitHub or send us the translation file (https://github.com/dvcama/LodView/blob/master/src/main/resources/messages_en.properties)
+We will appreciate any help in translating LodView, please commit your translation using GitHub or send us the translation file (https://github.com/dvcama/LodView/blob/master/src/main/resources/messages_en.properties)  
+Special thanks to Jana Ivanová for the Slovak translation. 
 
 ##### Information about used properties
 LodView provides info about every property found in the resource, just hover on the property to get a "info tooltip" that shows label and comment from the referring ontology (according to the locale of the client).  
