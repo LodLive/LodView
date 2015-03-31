@@ -10,7 +10,7 @@
 				<c:forEach items="${results.getImages() }" var="item">
 					<a href="${item}" target="_new"><img src="${item}"></a>
 				</c:forEach>
-			</div> 
+			</div>  
 		</c:if>
 		<%
 			/* drawing a map */
