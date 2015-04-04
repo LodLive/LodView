@@ -164,4 +164,3 @@
 	<http://dbpedia.org/ontology/Work>		conf:hasColorPair	"#914848-#7d3e3e". 
 	<http://dbpedia.org/ontology/Organisation>	conf:hasColorPair	"#6d8058-#5e6f4c". 
 	<http://dbpedia.org/ontology/Event>	conf:hasColorPair	"#5b8a97-#4f7783". 
-	<http://lodview.it/conf#otherClasses>	conf:hasColorPair	"#528775-#477565". 
