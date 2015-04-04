@@ -181,6 +181,7 @@
 	<jsp:include page="inc/custom_footer.jsp"></jsp:include>
 	</article>
 	<jsp:include page="inc/footer.jsp"></jsp:include>
+	<c:import url="inc/scripts.jsp"></c:import>
 	<div id="loadPanel">
 		<p id="lmessage">
 			<span class="lloading"></span><span class="content">&nbsp;</span>
