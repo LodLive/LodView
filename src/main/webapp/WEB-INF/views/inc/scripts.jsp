@@ -29,8 +29,12 @@
 			var img = $('body').find('img.hover');
 			if (img.length > 0)
 				lodview.zoomHelper(img);
+			var map = $('body').find('map.hover');
+			if (img.length > 0)
+				lodview.zoomHelper(map);
 		});
 		lodview.imagesInWidget();
+		lodview.mapInWidget();
 
 		/* adding info tooltips */
 		lodview.infoTooltip('init');
@@ -68,14 +72,26 @@
 	});
 
 	var lodview = {
-		zoomHelper : function(img) {
+		zoomHelper : function(img, obj) {
 			var l = this;
-			var w = img.naturalWidth();
-			var h = img.naturalHeight();
 			var ww = window.innerWidth - 100;
 			var wh = window.innerHeight - 100;
 
-			// image bigger than the window
+			var w = ww;
+			var h = wh;
+
+			try {
+				w = img.naturalWidth();
+				h = img.naturalHeight();
+			} catch (e) {
+				// not an image, probably a map 
+			}
+			if (!w) {
+				w = ww;
+			}
+			if (!h) {
+				h = wh;
+			}// image bigger than the window
 			if (w > ww) {
 				h = ww * h / w;
 				w = ww;
@@ -84,7 +100,12 @@
 				w = wh * w / h;
 				h = wh;
 			}
-
+			if (obj) {
+				obj.css({
+					width : w,
+					height : h
+				});
+			}
 			img.css({
 				width : w,
 				height : h,
@@ -95,6 +116,35 @@
 				marginTop : -(h / 2)
 			});
 			img.fadeTo(300, 1);
+		},
+		drawMap : function drawMap(id, lat, lon, testoPopup) {
+			var map = L.map(id, {
+				scrollWheelZoom : false,
+				zoomControl : false
+			}).setView([ lat, lon ], 3);
+			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+				attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(map);
+			L.marker([ lat, lon ]).addTo(map);
+		},
+		mapInWidget : function(forceLoad) {
+			var l = this;
+			l.drawMap("resourceMap", '${results.getLatitude()}', '${results.getLongitude()}');
+			var a = $('#resourceMap');
+			var w = a.width();
+			var h = a.height();
+			var tools = $('<div class="imgTools" style="width:' + w + 'px;height:' + h + 'px;"></div>')
+			var zoom = $('<span class="zoom sp" style="margin-top:' + (h / 2 - 15) + 'px;margin-left:' + (w / 2 - 15) + 'px;"></span>');
+			tools.append(zoom);
+			zoom.click(function() {
+				l.fullMap('${results.getLatitude()}', '${results.getLongitude()}', '${results.getTitle().replaceAll("\\n"," ").replaceAll("\'","&acute;")}');
+			});
+			a.prepend(tools);
+			a.hover(function() {
+				$(this).find('.imgTools').stop().fadeIn('fast');
+			}, function() {
+				$(this).find('.imgTools').stop().fadeOut('fast');
+			});
 		},
 		imagesInWidget : function(forceLoad) {
 			var l = this;
@@ -136,6 +186,26 @@
 				});
 			}
 		},
+		fullMap : function(lat, lon, testoPopup) {
+			var l = this;
+			$('body').find('.hover').remove();
+			var layer = $('<div id="hover" class="hover"></div>');
+			var map = $('<div class="hover"><div  id="maphover"></div></div>');
+			layer.click(function() {
+				$('body').find('div.hover').fadeOut(350, function() {
+					$(this).remove()
+				})
+				$('body').find('map.hover').fadeOut(200, function() {
+					$(this).remove()
+				})
+			});
+			$('body').append(layer);
+			$('body').append(map);
+			l.zoomHelper(map, $('#maphover'));
+			layer.fadeIn(300, function() {
+				l.drawMap("maphover", lat, lon, testoPopup);
+			});
+		},
 		fullImg : function(img) {
 			var l = this;
 			img.addClass('hover');
@@ -164,7 +234,6 @@
 				img.fadeTo(0, 0);
 				l.zoomHelper(img);
 			});
-
 		},
 		betterHeader : function() {
 			var IRI = $('h2>.iri');
@@ -692,7 +761,7 @@
 						if (!data.find('root').attr('error')) {
 							linking.masonry().append(dest).masonry('appended', dest);
 							if (dest.find('map').length > 0) {
-								drawMap(dest.find('map').attr("id"), data.find('latitude').text(), data.find('longitude').text(), title);
+								l.drawMap(dest.find('map').attr("id"), data.find('latitude').text(), data.find('longitude').text(), title);
 							}
 							data.find('link').each(function() {
 								var a = $(this).attr("href");

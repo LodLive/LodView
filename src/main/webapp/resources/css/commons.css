@@ -916,6 +916,10 @@ footer {
 	display:none;
 	z-index: 1006;
 }
+div.hover{
+	position: fixed;
+	z-index: 1007;
+}
 img.hover{
 	position: fixed;
 	z-index: 1007;
@@ -926,6 +930,7 @@ img.hover{
 .imgTools {
 	position: absolute;
 	overflow: hidden;	
+	z-index:999;
 	display:none;
 }
 

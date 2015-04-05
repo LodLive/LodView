@@ -15,23 +15,10 @@
 		<%
 			/* drawing a map */
 		%>
-		<c:if test='${hasLod || hasMap}'>
-			<script>	
-			function drawMap(id, lat, lon, testoPopup) {
-				var map = L.map(id,{scrollWheelZoom:false,zoomControl:false}).setView([ lat, lon ], 3);
-				L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-					attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-				}).addTo(map);
-
-				L.marker([ lat, lon ]).addTo(map);
-			}
- 		</script>
-		</c:if>
 		<c:if test='${hasMap}'>
 			<div id="resourceMapCnt">
 				<map name="resourceMap" id="resourceMap" class="sp"></map>
 			</div>
-			<script>drawMap("resourceMap",${results.getLatitude()},${results.getLongitude()});</script>
 		</c:if>
 		<%
 			/* external resources link */
