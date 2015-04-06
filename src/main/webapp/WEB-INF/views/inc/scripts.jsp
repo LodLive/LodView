@@ -29,13 +29,18 @@
 			var img = $('body').find('img.hover');
 			if (img.length > 0)
 				lodview.zoomHelper(img);
-			var map = $('body').find('map.hover');
-			if (img.length > 0)
+			var map = $('body').find('#maphover');
+			if (map.length > 0)
 				lodview.zoomHelper(map);
 		});
 		lodview.imagesInWidget();
 		lodview.mapInWidget();
-
+		$(document).keyup(function(e) {
+			if (e.keyCode === 27) {
+				//close fullscreen images and maps
+				lodview.closeFull();
+			}
+		});
 		/* adding info tooltips */
 		lodview.infoTooltip('init');
 
@@ -117,15 +122,21 @@
 			});
 			img.fadeTo(300, 1);
 		},
-		drawMap : function drawMap(id, lat, lon, testoPopup) {
-			var map = L.map(id, {
-				scrollWheelZoom : false,
-				zoomControl : false
-			}).setView([ lat, lon ], 3);
+		drawMap : function drawMap(id, lat, lon, testoPopup, fullVersion) {
+			var map = null;
+			if (fullVersion) {
+				var map = L.map(id).setView([ lat, lon ], 8);
+				L.marker([ lat, lon ]).addTo(map).bindPopup(testoPopup).openPopup();
+			} else {
+				map = L.map(id, {
+					scrollWheelZoom : false,
+					zoomControl : false
+				}).setView([ lat, lon ], 3);
+				L.marker([ lat, lon ]).addTo(map);
+			}
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 				attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}).addTo(map);
-			L.marker([ lat, lon ]).addTo(map);
 		},
 		mapInWidget : function(forceLoad) {
 			var l = this;
@@ -186,24 +197,30 @@
 				});
 			}
 		},
+		closeFull : function() {
+			$('body').find('div.hover').fadeOut(350, function() {
+				$(this).remove()
+			});
+			$('body').find('#maphover').fadeOut(200, function() {
+				$(this).remove()
+			});
+			$('body').find('img.hover').fadeOut(200, function() {
+				$(this).remove()
+			})
+		},
 		fullMap : function(lat, lon, testoPopup) {
 			var l = this;
 			$('body').find('.hover').remove();
 			var layer = $('<div id="hover" class="hover"></div>');
 			var map = $('<div class="hover"><div  id="maphover"></div></div>');
 			layer.click(function() {
-				$('body').find('div.hover').fadeOut(350, function() {
-					$(this).remove()
-				})
-				$('body').find('map.hover').fadeOut(200, function() {
-					$(this).remove()
-				})
+				l.closeFull();
 			});
 			$('body').append(layer);
 			$('body').append(map);
 			l.zoomHelper(map, $('#maphover'));
 			layer.fadeIn(300, function() {
-				l.drawMap("maphover", lat, lon, testoPopup);
+				l.drawMap("maphover", lat, lon, testoPopup, true);
 			});
 		},
 		fullImg : function(img) {
@@ -212,20 +229,10 @@
 			$('body').find('.hover').remove();
 			var layer = $('<div id="hover" class="hover"></div>');
 			layer.click(function() {
-				$('body').find('div.hover').fadeOut(350, function() {
-					$(this).remove()
-				})
-				$('body').find('img.hover').fadeOut(200, function() {
-					$(this).remove()
-				})
+				l.closeFull();
 			});
 			img.click(function() {
-				$('body').find('div.hover').fadeOut(350, function() {
-					$(this).remove()
-				})
-				$('body').find('img.hover').fadeOut(200, function() {
-					$(this).remove()
-				})
+				l.closeFull();
 			});
 			$('body').append(layer);
 			layer.fadeIn(300, function() {
