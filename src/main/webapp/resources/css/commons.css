@@ -577,12 +577,13 @@ footer {
 }
 
 #download {
-	margin-top: 185px;
 	float: left;
 	margin-bottom: 30px;
 }
-
-#download a {
+ 
+#download a#linkGit {
+	margin-top: 160px;
+	display:block;
 	font-size: 11px;
 	text-transform: uppercase;
 	letter-spacing: .7;
@@ -721,12 +722,23 @@ div#loadPanel>p {
 }
 
 footer {
-	background-size: 134px 25px;
-	background-image: url(../img/logo-footer-lodview.png);
-	background-position: 24px 24px;
-	background-repeat: no-repeat;
+
 }
 
+footer #linkBack {
+	display:block;
+	background-size: 134px 25px;
+	background-image: url(../img/logo-footer-lodview.png);
+	background-position: 0 0; 
+	height:25px;
+	width:134px;
+	background-repeat: no-repeat;
+}
+footer #linkBack:hover {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+	filter: alpha(opacity = 6);
+	opacity: 0.6;
+}
 #navigator {
 	position: fixed;
 	right: 0;
@@ -742,7 +754,7 @@ footer {
 	height: 20px;
 	cursor: pointer;
 	margin-bottom: 1px;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=10)";
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 	filter: alpha(opacity = 10);
 	opacity: 0.1;
 }
