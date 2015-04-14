@@ -1001,7 +1001,7 @@
 			});
 			$('.c3').each(function() {
 				var s = $(this).width();
-				fu
+				
 				if (s > col3) {
 					col3 = s;
 				}
