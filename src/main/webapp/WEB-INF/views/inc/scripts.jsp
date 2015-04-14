@@ -715,7 +715,7 @@
 			} else {
 				$('#linking').fadeIn('fast');
 				var container = $('#lodCloud').children("div");
-				var dest = $('<div class="connected"><span class="lloading"></span></div>');
+				var dest = $('<div class="connected acounter"><span class="lloading"></span></div>');
 				var content = $("<div class=\"content\" id='counterBlock'></div>");
 
 				content.append("<p id='grabDataTotal'><sp:message code='message.grabDataTotal' text='Resource connected {0}' arguments='<strong>0</strong>' javaScriptEscape='true' /></p>")
@@ -723,7 +723,10 @@
 				content.append("<p id='grabDataTotalLoaded'><sp:message code='message.grabDataTotalLoaded' text='Resource loaded {0}' arguments='<strong>0</strong>' javaScriptEscape='true' /></p>")
 
 				dest.append(content);
-				container.append(dest);
+				
+				// for dbpedia.it
+				//container.append(dest);
+				$('body').append(dest);
 
 				// initialize
 				container.masonry({

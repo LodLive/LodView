@@ -924,7 +924,6 @@ footer #linkBack:hover {
 	background:#fff;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
 	filter: alpha(opacity = 90);
-	opacity: 0.9;
 	display:none;
 	z-index: 1006;
 }

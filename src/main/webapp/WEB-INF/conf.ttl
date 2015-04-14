@@ -20,6 +20,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix yago: <http://dbpedia.org/class/yago/>.
 @prefix georss: <http://www.georss.org/georss/>.
+@prefix dbtax: <http://dbpedia.org/dbtax/>.
 
 <> a conf:Configuration;
 
@@ -40,7 +41,7 @@
 ##	to the HTML representation of the resources, live it blank if you want to 
 ##  use the "pure content negotiation mode"
 	
-	conf:httpRedirectSuffix ".html"; ## or ""
+	conf:httpRedirectSuffix "/html"; ## or ""
 
 
 ##  mode configurations
@@ -111,11 +112,8 @@
 	conf:typeProperties			rdf:type;
 	
 	conf:titleProperties		dc:title , dcterms:title, rdfs:label ;  
-<<<<<<< HEAD
- 
-=======
-								
->>>>>>> updating from master
+
+
 	conf:descriptionProperties	rdfs:comment , dc:description , dcterms:description , <http://dbpedia.org/ontology/abstract> , <http://it.dbpedia.org/property/contenuto>;
 								
 	conf:imageProperties		foaf:depiction;
@@ -126,15 +124,11 @@
 
 
 ##  choosing the lower class in hierarchy to put it on the top right of the page
-<<<<<<< HEAD
-##	put in mainOntologies the prefixes you need to filter the resource's classes
-##	you need also to add the ontology file in WEB-INF/ontologies
-##	leave conf:mainOntologies blank if you don't want lodlive do this job 
-=======
+ 
 ##	set in mainOntologies the prefixes you need to filter the resource's classes
 ##	you need also to add the ontology file in WEB-INF/ontologies
 ##	leave conf:mainOntologies blank if you don't want lodview do this job 
->>>>>>> updating from master
+ 
 
 	conf:mainOntologiesPrefixes	 ontology:;
 

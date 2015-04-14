@@ -16,7 +16,9 @@ div#logoBanner div#logo {
 		background-image: url(../img/custom/dbpedia-italia@2x.png);
 	}
 }
-
+div#lodCloud .more, .acounter{
+	display:none;
+}
 /* ********************************** */
 /*  CUSTOM FOOTER, HIDDEN BY DEFAULT  */
 /* ********************************** */
