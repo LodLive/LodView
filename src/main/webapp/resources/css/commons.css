@@ -932,6 +932,17 @@ div.hover{
 	position: fixed;
 	z-index: 1007;
 }
+div.closemapzoom {
+	width:14px;
+	height:14px;
+	display:inline-block;
+	background-position: -120px -35px;
+	position:fixed;
+	right:19px;
+	top:19px; 
+	cursor:pointer;
+	
+}
 img.hover{
 	position: fixed;
 	z-index: 1007;

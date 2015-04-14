@@ -31,7 +31,7 @@
 				lodview.zoomHelper(img);
 			var map = $('body').find('#maphover');
 			if (map.length > 0)
-				lodview.zoomHelper(map);
+				lodview.zoomHelper($('body').find('.maphover'), map, true);
 		});
 		lodview.imagesInWidget();
 		lodview.mapInWidget();
@@ -77,49 +77,67 @@
 	});
 
 	var lodview = {
-		zoomHelper : function(img, obj) {
+		zoomHelper : function(img, obj, alignLeft) {
 			var l = this;
-			var ww = window.innerWidth - 100;
-			var wh = window.innerHeight - 100;
+			if (alignLeft) {
+				var ww = window.innerWidth;
+				var wh = window.innerHeight;
+				if (obj) {
+					obj.css({
+						width : ww - 70,
+						height : wh
+					});
+				}
+				img.css({
+					width : ww - 70,
+					height : wh,
+					opacity : 0,
+					left : 0,
+					top : 0
+				});
+			} else {
+				var ww = window.innerWidth - 100;
+				var wh = window.innerHeight - 100;
 
-			var w = ww;
-			var h = wh;
+				var w = ww;
+				var h = wh;
 
-			try {
-				w = img.naturalWidth();
-				h = img.naturalHeight();
-			} catch (e) {
-				// not an image, probably a map 
-			}
-			if (!w) {
-				w = ww;
-			}
-			if (!h) {
-				h = wh;
-			}// image bigger than the window
-			if (w > ww) {
-				h = ww * h / w;
-				w = ww;
-			}
-			if (h > wh) {
-				w = wh * w / h;
-				h = wh;
-			}
-			if (obj) {
-				obj.css({
+				try {
+					w = img.naturalWidth();
+					h = img.naturalHeight();
+				} catch (e) {
+				}
+				if (!w) {
+					w = ww;
+				}
+				if (!h) {
+					h = wh;
+				}
+				// image bigger than the window
+				if (w > ww) {
+					h = ww * h / w;
+					w = ww;
+				}
+				if (h > wh) {
+					w = wh * w / h;
+					h = wh;
+				}
+				if (obj) {
+					obj.css({
+						width : w,
+						height : h
+					});
+				}
+				img.css({
 					width : w,
-					height : h
+					height : h,
+					opacity : 0,
+					left : '50%',
+					top : '50%',
+					marginLeft : -(w / 2),
+					marginTop : -(h / 2)
 				});
 			}
-			img.css({
-				width : w,
-				height : h,
-				opacity : 0,
-				left : '50%',
-				top : '50%',
-				marginLeft : -(w / 2),
-				marginTop : -(h / 2)
-			});
 			img.fadeTo(300, 1);
 		},
 		drawMap : function drawMap(id, lat, lon, testoPopup, fullVersion) {
@@ -139,7 +157,7 @@
 			}).addTo(map);
 		},
 		mapInWidget : function(forceLoad) {
-			if($('map').length>0){
+			if ($('map').length > 0) {
 				var l = this;
 				l.drawMap("resourceMap", '${results.getLatitude()}', '${results.getLongitude()}');
 				var a = $('#resourceMap');
@@ -214,13 +232,16 @@
 			var l = this;
 			$('body').find('.hover').remove();
 			var layer = $('<div id="hover" class="hover"></div>');
-			var map = $('<div class="hover"><div  id="maphover"></div></div>');
+			var map = $('<div class="hover maphover"><div  id="maphover"></div><div class="closemapzoom sp"></div></div>');
 			layer.click(function() {
+				l.closeFull();
+			});
+			map.find('.closemapzoom').click(function() {
 				l.closeFull();
 			});
 			$('body').append(layer);
 			$('body').append(map);
-			l.zoomHelper(map, $('#maphover'));
+			l.zoomHelper(map, $('#maphover'), true);
 			layer.fadeIn(300, function() {
 				l.drawMap("maphover", lat, lon, testoPopup, true);
 			});
@@ -1003,7 +1024,6 @@
 			});
 			$('.c3').each(function() {
 				var s = $(this).width();
-				
 				if (s > col3) {
 					col3 = s;
 				}
