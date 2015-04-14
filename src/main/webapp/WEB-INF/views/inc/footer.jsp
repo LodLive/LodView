@@ -1,7 +1,7 @@
 <%@page session="true"%><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%@taglib uri="http://www.springframework.org/tags" prefix="sp"%><footer>
 	<div id="download">
 		<a href="http://lodview.it" id="linkBack"></a>
-		<a href="https://github.com/dvcama/LodView" id="linkGit" target="_blank" title="based on LodView v1.1.3-SNAPSHOT"><sp:message code='footer.download' text='download lodview to publish your data' /></a>
+		<a href="https://github.com/dvcama/LodView" id="linkGit" target="_blank" title="based on LodView v1.1.4-SNAPSHOT"><sp:message code='footer.download' text='download lodview to publish your data' /></a>
 	</div>
 	<div id="endpoint">
 		<ul>
