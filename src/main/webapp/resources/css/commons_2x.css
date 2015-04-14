@@ -8,7 +8,7 @@
 	div#logoBanner div#logo {
 		background-image: url(../img/logo-header-lodview@2x.png);
 	}
-	footer {
+	footer #linkBack {
 		background-image: url(../img/logo-footer-lodview@2x.png);
 	}
 	div#directs .value>div:not (.value ), div#bnodes .valuecnt>div:not (.value ), div#inverses .value>div:not (.value ) {
