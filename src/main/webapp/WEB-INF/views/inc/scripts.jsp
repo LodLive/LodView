@@ -139,23 +139,25 @@
 			}).addTo(map);
 		},
 		mapInWidget : function(forceLoad) {
-			var l = this;
-			l.drawMap("resourceMap", '${results.getLatitude()}', '${results.getLongitude()}');
-			var a = $('#resourceMap');
-			var w = a.width();
-			var h = a.height();
-			var tools = $('<div class="imgTools" style="width:' + w + 'px;height:' + h + 'px;"></div>')
-			var zoom = $('<span class="zoom sp" style="margin-top:' + (h / 2 - 15) + 'px;margin-left:' + (w / 2 - 15) + 'px;"></span>');
-			tools.append(zoom);
-			zoom.click(function() {
-				l.fullMap('${results.getLatitude()}', '${results.getLongitude()}', '${results.getTitle().replaceAll("\\n"," ").replaceAll("\'","&acute;")}');
-			});
-			a.prepend(tools);
-			a.hover(function() {
-				$(this).find('.imgTools').stop().fadeIn('fast');
-			}, function() {
-				$(this).find('.imgTools').stop().fadeOut('fast');
-			});
+			if($('map').length>0){
+				var l = this;
+				l.drawMap("resourceMap", '${results.getLatitude()}', '${results.getLongitude()}');
+				var a = $('#resourceMap');
+				var w = a.width();
+				var h = a.height();
+				var tools = $('<div class="imgTools" style="width:' + w + 'px;height:' + h + 'px;"></div>')
+				var zoom = $('<span class="zoom sp" style="margin-top:' + (h / 2 - 15) + 'px;margin-left:' + (w / 2 - 15) + 'px;"></span>');
+				tools.append(zoom);
+				zoom.click(function() {
+					l.fullMap('${results.getLatitude()}', '${results.getLongitude()}', '${results.getTitle().replaceAll("\\n"," ").replaceAll("\'","&acute;")}');
+				});
+				a.prepend(tools);
+				a.hover(function() {
+					$(this).find('.imgTools').stop().fadeIn('fast');
+				}, function() {
+					$(this).find('.imgTools').stop().fadeOut('fast');
+				});
+			}
 		},
 		imagesInWidget : function(forceLoad) {
 			var l = this;
