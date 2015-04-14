@@ -6,11 +6,13 @@
 			/* including images */
 		%>
 		<c:if test='${results.getImages()!=null && results.getImages().size()>0}'>
+ 
 			<div id="images">
 				<c:forEach items="${results.getImages() }" var="item">
 					<a href="${item}" target="_new"><img src="${item}"></a>
 				</c:forEach>
 			</div>
+ 
 		</c:if>
 		<%
 			/* drawing a map */
