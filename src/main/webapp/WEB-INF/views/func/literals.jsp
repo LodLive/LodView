@@ -5,17 +5,17 @@
 					<c:otherwise>${iprop.getNsProperty().replaceAll(":",":<span>")}</span>
 					</c:otherwise>
 				</c:choose></a></label>
-		<div class="${c2name} value ">
-			<c:set var="veryShortProps" value="true" />
-			<c:set var="done" value="false" />
-			<c:forEach items='${data.get(iprop)}' var="ela">
-				<c:if test="${!done}">
-					<c:if test="${ela.getValue().length() gt 8  || !ela.getLang().equals('')}">
-						<c:set var="veryShortProps" value="false" />
-						<c:set var="done" value="true" />
-					</c:if>
+		<c:set var="veryShortProps" value="true" />
+		<c:set var="done" value="false" />
+		<c:forEach items='${data.get(iprop)}' var="ela">
+			<c:if test="${!done}">
+				<c:if test="${ela.getValue().length() gt 8  || !ela.getLang().equals('')}">
+					<c:set var="veryShortProps" value="false" />
+					<c:set var="done" value="true" />
 				</c:if>
-			</c:forEach>
+			</c:if>
+		</c:forEach>
+		<div class="${c2name} value <c:if test="${veryShortProps}">multiInLineBlock</c:if>">
 			<c:set var="done" value="false" />
 			<c:forEach items='${data.get(iprop)}' var="ela">
 				<c:choose>
