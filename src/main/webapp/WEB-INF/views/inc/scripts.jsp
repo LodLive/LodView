@@ -33,6 +33,9 @@
 			if (map.length > 0)
 				lodview.zoomHelper($('body').find('.maphover'), map, true);
 		});
+		lodview.betterTypes();
+		
+		
 		lodview.imagesInWidget();
 		lodview.mapInWidget();
 		$(document).keyup(function(e) {
@@ -139,6 +142,14 @@
 				});
 			}
 			img.fadeTo(300, 1);
+		},
+		betterTypes:function(){
+			$('.dType').each(function() {
+				var w = $(this).width();
+				$(this).closest('div.c2').css({
+					paddingRight : w + 7
+				})
+			});
 		},
 		drawMap : function drawMap(id, lat, lon, testoPopup, fullVersion) {
 			var map = null;
