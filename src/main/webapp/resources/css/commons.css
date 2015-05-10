@@ -377,6 +377,16 @@ div#directs .value>div:not(.value), div#bnodes .valuecnt>div:not(.value), div#in
 	background-position: bottom left;
 }
 
+div#directs .c2.multiInLineBlock,div#directs .c4.multiInLineBlock{
+	padding-bottom: 8.5px;
+	padding-top: 8.5px;
+}
+
+.multiInLine{
+	display:inline-block; 
+	margin-right: 20px;  
+	line-height:27px;
+}
 div#directs .value>div:not(.value):first-child, div#bnodes .valuecnt>div:not(.value):first-child, div#inverses .value>div:not(.value):first-child, div#inverses .value>div:not(.value):nth-of-type(n+2):not(.toOneLine):not(.toMultiLine), div#bnodes .valuecnt>div:not(.value):nth-of-type(n+2):not(.toOneLine):not(.toMultiLine){
 	margin-top: 0;
 }
