@@ -83,4 +83,9 @@ public class PropertyBean {
 		this.label = label;
 	}
 
+	@Override
+	public String toString() {
+		return "PropertyBean [nsProperty=" + nsProperty + ", property=" + property + ", propertyUrl=" + propertyUrl + ", label=" + label + ", comment=" + comment + "]";
+	}
+
 }

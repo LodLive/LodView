@@ -2,8 +2,8 @@ package org.dvcama.lodview.bean;
 
 
 public class TripleBean {
-	private String nsValue = null, type = null, IRI = null, nsIRI = null, value = null, dataType = null, nsDataType = null, lang = null, url = null;
-	private boolean isLocal = false;
+	public String nsValue = null, type = null, IRI = null, nsIRI = null, value = null, dataType = null, nsDataType = null, lang = null, url = null;
+	public boolean isLocal = false;
 	PropertyBean property = null;
 
 	public PropertyBean getProperty() {

@@ -8,10 +8,10 @@ import java.util.Map;
 
 public class ResultBean {
 
-	private String title, latitude = null, longitude = null, mainIRI = null;
-	private PropertyBean descriptionProperty = null, typeProperty = null;
-	private List<String> images = null, linking = null;
-	private Map<String, LinkedHashMap<PropertyBean, List<TripleBean>>> literals = new HashMap<String, LinkedHashMap<PropertyBean, List<TripleBean>>>(), resources = new HashMap<String, LinkedHashMap<PropertyBean, List<TripleBean>>>(), bnodes = new HashMap<String, LinkedHashMap<PropertyBean, List<TripleBean>>>();
+	public String title, latitude = null, longitude = null, mainIRI = null;
+	public PropertyBean descriptionProperty = null, typeProperty = null;
+	public List<String> images = null, linking = null;
+	public Map<String, LinkedHashMap<PropertyBean, List<TripleBean>>> literals = new HashMap<String, LinkedHashMap<PropertyBean, List<TripleBean>>>(), resources = new HashMap<String, LinkedHashMap<PropertyBean, List<TripleBean>>>(), bnodes = new HashMap<String, LinkedHashMap<PropertyBean, List<TripleBean>>>();
 
 	private Map<String, LinkedHashMap<PropertyBean, List<TripleBean>>> addEle(String IRI, TripleBean tripleBean, Map<String, LinkedHashMap<PropertyBean, List<TripleBean>>> ele) {
 		if (ele.get(IRI) == null || ele.get(IRI).get(tripleBean.getProperty()) == null) {

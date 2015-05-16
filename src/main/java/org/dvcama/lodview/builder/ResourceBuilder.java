@@ -16,6 +16,8 @@ import org.dvcama.lodview.endpoint.SPARQLEndPoint;
 import org.dvcama.lodview.utils.Misc;
 import org.springframework.context.MessageSource;
 
+import scala.annotation.meta.getter;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFWriter;
@@ -36,16 +38,8 @@ public class ResourceBuilder {
 	}
 
 	public ResultBean buildHtmlResource(String IRI, Locale locale, ConfigurationBean conf, OntologyBean ontoBean, boolean localMode) throws Exception {
-		ResultBean result = new ResultBean();
-		List<String> images = new ArrayList<String>();
-		List<String> linking = new ArrayList<String>();
 		SPARQLEndPoint se = new SPARQLEndPoint(conf, ontoBean, locale.getLanguage());
-		result.setMainIRI(IRI);
 
-		String preferredLanguage = conf.getPreferredLanguage();
-		if (preferredLanguage.equals("auto")) {
-			preferredLanguage = locale.getLanguage();
-		}
 		List<TripleBean> triples = new ArrayList<TripleBean>();
 		if (conf.getEndPointUrl() != null && conf.getEndPointUrl().equals("<>")) {
 			localMode = true;
@@ -62,58 +56,8 @@ public class ResourceBuilder {
 		} else {
 			triples = se.doQuery(IRI, conf.getDefaultQueries(), null);
 		}
-		boolean betterTitleMatch = false, betterDescrMatch = false;
-		for (TripleBean tripleBean : triples) {
 
-			if (tripleBean.getIRI() == null) {
-				tripleBean.setIRI(IRI);
-				tripleBean.setNsIRI(Misc.toNsResource(tripleBean.getIRI(), conf));
-			}
-
-			if (conf.getTitleProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getTitleProperties().contains(tripleBean.getProperty().getProperty())) {
-				if (tripleBean.getIRI().equals(IRI) && !betterTitleMatch && (result.getTitle() == null || result.getTitle().trim().equals("") || (tripleBean.getLang() != null && (preferredLanguage.equals(tripleBean.getLang()) || tripleBean.getLang().equals("en"))))) {
-					result.setTitle(Misc.stripHTML(tripleBean.getValue()));
-					if (preferredLanguage.equals(tripleBean.getLang())) {
-						betterTitleMatch = true;
-					}
-				}
-			} else if (conf.getDescriptionProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getDescriptionProperties().contains(tripleBean.getProperty().getProperty())) {
-				if (tripleBean.getIRI().equals(IRI) && !betterDescrMatch && (result.getDescriptionProperty() == null || (tripleBean.getLang() != null && (preferredLanguage.equals(tripleBean.getLang()) || tripleBean.getLang().equals("en"))))) {
-					result.setDescriptionProperty(tripleBean.getProperty());
-					if (preferredLanguage.equals(tripleBean.getLang())) {
-						betterDescrMatch = true;
-					}
-				}
-			} else if (conf.getLatitudeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getLatitudeProperties().contains(tripleBean.getProperty().getProperty())) {
-				result.setLatitude(tripleBean.getValue());
-			} else if (conf.getLongitudeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getLongitudeProperties().contains(tripleBean.getProperty().getProperty())) {
-				result.setLongitude(tripleBean.getValue());
-			} else if (conf.getImageProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getImageProperties().contains(tripleBean.getProperty().getProperty())) {
-				images.add(tripleBean.getValue());
-			} else if (conf.getLinkingProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getLinkingProperties().contains(tripleBean.getProperty().getProperty())) {
-				linking.add(tripleBean.getValue());
-			} else if (conf.getTypeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getTypeProperties().contains(tripleBean.getProperty().getProperty())) {
-				result.setTypeProperty(tripleBean.getProperty());
-			}
-
-			if (tripleBean.getType().equals("iri")) {
-				tripleBean.setUrl(Misc.toBrowsableUrl(tripleBean.getValue(), conf));
-				tripleBean.setNsValue(Misc.toNsResource(tripleBean.getValue(), conf));
-				if (!tripleBean.getUrl().equals(tripleBean.getValue()) || tripleBean.getValue().startsWith(conf.getPublicUrlPrefix())) {
-					tripleBean.setLocal(true);
-				}
-				result.addResource(tripleBean, tripleBean.getIRI());
-			} else if (tripleBean.getType().equals("literal")) {
-				result.addLiteral(tripleBean, tripleBean.getIRI());
-			} else if (tripleBean.getType().equals("bnode")) {
-				result.addBnode(tripleBean, tripleBean.getIRI());
-			}
-		}
-
-		result.setImages(images);
-		result.setLinking(linking);
-
-		return result;
+		return triplesToResult(IRI, triples, locale, conf, ontoBean);
 	}
 
 	public String buildRDFResource(String IRI, String sparql, Lang lang, ConfigurationBean conf) throws Exception {
@@ -126,9 +70,9 @@ public class ResourceBuilder {
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		RDFWriter rdfWriter = model.getWriter(lang.getName());
-		rdfWriter.setProperty("showXMLDeclaration","true");
-		rdfWriter.setProperty("relativeURIs","");
- 
+		rdfWriter.setProperty("showXMLDeclaration", "true");
+		rdfWriter.setProperty("relativeURIs", "");
+
 		rdfWriter.write(model, baos, conf.getIRInamespace());
 
 		byte[] resultByteArray = baos.toByteArray();
@@ -147,12 +91,12 @@ public class ResourceBuilder {
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		RDFWriter rdfWriter = model.getWriter(lang.getName());
-		rdfWriter.setProperty("showXMLDeclaration","true");
-		rdfWriter.setProperty("relativeURIs","");
+		rdfWriter.setProperty("showXMLDeclaration", "true");
+		rdfWriter.setProperty("relativeURIs", "");
 
 		rdfWriter.write(model, baos, conf.getIRInamespace());
-		rdfWriter.setProperty("showXMLDeclaration","true");
-		rdfWriter.setProperty("relativeURIs","");
+		rdfWriter.setProperty("showXMLDeclaration", "true");
+		rdfWriter.setProperty("relativeURIs", "");
 
 		byte[] resultByteArray = baos.toByteArray();
 		result = new String(resultByteArray);
@@ -179,13 +123,15 @@ public class ResourceBuilder {
 		 */
 
 		StringBuilder filter = new StringBuilder();
-		for (String titleProperty : filterProperties) {
-			if (titleProperty.toLowerCase().startsWith("http:")) {
-				filter.append("(?filterProperty = <" + titleProperty + ">)");
-			} else {
-				filter.append("(?filterProperty = " + titleProperty + ")");
+		if (filterProperties != null) {
+			for (String titleProperty : filterProperties) {
+				if (titleProperty.toLowerCase().startsWith("http:")) {
+					filter.append("(?filterProperty = <" + titleProperty + ">)");
+				} else {
+					filter.append("(?filterProperty = " + titleProperty + ")");
+				}
+				filter.append(" || ");
 			}
-			filter.append(" || ");
 		}
 
 		for (String about : abouts) {
@@ -318,5 +264,187 @@ public class ResourceBuilder {
 
 	public ResultBean buildHtmlInverseResource(String IRI, Locale locale, ConfigurationBean conf, OntologyBean ontoBean) throws Exception {
 		return buildHtmlInverseResource(IRI, null, -1, locale, conf, ontoBean);
+	}
+
+	public Map<Object, Object> buildPedegreeData(String IRI, ConfigurationBean conf, OntologyBean ontoBean, Locale locale) throws Exception {
+		Map<Object, Object> resultMap = new HashMap<Object, Object>();
+		boolean localMode = false;
+		if (conf.getEndPointUrl() != null && conf.getEndPointUrl().equals("<>")) {
+			localMode = true;
+		}
+		SPARQLEndPoint se = new SPARQLEndPoint(conf, ontoBean, locale.getLanguage());
+
+		String preferredLanguage = conf.getPreferredLanguage();
+		if (preferredLanguage.equals("auto")) {
+			preferredLanguage = locale.getLanguage();
+		}
+
+		Map<String, Object> s = new HashMap<String, Object>();
+		/* first: find a spouse */
+		browseRelatives(IRI, "spouse", s, resultMap, false, se, conf, localMode, locale, ontoBean);
+
+		/* second: find sons */
+		browseRelatives(IRI, "sons", s, resultMap, true, se, conf, localMode, locale, ontoBean);
+
+		/* third: find parents */
+		browseRelatives(IRI, "parents", s, resultMap, true, se, conf, localMode, locale, ontoBean);
+
+		/* second: find brothers */
+		browseRelatives(IRI, "bro", s, resultMap, true, se, conf, localMode, locale, ontoBean);
+
+		/* last: all the people we collected */
+		resultMap.put("s", s);
+
+		/*
+		 * for (String key : map.keySet()) { List<TripleBean> triples = new
+		 * ArrayList<TripleBean>();
+		 * 
+		 * List<String> queryList = new ArrayList<String>();
+		 * queryList.add(map.get(key)); System.out.println(map.get(key));
+		 * 
+		 * if (localMode) { Model m = ModelFactory.createDefaultModel(); try {
+		 * m.read(IRI); } catch (Exception e) { throw new
+		 * Exception(messageSource.getMessage("error.noContentNegotiation",
+		 * null, "sorry but content negotiation is not supported by the IRI",
+		 * locale)); } triples = se.doLocalSubjectQuery(m, IRI, queryList,
+		 * null); } else { triples = se.doSubjectQuery(IRI, queryList, null); }
+		 * System.out.println("trovati: " + triples.size()); resultMap.put(key,
+		 * triples); }
+		 */
+
+		return resultMap;
+	}
+
+	@SuppressWarnings("unchecked")
+	private void browseRelatives(String IRI, String key, Map<String, Object> s, Map<Object, Object> resultMap, boolean deep, SPARQLEndPoint se, ConfigurationBean conf, boolean localMode, Locale locale, OntologyBean ontoBean) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("parentsQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . <" + IRI + "> <http://dbpedia.org/property/parents> ?s. FILTER(?s != <" + IRI + ">)}");
+		map.put("spouseQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . {<" + IRI + "> <http://dbpedia.org/ontology/spouse> ?s. FILTER(?s != <" + IRI + ">)} UNION {?s <http://dbpedia.org/ontology/spouse> <" + IRI + ">. FILTER(?s != <" + IRI + ">)}}");
+		map.put("sonsQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . ?s <http://dbpedia.org/property/parents> <" + IRI + ">. FILTER(?s != <" + IRI + ">)}");
+		map.put("broQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . <" + IRI + "> <http://dbpedia.org/property/parents> ?parent.?s  <http://dbpedia.org/property/parents> ?parent . FILTER(?s != <" + IRI + ">) }");
+		 
+		List<TripleBean> a = findeRelatives(IRI, map.get(key + "Query"), se, localMode);
+		String[] abouts = new String[a.size()];
+		for (int c = 0; c < abouts.length; c++) {
+			abouts[c] = a.get(c).getValue();
+		}
+		ResultBean b = buildPartialHtmlResource("http://lodview.it/p/" + key, abouts, locale, conf, ontoBean, conf.getTitleProperties());
+		System.out.println(("http://lodview.it/p/" + key + " " + IRI));
+		if (b.getLiterals("http://lodview.it/p/" + key) != null) {
+			for (List<TripleBean> t : b.getLiterals("http://lodview.it/p/" + key).values()) {
+				for (TripleBean p : t) {
+					Map<String, String> data = new HashMap<String, String>();
+					data.put("value", p.getValue());
+					data.put("url", p.getProperty().getPropertyUrl());
+					data.put("nsIri", p.getProperty().getNsProperty());
+					s.put(p.getProperty().getProperty(), data);
+					if (deep) {
+						if (key.equals("sons") || key.equals("bro")) {
+							browseRelatives(p.getProperty().getProperty(), "spouse", s, resultMap, false, se, conf, localMode, locale, ontoBean);
+						}
+						if (key.equals("sons")) {
+							/* second: find sons */
+							browseRelatives(p.getProperty().getProperty(), "sons", s, resultMap, true, se, conf, localMode, locale, ontoBean);
+							// browseRelatives(p.getProperty().getProperty(),
+							// "bro", s, resultMap, false, se, conf, localMode,
+							// locale, ontoBean);
+						}
+					}
+				}
+			}
+			Map<Object, Object> ele = (HashMap<Object, Object>) resultMap.get(IRI);
+			if (ele == null) {
+				ele = new HashMap<Object, Object>();
+			}
+			ele.put(key, abouts);
+			resultMap.put(IRI, ele);
+		}
+
+	}
+
+	private List<TripleBean> findeRelatives(String IRI, String query, SPARQLEndPoint se, boolean localMode) throws Exception {
+		List<TripleBean> triples = new ArrayList<TripleBean>();
+		List<String> queryList = new ArrayList<String>();
+		queryList.add(query);
+		if (localMode) {
+			/* looking for data via content negotiation */
+			Model m = ModelFactory.createDefaultModel();
+			try {
+				m.read(IRI);
+			} catch (Exception e) {
+				// throw new
+				// Exception(messageSource.getMessage("error.noContentNegotiation",
+				// null,
+				// "sorry but content negotiation is not supported by the IRI",
+				// locale));
+			}
+			triples = se.doLocalSubjectQuery(m, IRI, queryList, null);
+		} else {
+			triples = se.doSubjectQuery(IRI, queryList, null);
+		}
+		return triples;
+	}
+
+	private ResultBean triplesToResult(String IRI, List<TripleBean> triples, Locale locale, ConfigurationBean conf, OntologyBean ontoBean) {
+		String preferredLanguage = conf.getPreferredLanguage();
+		if (preferredLanguage.equals("auto")) {
+			preferredLanguage = locale.getLanguage();
+		}
+		ResultBean result = new ResultBean();
+
+		result.setMainIRI(IRI);
+		boolean betterTitleMatch = false, betterDescrMatch = false;
+		List<String> images = new ArrayList<String>();
+		List<String> linking = new ArrayList<String>();
+		for (TripleBean tripleBean : triples) {
+
+			if (tripleBean.getIRI() == null) {
+				tripleBean.setIRI(IRI);
+				tripleBean.setNsIRI(Misc.toNsResource(tripleBean.getIRI(), conf));
+			}
+
+			if (conf.getTitleProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getTitleProperties().contains(tripleBean.getProperty().getProperty())) {
+				if (tripleBean.getIRI().equals(IRI) && !betterTitleMatch && (result.getTitle() == null || result.getTitle().trim().equals("") || (tripleBean.getLang() != null && (preferredLanguage.equals(tripleBean.getLang()) || tripleBean.getLang().equals("en"))))) {
+					result.setTitle(Misc.stripHTML(tripleBean.getValue()));
+					if (preferredLanguage.equals(tripleBean.getLang())) {
+						betterTitleMatch = true;
+					}
+				}
+			} else if (conf.getDescriptionProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getDescriptionProperties().contains(tripleBean.getProperty().getProperty())) {
+				if (tripleBean.getIRI().equals(IRI) && !betterDescrMatch && (result.getDescriptionProperty() == null || (tripleBean.getLang() != null && (preferredLanguage.equals(tripleBean.getLang()) || tripleBean.getLang().equals("en"))))) {
+					result.setDescriptionProperty(tripleBean.getProperty());
+					if (preferredLanguage.equals(tripleBean.getLang())) {
+						betterDescrMatch = true;
+					}
+				}
+			} else if (conf.getLatitudeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getLatitudeProperties().contains(tripleBean.getProperty().getProperty())) {
+				result.setLatitude(tripleBean.getValue());
+			} else if (conf.getLongitudeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getLongitudeProperties().contains(tripleBean.getProperty().getProperty())) {
+				result.setLongitude(tripleBean.getValue());
+			} else if (conf.getImageProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getImageProperties().contains(tripleBean.getProperty().getProperty())) {
+				images.add(tripleBean.getValue());
+			} else if (conf.getLinkingProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getLinkingProperties().contains(tripleBean.getProperty().getProperty())) {
+				linking.add(tripleBean.getValue());
+			} else if (conf.getTypeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getTypeProperties().contains(tripleBean.getProperty().getProperty())) {
+				result.setTypeProperty(tripleBean.getProperty());
+			}
+
+			if (tripleBean.getType().equals("iri")) {
+				tripleBean.setUrl(Misc.toBrowsableUrl(tripleBean.getValue(), conf));
+				tripleBean.setNsValue(Misc.toNsResource(tripleBean.getValue(), conf));
+				if (!tripleBean.getUrl().equals(tripleBean.getValue()) || tripleBean.getValue().startsWith(conf.getPublicUrlPrefix())) {
+					tripleBean.setLocal(true);
+				}
+				result.addResource(tripleBean, tripleBean.getIRI());
+			} else if (tripleBean.getType().equals("literal")) {
+				result.addLiteral(tripleBean, tripleBean.getIRI());
+			} else if (tripleBean.getType().equals("bnode")) {
+				result.addBnode(tripleBean, tripleBean.getIRI());
+			}
+		}
+
+		result.setImages(images);
+		result.setLinking(linking);
+		return result;
 	}
 }
