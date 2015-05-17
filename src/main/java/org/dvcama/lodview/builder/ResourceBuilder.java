@@ -9,14 +9,13 @@ import java.util.Map;
 
 import org.apache.jena.riot.Lang;
 import org.dvcama.lodview.bean.OntologyBean;
+import org.dvcama.lodview.bean.PropertyBean;
 import org.dvcama.lodview.bean.ResultBean;
 import org.dvcama.lodview.bean.TripleBean;
 import org.dvcama.lodview.conf.ConfigurationBean;
 import org.dvcama.lodview.endpoint.SPARQLEndPoint;
 import org.dvcama.lodview.utils.Misc;
 import org.springframework.context.MessageSource;
-
-import scala.annotation.meta.getter;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -38,6 +37,11 @@ public class ResourceBuilder {
 	}
 
 	public ResultBean buildHtmlResource(String IRI, Locale locale, ConfigurationBean conf, OntologyBean ontoBean, boolean localMode) throws Exception {
+
+		return buildHtmlResource(IRI, locale, conf, ontoBean, localMode, conf.getDefaultQueries());
+	}
+
+	public ResultBean buildHtmlResource(String IRI, Locale locale, ConfigurationBean conf, OntologyBean ontoBean, boolean localMode, List<String> queries) throws Exception {
 		SPARQLEndPoint se = new SPARQLEndPoint(conf, ontoBean, locale.getLanguage());
 
 		List<TripleBean> triples = new ArrayList<TripleBean>();
@@ -52,9 +56,9 @@ public class ResourceBuilder {
 			} catch (Exception e) {
 				throw new Exception(messageSource.getMessage("error.noContentNegotiation", null, "sorry but content negotiation is not supported by the IRI", locale));
 			}
-			triples = se.doLocalQuery(m, IRI, conf.getDefaultQueries());
+			triples = se.doLocalQuery(m, IRI, queries);
 		} else {
-			triples = se.doQuery(IRI, conf.getDefaultQueries(), null);
+			triples = se.doQuery(IRI, queries, null);
 		}
 
 		return triplesToResult(IRI, triples, locale, conf, ontoBean);
@@ -133,10 +137,10 @@ public class ResourceBuilder {
 				filter.append(" || ");
 			}
 		}
-
 		for (String about : abouts) {
 			StringBuilder sparqlQuery = new StringBuilder("select distinct ?o  ");
 			sparqlQuery.append("{ <" + about + "> ?filterProperty ?o. FILTER (" + filter + "))}  ");
+
 			List<String> sparqlQueries = new ArrayList<String>();
 			sparqlQueries.add(sparqlQuery.toString().replaceAll("\\|\\| \\)", ""));
 			try {
@@ -280,19 +284,19 @@ public class ResourceBuilder {
 		}
 
 		Map<String, Object> s = new HashMap<String, Object>();
-		/* first: find a spouse */
+		/* find a spouse */
 		browseRelatives(IRI, "spouse", s, resultMap, false, se, conf, localMode, locale, ontoBean);
-
-		/* second: find sons */
-		browseRelatives(IRI, "sons", s, resultMap, true, se, conf, localMode, locale, ontoBean);
-
-		/* third: find parents */
-		browseRelatives(IRI, "parents", s, resultMap, true, se, conf, localMode, locale, ontoBean);
-
+		
 		/* second: find brothers */
 		browseRelatives(IRI, "bro", s, resultMap, true, se, conf, localMode, locale, ontoBean);
+	
+		/* find sons */
+		browseRelatives(IRI, "sons", s, resultMap, true, se, conf, localMode, locale, ontoBean);
 
-		/* last: all the people we collected */
+		/* find parents */
+		browseRelatives(IRI, "parents", s, resultMap, true, se, conf, localMode, locale, ontoBean);
+
+		/* all the people we collected */
 		resultMap.put("s", s);
 
 		/*
@@ -318,48 +322,76 @@ public class ResourceBuilder {
 	@SuppressWarnings("unchecked")
 	private void browseRelatives(String IRI, String key, Map<String, Object> s, Map<Object, Object> resultMap, boolean deep, SPARQLEndPoint se, ConfigurationBean conf, boolean localMode, Locale locale, OntologyBean ontoBean) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
+
+		// TODO: put this in conf file
 		map.put("parentsQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . <" + IRI + "> <http://dbpedia.org/property/parents> ?s. FILTER(?s != <" + IRI + ">)}");
 		map.put("spouseQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . {<" + IRI + "> <http://dbpedia.org/ontology/spouse> ?s. FILTER(?s != <" + IRI + ">)} UNION {?s <http://dbpedia.org/ontology/spouse> <" + IRI + ">. FILTER(?s != <" + IRI + ">)}}");
 		map.put("sonsQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . ?s <http://dbpedia.org/property/parents> <" + IRI + ">. FILTER(?s != <" + IRI + ">)}");
 		map.put("broQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . <" + IRI + "> <http://dbpedia.org/property/parents> ?parent.?s  <http://dbpedia.org/property/parents> ?parent . FILTER(?s != <" + IRI + ">) }");
-		 
+
 		List<TripleBean> a = findeRelatives(IRI, map.get(key + "Query"), se, localMode);
-		String[] abouts = new String[a.size()];
-		for (int c = 0; c < abouts.length; c++) {
-			abouts[c] = a.get(c).getValue();
-		}
-		ResultBean b = buildPartialHtmlResource("http://lodview.it/p/" + key, abouts, locale, conf, ontoBean, conf.getTitleProperties());
-		System.out.println(("http://lodview.it/p/" + key + " " + IRI));
-		if (b.getLiterals("http://lodview.it/p/" + key) != null) {
-			for (List<TripleBean> t : b.getLiterals("http://lodview.it/p/" + key).values()) {
-				for (TripleBean p : t) {
-					Map<String, String> data = new HashMap<String, String>();
-					data.put("value", p.getValue());
-					data.put("url", p.getProperty().getPropertyUrl());
-					data.put("nsIri", p.getProperty().getNsProperty());
-					s.put(p.getProperty().getProperty(), data);
-					if (deep) {
-						if (key.equals("sons") || key.equals("bro")) {
-							browseRelatives(p.getProperty().getProperty(), "spouse", s, resultMap, false, se, conf, localMode, locale, ontoBean);
-						}
-						if (key.equals("sons")) {
-							/* second: find sons */
-							browseRelatives(p.getProperty().getProperty(), "sons", s, resultMap, true, se, conf, localMode, locale, ontoBean);
-							// browseRelatives(p.getProperty().getProperty(),
-							// "bro", s, resultMap, false, se, conf, localMode,
-							// locale, ontoBean);
-						}
-					}
-				}
-			}
+
+		// TODO: put this in conf file
+		List<String> list = conf.getTitleProperties();
+		list.add("http://dbpedia.org/ontology/birthDate");
+		list.add("http://dbpedia.org/ontology/deathDate");
+
+		List<String> abouts = new ArrayList<String>();
+		System.out.println("looking for " + key + " of " + IRI);
+		for (TripleBean tripleBean : a) {
+
+			abouts.add(tripleBean.getValue());
+
 			Map<Object, Object> ele = (HashMap<Object, Object>) resultMap.get(IRI);
 			if (ele == null) {
 				ele = new HashMap<Object, Object>();
 			}
 			ele.put(key, abouts);
 			resultMap.put(IRI, ele);
-		}
 
+			if (s.get(tripleBean.getValue()) == null) {
+				// getting more information about the person
+				System.out.println("found " + tripleBean.getValue());
+				StringBuilder query = new StringBuilder("select ?p ?o {");
+				query.append("<" + tripleBean.getValue() + "> ?p ?o. FILTER (");
+				for (String prop : list) {
+					query.append(" ?p = <" + prop + "> || ");
+				}
+				query.append("}");
+				List<String> queries = new ArrayList<String>();
+				queries.add(query.toString().replaceAll(" \\|\\| \\}", ")}"));
+
+				ResultBean b = buildHtmlResource(tripleBean.getValue(), locale, conf, ontoBean, localMode, queries);
+
+				Map<String, String> data = new HashMap<String, String>();
+				data.put("title", b.getTitle());
+				data.put("url", Misc.toBrowsableUrl(tripleBean.getValue(), conf));
+				data.put("nsIri", Misc.toNsResource(tripleBean.getValue(), conf));
+
+				Map<PropertyBean, List<TripleBean>> lits = b.getLiterals(tripleBean.getValue());
+				for (PropertyBean lit : lits.keySet()) {
+					List<TripleBean> l = lits.get(lit);
+					for (TripleBean trip : l) {
+						if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/birthDate")) {
+							data.put("birth", trip.getValue());
+						} else if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/deathDate")) {
+							data.put("death", trip.getValue());
+						}
+					}
+				}
+				s.put(tripleBean.getValue(), data);
+				if (deep) {
+					if (key.equals("sons") || key.equals("bro")) {
+						browseRelatives(tripleBean.getValue(), "spouse", s, resultMap, false, se, conf, localMode, locale, ontoBean);
+					}
+					if (key.equals("sons")) {
+						/* second: find sons */
+						browseRelatives(tripleBean.getValue(), "sons", s, resultMap, true, se, conf, localMode, locale, ontoBean);
+					}
+				}
+			}
+
+		}
 	}
 
 	private List<TripleBean> findeRelatives(String IRI, String query, SPARQLEndPoint se, boolean localMode) throws Exception {
