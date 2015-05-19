@@ -3,9 +3,11 @@ package org.dvcama.lodview.builder;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.jena.riot.Lang;
 import org.dvcama.lodview.bean.OntologyBean;
@@ -282,19 +284,61 @@ public class ResourceBuilder {
 		if (preferredLanguage.equals("auto")) {
 			preferredLanguage = locale.getLanguage();
 		}
+		Set<String> founded = new HashSet<String>();
+		Set<String> controlList = new HashSet<String>();
 
 		Map<String, Object> s = new HashMap<String, Object>();
 		/* find a spouse */
-		browseRelatives(IRI, "spouse", s, resultMap, false, se, conf, localMode, locale, ontoBean);
-		
+		browseRelatives(IRI, "spouse", resultMap, founded, controlList, false, se, conf, localMode, locale, ontoBean);
+
 		/* second: find brothers */
-		browseRelatives(IRI, "bro", s, resultMap, true, se, conf, localMode, locale, ontoBean);
-	
+		browseRelatives(IRI, "bro", resultMap, founded, controlList, true, se, conf, localMode, locale, ontoBean);
+
 		/* find sons */
-		browseRelatives(IRI, "sons", s, resultMap, true, se, conf, localMode, locale, ontoBean);
+		browseRelatives(IRI, "sons", resultMap, founded, controlList, true, se, conf, localMode, locale, ontoBean);
 
 		/* find parents */
-		browseRelatives(IRI, "parents", s, resultMap, true, se, conf, localMode, locale, ontoBean);
+		browseRelatives(IRI, "parents", resultMap, founded, controlList, true, se, conf, localMode, locale, ontoBean);
+
+		// TODO: put this in conf file
+		List<String> list = conf.getTitleProperties();
+		list.add("http://dbpedia.org/ontology/birthDate");
+		list.add("http://dbpedia.org/ontology/deathDate");
+
+		for (Object person : founded) {
+
+			// getting more information about the person
+			System.out.println("found " + person);
+			StringBuilder query = new StringBuilder("select ?p ?o {");
+			query.append("<" + person + "> ?p ?o. FILTER (");
+			for (String prop : list) {
+				query.append(" ?p = <" + prop + "> || ");
+			}
+			query.append("}");
+			List<String> queries = new ArrayList<String>();
+			queries.add(query.toString().replaceAll(" \\|\\| \\}", ")}"));
+
+			ResultBean b = buildHtmlResource(person.toString(), locale, conf, ontoBean, localMode, queries);
+
+			Map<String, String> data = new HashMap<String, String>();
+			data.put("title", b.getTitle());
+			data.put("url", Misc.toBrowsableUrl(person.toString(), conf));
+			data.put("nsIri", Misc.toNsResource(person.toString(), conf));
+
+			Map<PropertyBean, List<TripleBean>> lits = b.getLiterals(person.toString());
+			for (PropertyBean lit : lits.keySet()) {
+				List<TripleBean> l = lits.get(lit);
+				for (TripleBean trip : l) {
+					if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/birthDate")) {
+						data.put("birth", trip.getValue());
+					} else if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/deathDate")) {
+						data.put("death", trip.getValue());
+					}
+				}
+			}
+			s.put(person.toString(), data);
+
+		}
 
 		/* all the people we collected */
 		resultMap.put("s", s);
@@ -320,9 +364,10 @@ public class ResourceBuilder {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void browseRelatives(String IRI, String key, Map<String, Object> s, Map<Object, Object> resultMap, boolean deep, SPARQLEndPoint se, ConfigurationBean conf, boolean localMode, Locale locale, OntologyBean ontoBean) throws Exception {
+	private void browseRelatives(String IRI, String key, Map<Object, Object> resultMap, Set<String> founded, Set<String> controlList, boolean deep, SPARQLEndPoint se, ConfigurationBean conf, boolean localMode, Locale locale, OntologyBean ontoBean) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 
+		controlList.add(IRI + key);
 		// TODO: put this in conf file
 		map.put("parentsQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . <" + IRI + "> <http://dbpedia.org/property/parents> ?s. FILTER(?s != <" + IRI + ">)}");
 		map.put("spouseQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . {<" + IRI + "> <http://dbpedia.org/ontology/spouse> ?s. FILTER(?s != <" + IRI + ">)} UNION {?s <http://dbpedia.org/ontology/spouse> <" + IRI + ">. FILTER(?s != <" + IRI + ">)}}");
@@ -330,11 +375,6 @@ public class ResourceBuilder {
 		map.put("broQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . <" + IRI + "> <http://dbpedia.org/property/parents> ?parent.?s  <http://dbpedia.org/property/parents> ?parent . FILTER(?s != <" + IRI + ">) }");
 
 		List<TripleBean> a = findeRelatives(IRI, map.get(key + "Query"), se, localMode);
-
-		// TODO: put this in conf file
-		List<String> list = conf.getTitleProperties();
-		list.add("http://dbpedia.org/ontology/birthDate");
-		list.add("http://dbpedia.org/ontology/deathDate");
 
 		List<String> abouts = new ArrayList<String>();
 		System.out.println("looking for " + key + " of " + IRI);
@@ -347,46 +387,17 @@ public class ResourceBuilder {
 				ele = new HashMap<Object, Object>();
 			}
 			ele.put(key, abouts);
+
 			resultMap.put(IRI, ele);
+			founded.add(tripleBean.getValue());
 
-			if (s.get(tripleBean.getValue()) == null) {
-				// getting more information about the person
-				System.out.println("found " + tripleBean.getValue());
-				StringBuilder query = new StringBuilder("select ?p ?o {");
-				query.append("<" + tripleBean.getValue() + "> ?p ?o. FILTER (");
-				for (String prop : list) {
-					query.append(" ?p = <" + prop + "> || ");
-				}
-				query.append("}");
-				List<String> queries = new ArrayList<String>();
-				queries.add(query.toString().replaceAll(" \\|\\| \\}", ")}"));
-
-				ResultBean b = buildHtmlResource(tripleBean.getValue(), locale, conf, ontoBean, localMode, queries);
-
-				Map<String, String> data = new HashMap<String, String>();
-				data.put("title", b.getTitle());
-				data.put("url", Misc.toBrowsableUrl(tripleBean.getValue(), conf));
-				data.put("nsIri", Misc.toNsResource(tripleBean.getValue(), conf));
-
-				Map<PropertyBean, List<TripleBean>> lits = b.getLiterals(tripleBean.getValue());
-				for (PropertyBean lit : lits.keySet()) {
-					List<TripleBean> l = lits.get(lit);
-					for (TripleBean trip : l) {
-						if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/birthDate")) {
-							data.put("birth", trip.getValue());
-						} else if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/deathDate")) {
-							data.put("death", trip.getValue());
-						}
-					}
-				}
-				s.put(tripleBean.getValue(), data);
+			if (!controlList.contains(tripleBean.getValue() + key)) {
+				browseRelatives(tripleBean.getValue(), "spouse", resultMap, founded, controlList, false, se, conf, localMode, locale, ontoBean);
 				if (deep) {
-					if (key.equals("sons") || key.equals("bro")) {
-						browseRelatives(tripleBean.getValue(), "spouse", s, resultMap, false, se, conf, localMode, locale, ontoBean);
-					}
 					if (key.equals("sons")) {
-						/* second: find sons */
-						browseRelatives(tripleBean.getValue(), "sons", s, resultMap, true, se, conf, localMode, locale, ontoBean);
+						browseRelatives(tripleBean.getValue(), "sons", resultMap, founded, controlList, true, se, conf, localMode, locale, ontoBean);
+					} else if (key.equals("parents")) {
+						browseRelatives(tripleBean.getValue(), "parents", resultMap, founded, controlList, true, se, conf, localMode, locale, ontoBean);
 					}
 				}
 			}

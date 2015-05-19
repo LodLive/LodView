@@ -19,8 +19,18 @@ body {
 	margin-top: -50px;
 }
 
+div.relContainer {
+	position: absolute
+}
+
+div.relContainer div.pair {
+  position: relative;
+  top: -200px;
+  left: 60px;
+}
+
 div.pair {
-	position: aboslute; display : inline-block;
+	display: inline-block;
 	width: 220px;
 	height: 100px;
 	margin-right: 60px;
@@ -142,12 +152,28 @@ div.pair div strong {
 					}
 
 					bro = broTemp;
+
 					$.each(bro, function(k, v) {
 						var pair = pedigree.buildPair(v);
 						pedigree.c.append(pair)
 					});
 
+					if (this.data[this.mainIRI].parents) {
+						// find the father
+						this.buildFather(this.data[this.mainIRI].parents[0], $('.mainIRI').closest('.pair'));
+					}
+
 				}
+			},
+			buildFather : function(person, son) {
+				console.info('parent ' + person + ' ok ' + son.attr("data-iri"))
+				var pair = this.buildPair(person);
+				var cont = $('<div class="relContainer"></div>');
+				cont.append(pair);
+				son.prepend().append(cont);
+				/* if (this.data[person].parents) {
+					this.buildFather(this.data[person].parents[0],pair)
+				} */
 			},
 			buildPair : function(person) {
 				console.info('building ' + person)
@@ -159,7 +185,6 @@ div.pair div strong {
 				if (pedigree.data[person]) {
 					//TODO: more then one spouse and string spouse
 					var sp;
-					console.info(pedigree.data[person].spouse)
 					if (pedigree.data[person].spouse && pedigree.data.s[pedigree.data[person].spouse[0]]) {
 						sp = $('<div class="wf" data-iri="'+pedigree.data[person].spouse[0]+'"><strong>' + pedigree.data.s[pedigree.data[person].spouse[0]].title + '</strong></div>');
 						pair.append(sp);
