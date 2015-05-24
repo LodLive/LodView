@@ -315,8 +315,11 @@ public class SPARQLEndPoint {
 		if (filter != null) {
 			query = query.replaceAll("\\$\\{FILTERPROPERTY\\}", filter);
 		}
-		query = query.replaceAll("\\$\\{STARTFROM\\}", "" + start);
-
+		if (start > 0 && query.contains("STARTFROM")) {
+			query = query.replaceAll("\\$\\{STARTFROM\\}", "" + start);
+		} else if (start > 0) {
+			query = query.replaceAll("LIMIT (.+)$", "OFFSET " + start + " LIMIT $1");
+		}
 		return query;
 	}
 
