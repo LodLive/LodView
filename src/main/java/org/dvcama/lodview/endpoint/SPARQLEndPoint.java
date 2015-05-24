@@ -327,6 +327,7 @@ public class SPARQLEndPoint {
 			query = query.replaceAll("\\$\\{FILTERPROPERTY\\}", filter);
 		}
 		if (query.indexOf("STARTFROM")>0) {
+ 
 			query = query.replaceAll("\\$\\{STARTFROM\\}", "" + start);
 		} else if (start > 0) {
 			query = query.replaceAll("LIMIT (.+)$", "OFFSET " + start + " LIMIT $1");
