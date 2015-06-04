@@ -284,28 +284,28 @@ public class ResourceBuilder {
 		if (preferredLanguage.equals("auto")) {
 			preferredLanguage = locale.getLanguage();
 		}
-		Set<String> founded = new HashSet<String>();
+		Set<String> found = new HashSet<String>();
 		Set<String> controlList = new HashSet<String>();
 
 		Map<String, Object> s = new HashMap<String, Object>();
 		/* find a spouse */
-		browseRelatives(IRI, "spouse", resultMap, founded, controlList, false, se, conf, localMode, locale, ontoBean);
+		browseRelatives(IRI, "spouse", resultMap, found, controlList, false, se, conf, localMode, locale, ontoBean);
 
 		/* second: find brothers */
-		browseRelatives(IRI, "bro", resultMap, founded, controlList, true, se, conf, localMode, locale, ontoBean);
+		browseRelatives(IRI, "bro", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
 
 		/* find sons */
-		browseRelatives(IRI, "sons", resultMap, founded, controlList, true, se, conf, localMode, locale, ontoBean);
+		browseRelatives(IRI, "sons", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
 
 		/* find parents */
-		browseRelatives(IRI, "parents", resultMap, founded, controlList, true, se, conf, localMode, locale, ontoBean);
+		browseRelatives(IRI, "parents", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
 
 		// TODO: put this in conf file
 		List<String> list = conf.getTitleProperties();
 		list.add("http://dbpedia.org/ontology/birthDate");
 		list.add("http://dbpedia.org/ontology/deathDate");
 
-		for (Object person : founded) {
+		for (Object person : found) {
 
 			// getting more information about the person
 			System.out.println("found " + person);
@@ -364,7 +364,7 @@ public class ResourceBuilder {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void browseRelatives(String IRI, String key, Map<Object, Object> resultMap, Set<String> founded, Set<String> controlList, boolean deep, SPARQLEndPoint se, ConfigurationBean conf, boolean localMode, Locale locale, OntologyBean ontoBean) throws Exception {
+	private void browseRelatives(String IRI, String key, Map<Object, Object> resultMap, Set<String> found, Set<String> controlList, boolean deep, SPARQLEndPoint se, ConfigurationBean conf, boolean localMode, Locale locale, OntologyBean ontoBean) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 
 		controlList.add(IRI + key);
@@ -389,15 +389,15 @@ public class ResourceBuilder {
 			ele.put(key, abouts);
 
 			resultMap.put(IRI, ele);
-			founded.add(tripleBean.getValue());
+			found.add(tripleBean.getValue());
 
 			if (!controlList.contains(tripleBean.getValue() + key)) {
-				browseRelatives(tripleBean.getValue(), "spouse", resultMap, founded, controlList, false, se, conf, localMode, locale, ontoBean);
+				browseRelatives(tripleBean.getValue(), "spouse", resultMap, found, controlList, false, se, conf, localMode, locale, ontoBean);
 				if (deep) {
 					if (key.equals("sons")) {
-						browseRelatives(tripleBean.getValue(), "sons", resultMap, founded, controlList, true, se, conf, localMode, locale, ontoBean);
+						browseRelatives(tripleBean.getValue(), "sons", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
 					} else if (key.equals("parents")) {
-						browseRelatives(tripleBean.getValue(), "parents", resultMap, founded, controlList, true, se, conf, localMode, locale, ontoBean);
+						browseRelatives(tripleBean.getValue(), "parents", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
 					}
 				}
 			}
