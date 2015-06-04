@@ -31,7 +31,7 @@ public class ResourceBuilder {
 	}
 
 	public ResourceBuilder(MessageSource messageSource) {
-		this.messageSource = messageSource;
+		this.messageSource = messageSource;s
 	}
 
 	public ResultBean buildHtmlResource(String IRI, Locale locale, ConfigurationBean conf, OntologyBean ontoBean) throws Exception {
