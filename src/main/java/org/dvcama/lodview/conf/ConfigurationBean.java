@@ -26,7 +26,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	private String confFile, homeUrl, license, httpRedirectSuffix, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
 
-	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null, defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null, imageProperties = null, linkingProperties = null, titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
+	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null, defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null, audioProperties = null, imageProperties = null, videoProperties = null, linkingProperties = null, titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null, mainOntologiesPrefixes = null;
 	private Map<String, String> colorPairMatcher = null;
 
@@ -69,6 +69,8 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		titleProperties = getMultiConfValue("titleProperties");
 		descriptionProperties = getMultiConfValue("descriptionProperties");
 		imageProperties = getMultiConfValue("imageProperties");
+		audioProperties = getMultiConfValue("audioProperties");
+		videoProperties = getMultiConfValue("videoProperties");
 		linkingProperties = getMultiConfValue("linkingProperties");
 		longitudeProperties = getMultiConfValue("longitudeProperties");
 		latitudeProperties = getMultiConfValue("latitudeProperties");
@@ -246,6 +248,14 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		return imageProperties;
 	}
 
+	public List<String> getAudioProperties() {
+		return audioProperties;
+	}
+
+	public List<String> getVideoProperties() {
+		return videoProperties;
+	}
+
 	public List<String> getLinkingProperties() {
 		return linkingProperties;
 	}
@@ -319,7 +329,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	@Override
 	public String toString() {
 		return "ConfigurationBean [confModel=" + confModel + ", context=" + context + ", confFile=" + confFile + ", EndPointUrl=" + EndPointUrl + ", IRInamespace=" + IRInamespace + ", contentEncoding=" + contentEncoding + ", staticResourceURL=" + staticResourceURL + ", preferredLanguage=" + preferredLanguage + ", publicUrlPrefix=" + publicUrlPrefix + ", authUsername=" + authUsername + ", authPassword=" + authPassword + ", defaultInverseBehaviour=" + defaultInverseBehaviour + ", defaultQueries=" + defaultQueries + ", defaultRawDataQueries=" + defaultRawDataQueries + ", defaultInversesQueries=" + defaultInversesQueries + ", defaultInversesTest=" + defaultInversesTest + ", defaultInversesCountQueries=" + defaultInversesCountQueries + ", typeProperties=" + typeProperties
-				+ ", imageProperties=" + imageProperties + ", linkingProperties=" + linkingProperties + ", titleProperties=" + titleProperties + ", descriptionProperties=" + descriptionProperties + ", longitudeProperties=" + longitudeProperties + ", latitudeProperties=" + latitudeProperties + ", colorPair=" + colorPair + ", skipDomains=" + skipDomains + ", rand=" + rand + "]";
+				+ ", imageProperties=" + imageProperties + ", audioProperties=" + audioProperties + ", videoProperties=" + videoProperties + ", linkingProperties=" + linkingProperties + ", titleProperties=" + titleProperties + ", descriptionProperties=" + descriptionProperties + ", longitudeProperties=" + longitudeProperties + ", latitudeProperties=" + latitudeProperties + ", colorPair=" + colorPair + ", skipDomains=" + skipDomains + ", rand=" + rand + "]";
 	}
 
 	public String getHomeUrl() {

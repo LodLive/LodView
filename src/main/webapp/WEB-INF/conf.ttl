@@ -51,6 +51,8 @@
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix claros: <http://purl.org/NET/Claros/vocab#> .
 @prefix crm120111: <http://erlangen-crm.org/120111/> .
+@prefix rel: <http://purl.org/vocab/relationship/> .
+
 
 <> a conf:Configuration;
 
@@ -58,11 +60,11 @@
 ## 	IRIs namespace we use to replace the webapp base (eg. http://localhost:8080/lodview/), an
 ##	installation on dbpedia domain should use <http://dbpedia.org/resource/> 
 	
-	conf:IRInamespace <http://dbpedia.org/resource/> ;
+	conf:IRInamespace <http://linkedjazz.org/resource/> ;
 
 ## 	EndPoint
 
-	conf:endpoint <http://dbpedia.org/sparql>;
+	conf:endpoint <https://linkedjazz.org/sparql/select>;
 
 ########## give it a try opening http://localhost:8080/lodview/Rome
 
@@ -160,7 +162,7 @@
 	
 	conf:titleProperties		dc:title , dcterms:title, rdfs:label , <http://www.w3.org/2004/02/skos/core#prefLabel> , 
 								<http://www.w3.org/2008/05/skos-xl#prefLabel> , <http://www.w3.org/2009/08/skos-reference/skos.html#prefLabel> , 
-								gn:officialName , gn:name , rdf:value , foaf:surname , <http://purl.org/collections/nl/am/title> ;  
+								gn:officialName , gn:name , rdf:value , foaf:surname , <http://purl.org/collections/nl/am/title> , <http://xmlns.com/foaf/0.1/name>;  
 								
 	conf:descriptionProperties	rdfs:comment , dc:description , dcterms:description , 
 								dc:description , skos:definition ,  <http://dbpedia.org/ontology/abstract>;
@@ -172,6 +174,8 @@
 	conf:latitudeProperties		geo:lat;
 	conf:linkingProperties		owl:sameAs , skos:exactMatch , gn:locatedIn ,  <http://www.bbc.co.uk/ontologies/coreconcepts/sameAs>;
 
+	conf:videoProperties		<http://schema.org/VideoObject>;
+	conf:audioProperties		<http://schema.org/AudioObject>;
 
 ##	preferred language for title and description ("auto" for delegate to the client)
 	

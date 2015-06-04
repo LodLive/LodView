@@ -106,7 +106,7 @@
 ##	prefixes or not
 
 	conf:typeProperties			rdf:type;
-	conf:titleProperties		<http://purl.uniprot.org/core/scientificName> , dc:title , dcterms:title , rdfs:label , gn:officialName , gn:name , skos:prefLabel ;
+	conf:titleProperties		<http://xmlns.com/foaf/0.1/name> , <http://purl.uniprot.org/core/scientificName> , dc:title , dcterms:title , rdfs:label , gn:officialName , gn:name , skos:prefLabel ;
 	conf:descriptionProperties	rdfs:comment , skos:definition , dc:description , dcterms:description , dbpedia-owl:abstract ;
 	conf:imageProperties		foaf:depiction;
 	conf:longitudeProperties	geo:long;
