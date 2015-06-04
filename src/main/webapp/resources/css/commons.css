@@ -210,7 +210,7 @@ aside div.noImg {
 	background-size: 300px 250px;
 }
 
-aside div#linking, aside div#images {
+aside div#linking, aside div#images, aside div#audio , aside div#video{
 	display: inline-block;
 }
 
@@ -224,6 +224,18 @@ aside div#images a img, aside div#linking a span, aside div#resourceMapCnt map {
 	height: 136px;
 	display: inline-block;
 	width: auto;
+}
+aside div#video *{
+	height: 136px;
+	display: inline-block;
+	margin-right: 8px;
+}
+aside div#audio audio{
+	height: 136px;
+	display: inline-block;
+	width: 136px;
+	margin-right: 8px;
+	
 }
 
 aside div#linking {

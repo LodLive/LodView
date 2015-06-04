@@ -10,7 +10,7 @@ public class ResultBean {
 
 	private String title, latitude = null, longitude = null, mainIRI = null;
 	private PropertyBean descriptionProperty = null, typeProperty = null;
-	private List<String> images = null, linking = null;
+	private List<String> images = null, linking = null, videos = null, audios = null;
 	private Map<String, LinkedHashMap<PropertyBean, List<TripleBean>>> literals = new HashMap<String, LinkedHashMap<PropertyBean, List<TripleBean>>>(), resources = new HashMap<String, LinkedHashMap<PropertyBean, List<TripleBean>>>(), bnodes = new HashMap<String, LinkedHashMap<PropertyBean, List<TripleBean>>>();
 
 	private Map<String, LinkedHashMap<PropertyBean, List<TripleBean>>> addEle(String IRI, TripleBean tripleBean, Map<String, LinkedHashMap<PropertyBean, List<TripleBean>>> ele) {
@@ -107,6 +107,14 @@ public class ResultBean {
 		return latitude;
 	}
 
+	public List<String> getAudios() {
+		return audios;
+	}
+
+	public List<String> getVideos() {
+		return videos;
+	}
+
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
@@ -174,6 +182,14 @@ public class ResultBean {
 
 	public void setTypeProperty(PropertyBean typeProperty) {
 		this.typeProperty = typeProperty;
+	}
+
+	public void setVideos(List<String> videos) {
+		this.videos = videos;
+	}
+
+	public void setAudios(List<String> audios) {
+		this.audios = audios;
 	}
 
 }

@@ -13,6 +13,31 @@
 			</div>
 		</c:if>
 		<%
+			/* including video */
+		%>
+		<c:if test='${results.getVideos()!=null && results.getVideos().size()>0}'>
+			<div id="video">
+				<c:forEach items="${results.getVideos() }" var="item">
+					 <c:if test="${item.contains('youtube') }">
+						<iframe width="242" height="136" src="${item}" frameborder="0" allowfullscreen></iframe>
+					 </c:if>				 
+				</c:forEach>
+			</div>
+		</c:if>				
+		<%
+			/* including audio */
+		%>
+		<c:if test='${results.getAudios()!=null && results.getAudios().size()>0}'>
+			<div id="audio">
+				<c:forEach items="${results.getAudios() }" var="item">
+					<audio controls> 
+					  <source src="${item}" >
+					Your browser does not support the audio element.
+					</audio>					 
+				</c:forEach>
+			</div>
+		</c:if>		
+		<%
 			/* drawing a map */
 		%>
 		<c:if test='${hasMap}'>

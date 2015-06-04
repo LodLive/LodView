@@ -37,6 +37,8 @@ public class ResourceBuilder {
 
 	public ResultBean buildHtmlResource(String IRI, Locale locale, ConfigurationBean conf, OntologyBean ontoBean, boolean localMode) throws Exception {
 		ResultBean result = new ResultBean();
+		List<String> videos = new ArrayList<String>();
+		List<String> audios = new ArrayList<String>();
 		List<String> images = new ArrayList<String>();
 		List<String> linking = new ArrayList<String>();
 		SPARQLEndPoint se = new SPARQLEndPoint(conf, ontoBean, locale.getLanguage());
@@ -90,7 +92,11 @@ public class ResourceBuilder {
 				result.setLongitude(tripleBean.getValue());
 			} else if (conf.getImageProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getImageProperties().contains(tripleBean.getProperty().getProperty())) {
 				images.add(tripleBean.getValue());
-			} else if (conf.getLinkingProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getLinkingProperties().contains(tripleBean.getProperty().getProperty())) {
+			}  else if (conf.getAudioProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getAudioProperties().contains(tripleBean.getProperty().getProperty())) {
+				audios.add(tripleBean.getValue());
+			} else if (conf.getVideoProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getVideoProperties().contains(tripleBean.getProperty().getProperty())) {
+				videos.add(tripleBean.getValue());
+			}  else if (conf.getLinkingProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getLinkingProperties().contains(tripleBean.getProperty().getProperty())) {
 				linking.add(tripleBean.getValue());
 			} else if (conf.getTypeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getTypeProperties().contains(tripleBean.getProperty().getProperty())) {
 				result.setTypeProperty(tripleBean.getProperty());
@@ -112,6 +118,8 @@ public class ResourceBuilder {
 
 		result.setImages(images);
 		result.setLinking(linking);
+		result.setVideos(videos);
+		result.setAudios(audios);
 
 		return result;
 	}
