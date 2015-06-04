@@ -79,10 +79,17 @@ public class SPARQLEndPoint {
 				}
 
 				try {
-					if (qs.get("s") != null) { // probably a blanknode
+					if (qs.get("s") != null && !qs.get("s").asNode().toString().startsWith("http://")) { // probably
+																											// a
+																											// bn
 						rb.setIRI(qs.get("s").asNode().toString());
 						rb.setNsIRI("_:" + rb.getIRI());
+					} else if (qs.get("s") != null && qs.get("s").asNode().toString().startsWith("http://")) {
+						rb.setIRI(qs.get("s").asNode().toString());
+						rb.setNsIRI(Misc.toNsResource(rb.getIRI(), conf));
+						rb.setUrl(Misc.toBrowsableUrl(rb.getIRI(), conf));
 					}
+
 					PropertyBean p = new PropertyBean();
 					p.setNsProperty(Misc.toNsResource(property, conf));
 					p.setProperty(property);
@@ -206,11 +213,15 @@ public class SPARQLEndPoint {
 				} else if (qs.get("p") != null) {
 					property = qs.get("p").asNode().toString();
 				}
-
 				try {
-					if (qs.get("s") != null) { // probably a blanknode
+					if (qs.get("s") != null && !qs.get("s").asNode().toString().startsWith("http://")) { // probably
+						// blanknode
 						rb.setIRI(qs.get("s").asNode().toString());
 						rb.setNsIRI("_:" + rb.getIRI());
+					} else if (qs.get("s") != null && qs.get("s").asNode().toString().startsWith("http://")) {
+						rb.setIRI(qs.get("s").asNode().toString());
+						rb.setNsIRI(Misc.toNsResource(rb.getIRI(), conf));
+						rb.setUrl(Misc.toBrowsableUrl(rb.getIRI(), conf));
 					}
 					PropertyBean p = new PropertyBean();
 					p.setNsProperty(Misc.toNsResource(property, conf));
@@ -304,7 +315,7 @@ public class SPARQLEndPoint {
 		return result;
 	}
 
-	private String parseQuery(String query, String IRI, String property, int start, String filter) {
+	public String parseQuery(String query, String IRI, String property, int start, String filter) {
 		if (IRI != null) {
 			/* managing issues depending on "$" in some IRIs */
 			query = query.replaceAll("\\$\\{IRI\\}", IRI.replaceAll("\\$", "%24")).replaceAll("%24", "\\$");
@@ -315,7 +326,7 @@ public class SPARQLEndPoint {
 		if (filter != null) {
 			query = query.replaceAll("\\$\\{FILTERPROPERTY\\}", filter);
 		}
-		if (start > 0 && query.contains("STARTFROM")) {
+		if (query.indexOf("STARTFROM")>0) {
 			query = query.replaceAll("\\$\\{STARTFROM\\}", "" + start);
 		} else if (start > 0) {
 			query = query.replaceAll("LIMIT (.+)$", "OFFSET " + start + " LIMIT $1");
