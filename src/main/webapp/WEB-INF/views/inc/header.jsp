@@ -14,15 +14,12 @@
 <meta name="twitter:description" content="LodView is a powerful RDF viewer, IRI dereferencer and opensource SPARQL navigator">
 <link rel="icon" type="image/png" href="${conf.getStaticResourceURL()}img/favicon.png">
 <link href='//fonts.googleapis.com/css?family=Roboto:100,300,500&subset=latin-ext,latin,greek-ext,greek,cyrillic-ext,vietnamese,cyrillic' rel='stylesheet' type='text/css'>
-<c:if test='${results.getLatitude()!=null && !results.getLatitude().equals("")}'>
 <!-- managing maps  -->
-<link rel="stylesheet" href="${conf.getStaticResourceURL()}leaflet/leaflet.css" />
-<script src="${conf.getStaticResourceURL()}leaflet/leaflet.js"></script>
-
-</c:if>
+<link rel="stylesheet" href="${conf.getStaticResourceURL()}vendor/leaflet/leaflet.css" />
+<script src="${conf.getStaticResourceURL()}vendor/leaflet/leaflet.js"></script>
 <link rel="canonical" href="${results.getMainIRI()}" >
-<script src="${conf.getStaticResourceURL()}masonry.pkgd.min.js"></script>
-<script src="${conf.getStaticResourceURL()}modernizr-custom.min.js"></script>
+<script src="${conf.getStaticResourceURL()}vendor/masonry.pkgd.min.js"></script>
+<script src="${conf.getStaticResourceURL()}vendor/modernizr-custom.min.js"></script>
 <c:set var="color1" value='${colorPair.replaceAll("-.+","") }' scope="page" />
 <c:set var="color2" value='${colorPair.replaceAll(".+-","") }' scope="page" />
 <style type="text/css">
@@ -51,3 +48,8 @@ div#loadPanel span.ok img {
 	var isRetina = window.devicePixelRatio > 1;
 	var isChrome = /chrom(e|ium)/.test(navigator.userAgent.toLowerCase())
 </script>
+<c:set var="hasMap" scope="page" value='${results.getLatitude()!=null && !results.getLatitude().equals("") && results.getLongitude()!=null&&!results.getLongitude().equals("")}'></c:set>
+<c:set var="hasLod" scope="page" value="${results.getLinking()!=null && results.getLinking().size()>0}"></c:set>
+<c:set var="hasImages" scope="page" value="${results.getImages()!=null && results.getImages().size()>0}"></c:set>
+<c:set var="hasVideos" scope="page" value="${results.getVideos()!=null && results.getVideos().size()>0}"></c:set>
+<c:set var="hasAudios" scope="page" value="${results.getAudios()!=null && results.getAudios().size()>0}"></c:set>
