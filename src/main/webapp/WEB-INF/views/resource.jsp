@@ -54,10 +54,9 @@
 				</c:otherwise>
 			</c:choose>
 		</header>
-		<c:set var="hasMap" scope="page" value='${results.getLatitude()!=null && !results.getLatitude().equals("") && results.getLongitude()!=null&&!results.getLongitude().equals("")}'></c:set>
-		<c:set var="hasLod" scope="page" value="${results.getLinking()!=null && results.getLinking().size()>0}"></c:set>
+
 		<c:choose>
-			<c:when test='${(results.getImages()!=null && results.getImages().size()>0) || hasMap || hasLod}'>
+			<c:when test='${hasImages || hasMap || hasLod}'>
 				<%@include file="inc/widgets.jsp"%>
 			</c:when>
 			<c:otherwise>

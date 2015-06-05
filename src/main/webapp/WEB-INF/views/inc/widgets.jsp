@@ -5,7 +5,7 @@
 		<%
 			/* including images */
 		%>
-		<c:if test='${results.getImages()!=null && results.getImages().size()>0}'>
+		<c:if test='${hasImages}'>
 			<div id="images">
 				<c:forEach items="${results.getImages() }" var="item">
 					<a href="${item}" target="_new"><img src="${item}"></a>
@@ -15,7 +15,7 @@
 		<%
 			/* including video */
 		%>
-		<c:if test='${results.getVideos()!=null && results.getVideos().size()>0}'>
+		<c:if test='${hasVideos}'>
 			<div id="video">
 				<c:forEach items="${results.getVideos() }" var="item">
 					 <c:if test="${item.contains('youtube') }">
@@ -27,7 +27,7 @@
 		<%
 			/* including audio */
 		%>
-		<c:if test='${results.getAudios()!=null && results.getAudios().size()>0}'>
+		<c:if test='${hasAudios}'>
 			<div id="audio">
 				<c:forEach items="${results.getAudios() }" var="item">
 					<audio controls> 
