@@ -6,7 +6,7 @@
 	document.write('</style>');
 </script>
 <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
-<script src="${conf.getStaticResourceURL()}jquery.min.js"></script>
+<script src="${conf.getStaticResourceURL()}vendor/jquery.min.js"></script>
 <meta property="og:title" content="${results.getTitle()} &mdash; LodView, giving data a new shape">
 <meta property="og:image" content="${conf.getStaticResourceURL()}img/lodview_sharer.png">
 <link rel="image_src" href="${conf.getStaticResourceURL()}img/lodview_sharer.png">
