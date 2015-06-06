@@ -50,6 +50,9 @@ LodView provides (and will provide) various widgets for displaying multimedia co
 ##### Image widget
 Easy access to the image referenced in the resource.
 
+##### Video and audio widget
+Players for videos and even audio files extracted form the resource.
+
 ##### Linked LOD resources widget
 To make the context of the viewed resourced even more understandable and to prove the power of the linked data cloud, all connected resources (eg. sameAs) are automatically shown with their title, an image or a map, and an abstract.
     
@@ -58,10 +61,7 @@ Geographical information is shown as points on a map (thanks to OSM project).
 **TODO**: manage shape representation.
 
 ##### Hierarchy widget
-**TODO**:  develop a widget which is able to represent hierarchical relations (eg. thesauri, family trees or taxonomies) 
-
-##### Multimedia widget
-Developing a multimedia player for viewing video or listening  to music is obviously an easy thing to implement, we hope that LodView will spread wide and that someone will ask us to do it.
+**TODO**: develop a widget which is able to represent hierarchical relations (eg. thesauri, family trees or taxonomies) 
 
 ##### SPARQL URL handler
 Because we want the SPARQL endpoint URL to be easy to deduce from a resource's IRI, LodView manages calls to http://data.yourdomain.com/sparql redirecting clients to the SPARQL endpoint real URL or proxying it for an even easier access (proxy feature is still under development). This particular feature simplifies server configuration and supports client's discovery capabilities.
