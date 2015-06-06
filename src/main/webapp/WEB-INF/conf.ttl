@@ -60,11 +60,11 @@
 ## 	IRIs namespace we use to replace the webapp base (eg. http://localhost:8080/lodview/), an
 ##	installation on dbpedia domain should use <http://dbpedia.org/resource/> 
 	
-	conf:IRInamespace <http://linkedjazz.org/resource/> ;
+	conf:IRInamespace <http://dbpedia.org/resource/>  ;
 
 ## 	EndPoint
 
-	conf:endpoint <https://linkedjazz.org/sparql/select>;
+	conf:endpoint <https://dbpedia.org/sparql>;
 
 ########## give it a try opening http://localhost:8080/lodview/Rome
 

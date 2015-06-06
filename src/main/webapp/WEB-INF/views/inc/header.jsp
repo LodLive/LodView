@@ -23,7 +23,7 @@
 <c:set var="color1" value='${colorPair.replaceAll("-.+","") }' scope="page" />
 <c:set var="color2" value='${colorPair.replaceAll(".+-","") }' scope="page" />
 <style type="text/css">
-hgroup, #linking a span,#audio .cp-container{
+hgroup, #linking a span,#audio .audio{
 	background-color: ${color1
 }
 
@@ -53,8 +53,7 @@ div#loadPanel span.ok img {
 <c:set var="hasImages" scope="page" value="${results.getImages()!=null && results.getImages().size()>0}"></c:set>
 <c:set var="hasVideos" scope="page" value="${results.getVideos()!=null && results.getVideos().size()>0}"></c:set>
 <c:set var="hasAudios" scope="page" value="${results.getAudios()!=null && results.getAudios().size()>0}"></c:set>
-<c:if test="${hasAudios }">	
-	<link rel="stylesheet" href="${conf.getStaticResourceURL()}vendor/jplayercircle/css/not.the.skin.css">
+<c:if test="${hasAudios }">	 
 	<link rel="stylesheet" href="${conf.getStaticResourceURL()}vendor/jplayercircle/circle.skin/circle.player.css">
 	<script type="text/javascript" src="${conf.getStaticResourceURL()}vendor/jplayercircle/js/jquery.transform.js"></script>
 	<script type="text/javascript" src="${conf.getStaticResourceURL()}vendor/jplayercircle/js/jquery.grab.js"></script>

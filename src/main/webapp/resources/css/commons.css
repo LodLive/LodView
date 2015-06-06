@@ -217,25 +217,27 @@ aside div#linking, aside div#images, aside div#audio , aside div#video{
 aside div#resourceMapCnt {
 	display: inline-block;
 	margin-right: 8px;
-	margin-bottom: 8px;
 }
 
-aside div#images a img, aside div#linking a span, aside div#resourceMapCnt map {
+aside div#images a img, aside div#linking a span, aside div#resourceMapCnt map , aside div#audio .audio {
 	height: 136px;
 	display: inline-block;
 	width: auto;
+}aside div#video{
+	height:144px;
 }
 aside div#video *{
 	height: 136px;
 	display: inline-block;
 	margin-right: 8px;
 }
-aside div#audio audio{
+aside div#audio .audio{
 	height: 136px;
 	display: inline-block;
 	width: 136px;
 	margin-right: 8px;
-	
+	margin-bottom: 8px;
+	background-position: -520px -65px;
 }
 
 aside div#linking {
