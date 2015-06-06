@@ -14,9 +14,7 @@
 	position: relative;
 	display:inline-block;
 	width: 70px; /* 200 - (2 * 48) */
-	height: 70px;
-	background: url("bgr.png") 0 0 no-repeat;
-	background-size:136px 136px;
+	height: 70px;  
 	padding: 33px;
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
 	  margin-right: 8px;
