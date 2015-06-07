@@ -67,9 +67,15 @@ h3 {
 	height: 150px;
 	background-color: #fff;
 }
-
+div.pair img{
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	width:100px;
+	height:auto;
+}
 div.pair div strong {
-	display: block;
+	display: none;
 	margin-right: 5px;
 	margin-left: 5px;
 	overflow: hidden;
@@ -358,7 +364,7 @@ div.pair div strong {
 				console.info('building ' + person)
 				var pair = $('<div class="pair"></div>');
 				if ($('[data-iri="' + person + '"]').length == 0) {
-					var hb = $('<div class="e"><div class="hb" data-iri="' + person + '" data-family="' + (JSON.stringify(pedigree.data[person]) + '').replace(/"/g, '') + '"><strong>' + pedigree.data.s[person].title + '</strong></div></div>');
+					var hb = $('<div class="e"><div class="hb" data-iri="' + person + '" data-family="' + (JSON.stringify(pedigree.data[person]) + '').replace(/"/g, '') + '"><strong>' + pedigree.data.s[person].title + '</strong>'+(pedigree.data.s[person].image?'<img src="'+ pedigree.data.s[person].image+'">':'')+'</div></div>');
 					if (person == pedigree.mainIRI) {
 						hb.addClass('mainIRI');
 					}
@@ -367,7 +373,7 @@ div.pair div strong {
 						var sp;
 						if (pedigree.data[person].spouse && pedigree.data.s[pedigree.data[person].spouse[0]]) {
 							$.each(pedigree.data[person].spouse, function(k, v) {
-								sp = $('<div class="e"><div  class="wf" data-iri="' + v + '" data-family="' + (JSON.stringify(pedigree.data[v]) + '').replace(/"/g, '') + '"><strong>' + pedigree.data.s[v].title + '</strong></div></div>');
+								sp = $('<div class="e"><div  class="wf" data-iri="' + v + '" data-family="' + (JSON.stringify(pedigree.data[v]) + '').replace(/"/g, '') + '"><strong>' + pedigree.data.s[v].title + '</strong>'+(pedigree.data.s[v].image?'<img src="'+ pedigree.data.s[v].image+'">':'')+'</div></div>');
 								if (wrapSpouse) {
 									wrapSpouse.append(sp);
 									pair.prepend(wrapSpouse);

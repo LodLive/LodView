@@ -336,7 +336,16 @@ public class ResourceBuilder {
 							data.put("birth", trip.getValue());
 						} else if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/deathDate")) {
 							data.put("death", trip.getValue());
-						} else if (conf.getImageProperties().contains(trip.getProperty().getNsProperty()) || conf.getImageProperties().contains(trip.getProperty().getProperty())) {
+						}  
+					}
+				}
+			}
+			lits = b.getResources(person.toString());
+			if (lits != null) {
+				for (PropertyBean lit : lits.keySet()) {
+					List<TripleBean> l = lits.get(lit);
+					for (TripleBean trip : l) {
+						if (conf.getImageProperties().contains(trip.getProperty().getNsProperty()) || conf.getImageProperties().contains(trip.getProperty().getProperty())) {
 							data.put("image", trip.getValue());
 						}
 					}
