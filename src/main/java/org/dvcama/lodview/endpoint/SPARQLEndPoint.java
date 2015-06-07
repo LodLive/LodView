@@ -114,7 +114,7 @@ public class SPARQLEndPoint {
 					results.add(rb);
 				} catch (Exception e) {
 					System.err.println("error? " + e.getMessage());
-					//e.printStackTrace();
+					// e.printStackTrace();
 				}
 			}
 		} catch (Exception ez) {
@@ -123,6 +123,53 @@ public class SPARQLEndPoint {
 				// System.out.println("query failed (" + ez.getMessage() +
 				// "), I'm giving another chance (" + retry + "/3)");
 				return moreThenOneQuery(qe, results, retry, overrideProperty);
+			}
+			ez.printStackTrace();
+			throw new Exception("connection refused");
+		}
+
+		return results;
+	}
+
+	private List<TripleBean> moreThenOneSubjectQuery(QueryExecution qe, List<TripleBean> results, int retry, String overrideProperty) throws Exception {
+
+		try {
+			ResultSet rs = qe.execSelect();
+			while (rs.hasNext()) {
+				TripleBean rb = new TripleBean();
+				QuerySolution qs = rs.next();
+				try {
+					if (qs.get("s") != null) {
+						Node object = qs.get("s").asNode();
+						if (object.isURI()) {
+							rb.setType("iri");
+							rb.setValue(object.toString(false));
+							rb.setNsValue(Misc.toNsResource(object.toString(false), conf));
+							rb.setUrl(Misc.toBrowsableUrl(object.toString(false), conf));
+						} else if (object.isLiteral()) {
+							rb.setType("literal");
+							rb.setDataType(object.getLiteralDatatypeURI());
+							rb.setNsDataType(Misc.toNsResource(object.getLiteralDatatypeURI(), conf));
+							rb.setLang(object.getLiteralLanguage());
+							rb.setValue(object.getLiteralLexicalForm());
+						} else if (object.isBlank()) {
+							rb.setType("bnode");
+							rb.setValue(object.toString(false));
+						}
+						results.add(rb);
+					}
+
+				} catch (Exception e) {
+					System.err.println("error? " + e.getMessage());
+					// e.printStackTrace();
+				}
+			}
+		} catch (Exception ez) {
+			if (retry < 3) {
+				retry++;
+				// System.out.println("query failed (" + ez.getMessage() +
+				// "), I'm giving another chance (" + retry + "/3)");
+				return moreThenOneSubjectQuery(qe, results, retry, overrideProperty);
 			}
 			ez.printStackTrace();
 			throw new Exception("connection refused");
@@ -290,6 +337,27 @@ public class SPARQLEndPoint {
 			System.out.println("is offline " + e.getMessage());
 			return "offline " + e.getMessage();
 		}
+	}
+
+	public List<TripleBean> doLocalSubjectQuery(Model m, String IRI, List<String> queries, String overrideProperty) {
+		// TODO: local query
+		return null;
+	}
+
+	public List<TripleBean> doSubjectQuery(String IRI, List<String> queries, String overrideProperty) throws Exception {
+		// System.out.println("executing query on " + conf.getEndPointUrl());
+		List<TripleBean> results = new ArrayList<TripleBean>();
+		HttpAuthenticator auth = null;
+		if (conf.getAuthPassword() != null && !conf.getAuthPassword().equals("")) {
+			auth = new SimpleAuthenticator(conf.getAuthUsername(), conf.getAuthPassword().toCharArray());
+		}
+		for (String query : queries) {
+
+			QueryExecution qe = QueryExecutionFactory.sparqlService(conf.getEndPointUrl(), parseQuery(query, IRI, null, -1, ""), auth);
+			results = moreThenOneSubjectQuery(qe, results, 0, overrideProperty);
+		}
+
+		return results;
 	}
 
 }
