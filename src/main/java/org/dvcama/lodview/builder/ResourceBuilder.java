@@ -286,7 +286,7 @@ public class ResourceBuilder {
 			preferredLanguage = locale.getLanguage();
 		}
  
-		Set<String> found = new HashSet<String>();
+		Set<String> found = new HashSet<String>(); 
 		Set<String> controlList = new HashSet<String>();
 
 		Map<String, Object> s = new HashMap<String, Object>();
@@ -301,13 +301,14 @@ public class ResourceBuilder {
 
 		/* find parents */
 		browseRelatives(IRI, "parents", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
+ 
 
 		// TODO: put this in conf file
 		List<String> list = conf.getTitleProperties();
 		list.add("http://dbpedia.org/ontology/birthDate");
 		list.add("http://dbpedia.org/ontology/deathDate");
 
-		for (Object person : found) {
+		for (Object person : found) { 
 
 			// getting more information about the person
 			System.out.println("found " + person);
@@ -368,6 +369,7 @@ public class ResourceBuilder {
 	@SuppressWarnings("unchecked")
  
 	private void browseRelatives(String IRI, String key, Map<Object, Object> resultMap, Set<String> found, Set<String> controlList, boolean deep, SPARQLEndPoint se, ConfigurationBean conf, boolean localMode, Locale locale, OntologyBean ontoBean) throws Exception {
+ 
 		Map<String, String> map = new HashMap<String, String>();
 
 		controlList.add(IRI + key);
@@ -378,7 +380,6 @@ public class ResourceBuilder {
 		map.put("broQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . <" + IRI + "> <http://dbpedia.org/property/parents> ?parent.?s  <http://dbpedia.org/property/parents> ?parent . FILTER(?s != <" + IRI + ">) }");
 
 		List<TripleBean> a = findeRelatives(IRI, map.get(key + "Query"), se, localMode);
- 
 
 		List<String> abouts = new ArrayList<String>();
 		System.out.println("looking for " + key + " of " + IRI);
@@ -403,6 +404,7 @@ public class ResourceBuilder {
 						browseRelatives(tripleBean.getValue(), "sons", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
 					} else if (key.equals("parents")) {
 						browseRelatives(tripleBean.getValue(), "parents", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
+ 
 					}
 				}
 			}
