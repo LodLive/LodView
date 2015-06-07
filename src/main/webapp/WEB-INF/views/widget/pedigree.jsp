@@ -11,11 +11,30 @@ body {
 	-webkit-box-sizing: border-box;
 }
 
-#bro div.pair {
+#pedigree-content {
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	top: 50%;
+	margin-top: -50px;
+}
+
+div.relContainer {
+	position: absolute
+}
+
+div.relContainer div.pair {
+  position: relative;
+  top: -200px;
+  left: 60px;
+}
+
+div.pair {
 	display: inline-block;
 	width: 220px;
 	height: 100px;
 	margin-right: 60px;
+	display: inline-block;
 }
 
 div.pair div.wf-connector {
@@ -74,13 +93,14 @@ div.pair div strong {
 	<div id="pedigree-content"></div>
 	<script>
 		$(function() {
-			pedigree.load();
+			pedigree.init();
 		});
 
 		var pedigree = {
 			"mainIRI" : "${param.IRI}",
 			"data" : {},
-			"load" : function() {
+			"c" : null,
+			"init" : function() {
 				$.ajax({
 					url : "${conf.getPublicUrlPrefix()}pedigree/data",
 					data : {
@@ -95,7 +115,7 @@ div.pair div strong {
 						data.s[pedigree.mainIRI] = {
 							//<c:forEach var="data" items="${results.getLiterals(param.IRI)}">
 							//<c:forEach items='${data.getValue()}' var="p"> 
-							"value" : "${p.getValue()}",
+							"title" : "${p.getValue()}",
 							"url" : '${p.getProperty().getPropertyUrl()}',
 							"nsIri" : '${p.getProperty().getNsProperty()}'
 						//</c:forEach>
@@ -110,7 +130,8 @@ div.pair div strong {
 					beforeSend : function() {
 						$('body').append('<strong>loading...</strong>');
 					}
-				})
+				});
+				this.c = $('#pedigree-content');
 			},
 			"process" : function() {
 				if (!this.data[this.mainIRI]) {
@@ -129,34 +150,54 @@ div.pair div strong {
 							broTemp.push(v);
 						});
 					}
-					var c = $('#pedigree-content');
+ 
 
 					bro = broTemp;
-					var brodiv = $('<div id="bro"></div>');
+
 					$.each(bro, function(k, v) {
-						var pair = $('<div class="pair"></div>');
-						var hb = $('<div class="hb" data-iri="'+v+'"><strong>' + pedigree.data.s[v].value + '</strong></div>');
-						if (v == pedigree.mainIRI) {
-							hb.addClass('mainIRI');
-						}
-
-						//TODO: more then one spouse and string spouse
-						var sp;
-						if (pedigree.data[v] && pedigree.data[v].spouse && pedigree.data.s[pedigree.data[v].spouse[0]]) {
-							sp = $('<div class="wf" data-iri="'+pedigree.data[v].spouse[0]+'"><strong>' + pedigree.data.s[pedigree.data[v].spouse[0]].value + '</strong></div>');
-							pair.append(sp);
-							pair.append('<div class="wf-connector"></div>')
-						}
-
-						pair.append(hb);
-						pair.find('[data-iri]').click(function() {
-							document.location = '?IRI=' + $(this).attr("data-iri");
-						});
-						brodiv.append(pair);
+						var pair = pedigree.buildPair(v);
+						pedigree.c.append(pair)
 					});
-					c.append(brodiv);
-				}
 
+					if (this.data[this.mainIRI].parents) {
+						// find the father
+						this.buildFather(this.data[this.mainIRI].parents[0], $('.mainIRI').closest('.pair'));
+					}
+
+				}
+			},
+			buildFather : function(person, son) {
+				console.info('parent ' + person + ' ok ' + son.attr("data-iri"))
+				var pair = this.buildPair(person);
+				var cont = $('<div class="relContainer"></div>');
+				cont.append(pair);
+				son.prepend().append(cont);
+				/* if (this.data[person].parents) {
+					this.buildFather(this.data[person].parents[0],pair)
+				} */
+			},
+			buildPair : function(person) {
+				console.info('building ' + person)
+				var pair = $('<div class="pair"></div>');
+				var hb = $('<div class="hb" data-iri="'+person+'"><strong>' + pedigree.data.s[person].title + '</strong></div>');
+				if (person == pedigree.mainIRI) {
+					hb.addClass('mainIRI');
+				}
+				if (pedigree.data[person]) {
+					//TODO: more then one spouse and string spouse
+					var sp;
+					if (pedigree.data[person].spouse && pedigree.data.s[pedigree.data[person].spouse[0]]) {
+						sp = $('<div class="wf" data-iri="'+pedigree.data[person].spouse[0]+'"><strong>' + pedigree.data.s[pedigree.data[person].spouse[0]].title + '</strong></div>');
+						pair.append(sp);
+						pair.append('<div class="wf-connector"></div>')
+					}
+				}
+				pair.append(hb);
+				pair.find('[data-iri]').click(function() {
+					document.location = '?IRI=' + $(this).attr("data-iri");
+				});
+
+				return pair;
 			}
 		}
 	</script>
