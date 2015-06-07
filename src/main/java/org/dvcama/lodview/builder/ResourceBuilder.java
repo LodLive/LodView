@@ -31,7 +31,7 @@ public class ResourceBuilder {
 	}
 
 	public ResourceBuilder(MessageSource messageSource) {
-		this.messageSource = messageSource;s
+		this.messageSource = messageSource;
 	}
 
 	public ResultBean buildHtmlResource(String IRI, Locale locale, ConfigurationBean conf, OntologyBean ontoBean) throws Exception {
@@ -40,7 +40,6 @@ public class ResourceBuilder {
 
 	public ResultBean buildHtmlResource(String IRI, Locale locale, ConfigurationBean conf, OntologyBean ontoBean, boolean localMode) throws Exception {
 
- 
 		return buildHtmlResource(IRI, locale, conf, ontoBean, localMode, conf.getDefaultQueries());
 	}
 
@@ -61,7 +60,7 @@ public class ResourceBuilder {
 			}
 			triples = se.doLocalQuery(m, IRI, queries);
 		} else {
-			triples = se.doQuery(IRI, queries, null); 
+			triples = se.doQuery(IRI, queries, null);
 		}
 
 		return triplesToResult(IRI, triples, locale, conf, ontoBean);
@@ -285,8 +284,8 @@ public class ResourceBuilder {
 		if (preferredLanguage.equals("auto")) {
 			preferredLanguage = locale.getLanguage();
 		}
- 
-		Set<String> found = new HashSet<String>(); 
+
+		Set<String> found = new HashSet<String>();
 		Set<String> controlList = new HashSet<String>();
 
 		Map<String, Object> s = new HashMap<String, Object>();
@@ -301,14 +300,14 @@ public class ResourceBuilder {
 
 		/* find parents */
 		browseRelatives(IRI, "parents", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
- 
 
 		// TODO: put this in conf file
 		List<String> list = conf.getTitleProperties();
 		list.add("http://dbpedia.org/ontology/birthDate");
 		list.add("http://dbpedia.org/ontology/deathDate");
+		list.addAll(conf.getImageProperties());
 
-		for (Object person : found) { 
+		for (Object person : found) {
 
 			// getting more information about the person
 			System.out.println("found " + person);
@@ -329,13 +328,17 @@ public class ResourceBuilder {
 			data.put("nsIri", Misc.toNsResource(person.toString(), conf));
 
 			Map<PropertyBean, List<TripleBean>> lits = b.getLiterals(person.toString());
-			for (PropertyBean lit : lits.keySet()) {
-				List<TripleBean> l = lits.get(lit);
-				for (TripleBean trip : l) {
-					if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/birthDate")) {
-						data.put("birth", trip.getValue());
-					} else if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/deathDate")) {
-						data.put("death", trip.getValue());
+			if (lits != null) {
+				for (PropertyBean lit : lits.keySet()) {
+					List<TripleBean> l = lits.get(lit);
+					for (TripleBean trip : l) {
+						if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/birthDate")) {
+							data.put("birth", trip.getValue());
+						} else if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/deathDate")) {
+							data.put("death", trip.getValue());
+						} else if (conf.getImageProperties().contains(trip.getProperty().getNsProperty()) || conf.getImageProperties().contains(trip.getProperty().getProperty())) {
+							data.put("image", trip.getValue());
+						}
 					}
 				}
 			}
@@ -367,17 +370,16 @@ public class ResourceBuilder {
 	}
 
 	@SuppressWarnings("unchecked")
- 
 	private void browseRelatives(String IRI, String key, Map<Object, Object> resultMap, Set<String> found, Set<String> controlList, boolean deep, SPARQLEndPoint se, ConfigurationBean conf, boolean localMode, Locale locale, OntologyBean ontoBean) throws Exception {
- 
+
 		Map<String, String> map = new HashMap<String, String>();
 
 		controlList.add(IRI + key);
 		// TODO: put this in conf file
-		map.put("parentsQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . <" + IRI + "> <http://dbpedia.org/property/parents> ?s. FILTER(?s != <" + IRI + ">)}");
-		map.put("spouseQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . {<" + IRI + "> <http://dbpedia.org/ontology/spouse> ?s. FILTER(?s != <" + IRI + ">)} UNION {?s <http://dbpedia.org/ontology/spouse> <" + IRI + ">. FILTER(?s != <" + IRI + ">)}}");
-		map.put("sonsQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . ?s <http://dbpedia.org/property/parents> <" + IRI + ">. FILTER(?s != <" + IRI + ">)}");
-		map.put("broQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person> . <" + IRI + "> <http://dbpedia.org/property/parents> ?parent.?s  <http://dbpedia.org/property/parents> ?parent . FILTER(?s != <" + IRI + ">) }");
+		map.put("parentsQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person>; a ?a FILTER(?a != <http://dbpedia.org/ontology/OfficeHolder>) . { <" + IRI + "> <http://dbpedia.org/property/parents> ?s. FILTER(?s != <" + IRI + ">)} UNION {?s <http://dbpedia.org/property/children>  <" + IRI + "> . }}");
+		map.put("spouseQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person>; a ?a FILTER(?a != <http://dbpedia.org/ontology/OfficeHolder>) . {<" + IRI + "> <http://dbpedia.org/ontology/spouse> ?s. FILTER(?s != <" + IRI + ">)} UNION {?s <http://dbpedia.org/ontology/spouse> <" + IRI + ">. FILTER(?s != <" + IRI + ">)}}");
+		map.put("sonsQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person>; a ?a FILTER(?a != <http://dbpedia.org/ontology/OfficeHolder>) . {?s <http://dbpedia.org/property/parents> <" + IRI + ">. FILTER(?s != <" + IRI + ">)} UNION {<" + IRI + ">  <http://dbpedia.org/property/children>  ?s. }}");
+		map.put("broQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person>; a ?a FILTER(?a != <http://dbpedia.org/ontology/OfficeHolder>) . <" + IRI + "> <http://dbpedia.org/property/parents> ?parent.?s  <http://dbpedia.org/property/parents> ?parent . FILTER(?s != <" + IRI + ">) }");
 
 		List<TripleBean> a = findeRelatives(IRI, map.get(key + "Query"), se, localMode);
 
@@ -392,24 +394,30 @@ public class ResourceBuilder {
 				ele = new HashMap<Object, Object>();
 			}
 			ele.put(key, abouts);
- 
 
 			resultMap.put(IRI, ele);
 			found.add(tripleBean.getValue());
 
 			if (!controlList.contains(tripleBean.getValue() + key)) {
-				browseRelatives(tripleBean.getValue(), "spouse", resultMap, found, controlList, false, se, conf, localMode, locale, ontoBean);
+				// browseRelatives(tripleBean.getValue(), "spouse", resultMap,
+				// found, controlList, false, se, conf, localMode, locale,
+				// ontoBean);
 				if (deep) {
+					// if (key.equals("sons")) {
+					// browseRelatives(tripleBean.getValue(), "sons", resultMap,
+					// found, controlList, true, se, conf, localMode, locale,
+					// ontoBean);
 					if (key.equals("sons")) {
-						browseRelatives(tripleBean.getValue(), "sons", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
-					} else if (key.equals("parents")) {
+						browseRelatives(tripleBean.getValue(), "sons", resultMap, found, controlList, false, se, conf, localMode, locale, ontoBean);
+					}
+					if (key.equals("parents")) {
 						browseRelatives(tripleBean.getValue(), "parents", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
- 
+						browseRelatives(tripleBean.getValue(), "spouse", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
 					}
 				}
 			}
 
-		} 
+		}
 	}
 
 	private List<TripleBean> findeRelatives(String IRI, String query, SPARQLEndPoint se, boolean localMode) throws Exception {
@@ -447,7 +455,7 @@ public class ResourceBuilder {
 		List<String> images = new ArrayList<String>();
 		List<String> linking = new ArrayList<String>();
 		List<String> videos = new ArrayList<String>();
-		List<String> audios = new ArrayList<String>(); 
+		List<String> audios = new ArrayList<String>();
 		for (TripleBean tripleBean : triples) {
 
 			if (tripleBean.getIRI() == null) {
@@ -478,7 +486,7 @@ public class ResourceBuilder {
 			} else if (conf.getAudioProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getAudioProperties().contains(tripleBean.getProperty().getProperty())) {
 				audios.add(tripleBean.getValue());
 			} else if (conf.getVideoProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getVideoProperties().contains(tripleBean.getProperty().getProperty())) {
-				videos.add(tripleBean.getValue()); 
+				videos.add(tripleBean.getValue());
 			} else if (conf.getLinkingProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getLinkingProperties().contains(tripleBean.getProperty().getProperty())) {
 				linking.add(tripleBean.getValue());
 			} else if (conf.getTypeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getTypeProperties().contains(tripleBean.getProperty().getProperty())) {

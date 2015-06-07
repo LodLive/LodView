@@ -64,7 +64,7 @@
 
 ## 	EndPoint
 
-	conf:endpoint <https://dbpedia.org/sparql>;
+	conf:endpoint <http://dbpedia.org/sparql>;
 
 ########## give it a try opening http://localhost:8080/lodview/Rome
 
@@ -162,7 +162,7 @@
 	
 	conf:titleProperties		dc:title , dcterms:title, rdfs:label , <http://www.w3.org/2004/02/skos/core#prefLabel> , 
 								<http://www.w3.org/2008/05/skos-xl#prefLabel> , <http://www.w3.org/2009/08/skos-reference/skos.html#prefLabel> , 
-								gn:officialName , gn:name , rdf:value , foaf:surname , <http://purl.org/collections/nl/am/title> , <http://xmlns.com/foaf/0.1/name>;  
+								gn:officialName , gn:name , rdf:value ,  <http://purl.org/collections/nl/am/title> , <http://xmlns.com/foaf/0.1/name>;  
 								
 	conf:descriptionProperties	rdfs:comment , dc:description , dcterms:description , 
 								dc:description , skos:definition ,  <http://dbpedia.org/ontology/abstract>;

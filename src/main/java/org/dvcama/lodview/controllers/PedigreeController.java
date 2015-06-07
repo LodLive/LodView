@@ -53,6 +53,7 @@ public class PedigreeController {
 
 	private Object pedigreePage(ConfigurationBean conf, ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, String output, String IRI, String colorPair) {
 
+		model.addAttribute("colorPair", colorPair);
 		model.addAttribute("conf", conf);
 		model.addAttribute("Misc", new Misc());
 
@@ -95,7 +96,7 @@ public class PedigreeController {
 		model.addAttribute("Misc", new Misc());
 
 		System.out.println("####################################################################");
-		System.out.println("#################  looking for " + IRI + " in pedigree byg.portal ################# ");
+		System.out.println("#################  looking for " + IRI + " in pedigreeData ################# ");
 
 		try {
 			model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
