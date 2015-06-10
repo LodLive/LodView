@@ -53,21 +53,21 @@ div#loadPanel span.ok img {
 	conf['IRInamespace'] = "${conf.getIRInamespace()}";
 	conf['PublicUrlPrefix'] = "${conf.getPublicUrlPrefix()}";
 	conf['StaticResourceURL'] = "${conf.getStaticResourceURL()}";
-	
 	conf['MainIRI'] = "${results.getMainIRI()}";
 	conf['HomeUrl'] = "${conf.getHomeUrl()}";
 	conf['locale'] = "${locale}";
 	conf['suffix'] = "${suffix}";
 	conf['DefaultInverseBehaviour'] = "${conf.getDefaultInverseBehaviour()}";
-	
- </script>
+</script>
 <c:set var="hasMap" scope="page" value='${results.getLatitude()!=null && !results.getLatitude().equals("") && results.getLongitude()!=null&&!results.getLongitude().equals("")}'></c:set>
 <c:set var="hasLod" scope="page" value="${results.getLinking()!=null && results.getLinking().size()>0}"></c:set>
 <c:set var="hasImages" scope="page" value="${results.getImages()!=null && results.getImages().size()>0}"></c:set>
 <c:set var="hasVideos" scope="page" value="${results.getVideos()!=null && results.getVideos().size()>0}"></c:set>
 <c:set var="hasAudios" scope="page" value="${results.getAudios()!=null && results.getAudios().size()>0}"></c:set>
->
 <c:set var="hasFamilyTree" scope="page" value="${results.gethasFamilyTree()}"></c:set>
+<c:if test="${hasFamilyTree }">
+	<script type="text/javascript" src="${conf.getStaticResourceURL()}js/familytree.js"></script>
+</c:if>
 <c:if test="${hasAudios }">
 	<link rel="stylesheet" href="${conf.getStaticResourceURL()}vendor/jplayercircle/circle.skin/circle.player.css">
 	<script type="text/javascript" src="${conf.getStaticResourceURL()}vendor/jplayercircle/js/jquery.transform.js"></script>
