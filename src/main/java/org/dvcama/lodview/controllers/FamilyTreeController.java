@@ -91,7 +91,7 @@ public class FamilyTreeController {
 		return familytreeData(conf, model, req, res, locale, output, IRI, colorPair);
 	}
 
-	public Object familytreeData( ConfigurationBean conf, ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, String output, String IRI, String colorPair) throws UnsupportedEncodingException {
+	public Object familytreeData(ConfigurationBean conf, ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, String output, String IRI, String colorPair) throws UnsupportedEncodingException {
 		model.addAttribute("conf", conf);
 		model.addAttribute("Misc", new Misc());
 

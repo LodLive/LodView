@@ -95,15 +95,14 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 			colorPairMatcher = populateColorPairMatcher();
 		}
 		
-		if( getMultiConfValue("familytree").size()>0) {
-			familytreeData.put("birthDate",  getMultiConfValue("birthDate"));
-			familytreeData.put("deathDeate",  getMultiConfValue("deathDeate"));
-			familytreeData.put("parentsQuery",  getMultiConfValue("parentsQuery"));
-			familytreeData.put("sonsQuery",  getMultiConfValue("sonsQuery"));
-			familytreeData.put("spouseQuery",  getMultiConfValue("spouseQuery"));
-			familytreeData.put("broQuery",  getMultiConfValue("broQuery"));
+			familytreeData.put("birthDate",  getMultiConfValue("familytreeBirthDate"));
+			familytreeData.put("deathDate",  getMultiConfValue("familytreeDeathDate"));
+			familytreeData.put("parentsQuery",  getMultiConfValue("familytreeParentsQuery"));
+			familytreeData.put("sonsQuery",  getMultiConfValue("familytreeSonsQuery"));
+			familytreeData.put("spouseQuery",  getMultiConfValue("familytreeSpouseQuery"));
+			familytreeData.put("broQuery",  getMultiConfValue("familytreeBroQuery"));
 			familytreeData.put("familytreeTestProperties",  getMultiConfValue("familytreeTestProperties"));
-		}
+		System.out.println(familytreeData);
 
 		skipDomains = getMultiConfValue("skipDomains");
 	}

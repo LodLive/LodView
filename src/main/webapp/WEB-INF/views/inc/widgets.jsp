@@ -1,4 +1,4 @@
-<%@page session="true"%><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page session="true"%><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%@taglib uri="http://www.springframework.org/tags" prefix="sp"%>
 <aside><span class="c1"></span><div id="widgets" class="c2"><%
 			/* including images */
 		%><c:if test='${hasImages}'>
@@ -47,9 +47,9 @@
 			</div></c:if><%
 			/* external resources link */
 		%><c:if test='${hasFamilyTree}'><div id="familytree">
-				<a href="#familytree" title="family tree"><span class="sp"></span></a>
-			</div></c:if>><%
+				<a href="#familytree" title="<sp:message code='widget.familytree' text='family tree' />"><span class="sp"><strong class="widgetTitle"><sp:message code='widget.familytree' text='family tree' /></strong></span></a>
+			</div></c:if><%
 			/* external resources link */
 		%><c:if test='${hasLod}'><div id="linking">
-				<a href="#lodCloud" title="data from the lod cloud"><span class="sp"></span></a>
+				<a href="#lodCloud" title="<sp:message code='widget.lodcloud' text='lodcloud' />"><span class="sp"><strong class="widgetTitle"><sp:message code='widget.lodcloud' text='lodcloud' /></strong></span></a>
 			</div></c:if></div></aside>

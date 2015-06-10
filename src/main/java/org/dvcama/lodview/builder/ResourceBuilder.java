@@ -496,7 +496,7 @@ public class ResourceBuilder {
 				linking.add(tripleBean.getValue());
 			} else if (conf.getTypeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getTypeProperties().contains(tripleBean.getProperty().getProperty())) {
 				result.setTypeProperty(tripleBean.getProperty());
-			} else if (conf.getFamilyTreeData("familytreeTestProperties").contains(tripleBean.getProperty().getNsProperty()) || conf.getTypeProperties().contains(tripleBean.getProperty().getProperty())) {
+			} else if (conf.getFamilyTreeData("familytreeTestProperties").contains(tripleBean.getProperty().getNsProperty()) || conf.getFamilyTreeData("familytreeTestProperties").contains(tripleBean.getProperty().getProperty())) {
 				result.setHasFamilyTree(true);
 			}
 

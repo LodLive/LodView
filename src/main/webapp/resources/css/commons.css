@@ -3,7 +3,7 @@
 /* ********************************************** */
 .sp {
 	background-image: url(../img/lodview-sprite.png);
-	background-size: 1000px 600px;
+	background-size: 1250px 600px;
 }
 
 div#logoBanner div#logo {
@@ -179,7 +179,7 @@ aside {
 	padding: 24px 24px 16px 24px;
 }
 
-#widgets>div#images>a:hover, #widgets>div#linking>a:hover {
+#widgets>div#images>a:hover, #widgets>div#linking>a:hover, #widgets>div#familytree>a:hover  {
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
 	filter: alpha(opacity = 90);
 	opacity: 0.9;
@@ -210,7 +210,7 @@ aside div.noImg {
 	background-size: 300px 250px;
 }
 
-aside div#linking, aside div#images, aside div#audio , aside div#video{
+aside div#linking, aside div#familytree, aside div#images, aside div#audio , aside div#video{
 	display: inline-block;
 }
 
@@ -218,12 +218,33 @@ aside div#resourceMapCnt {
 	display: inline-block;
 	margin-right: 8px;
 }
+aside div#familytree{
+	margin-right: 8px;
+	margin-bottom: 8px;
+}
 
-aside div#images a img, aside div#linking a span, aside div#resourceMapCnt map , aside div#audio .audio {
+aside div#images a img, aside div#linking a span, aside div#familytree a span, aside div#resourceMapCnt map , aside div#audio .audio {
 	height: 136px;
 	display: inline-block;
 	width: auto;
-}aside div#video{
+	overflow:hidden;
+}
+
+aside div#linking a strong.widgetTitle, aside div#familytree a strong.widgetTitle, aside div#audio strong.widgetTitle {
+	display: inline;
+	position: relative;
+	top: 113px;
+  	left: 10px;
+  	letter-spacing: .6;
+	font-size: 10px;
+	text-transform: uppercase;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
+	filter: alpha(opacity = 2.5);
+	opacity: 0.25;
+	color:#fff;
+}
+
+aside div#video{
 	height:144px;
 }
 aside div#video *{
@@ -240,13 +261,18 @@ aside div#audio .audio{
 	background-position: -520px -65px;
 }
 
-aside div#linking {
+aside div#linking, aside div#familytree {
 	margin-bottom: 8px;
 }
 
-aside div#linking a span {
+aside div#linking a span  {
 	width: 136px;
 	background-position: -280px -65px;
+}
+
+aside div#familytree a span {
+	width: 136px;
+	background-position: -980px -65px;
 }
 
 aside div#resourceMapCnt map {
