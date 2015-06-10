@@ -11,7 +11,7 @@ body {
 	-webkit-box-sizing: border-box;
 }
 
-#pedigree-content {
+#familytree-content {
 	text-align: left;
 }
 
@@ -178,7 +178,7 @@ div.pair div strong {
 </style>
 </head>
 <body class="">
-	<div id="pedigree-content">
+	<div id="familytree-content">
 		<div id="grampas">
 			<div id="fgp">
 				<h3>GRANDPARENTS</h3>
@@ -206,26 +206,26 @@ div.pair div strong {
 	</div>
 	<script>
 		$(function() {
-			pedigree.init();
+			familytree.init();
 		});
 
-		var pedigree = {
+		var familytree = {
 			"mainIRI" : "${param.IRI}",
 			"data" : {},
 			"c" : null,
 			"mainOffset" : null,
 			"init" : function() {
-				this.c = $('#pedigree-content');
-				this.sons = $('#pedigree-content').find('#sons');
-				this.mainOffset = $('#pedigree-content').offset().top;
+				this.c = $('#familytree-content');
+				this.sons = $('#familytree-content').find('#sons');
+				this.mainOffset = $('#familytree-content').offset().top;
 				if (localStorage && localStorage.getItem('${param.IRI}')) {
-					pedigree.data = (JSON.parse(localStorage.getItem('${param.IRI}')));
-					pedigree.process();
+					familytree.data = (JSON.parse(localStorage.getItem('${param.IRI}')));
+					familytree.process();
 				} else {
 					$.ajax({
-						url : "${conf.getPublicUrlPrefix()}pedigree/data",
+						url : "${conf.getPublicUrlPrefix()}familytree/data",
 						data : {
-							"IRI" : pedigree.mainIRI,
+							"IRI" : familytree.mainIRI,
 							"sparql" : "${conf.getEndPointUrl()}",
 							"prefix" : "${conf.getIRInamespace()}"
 						},
@@ -234,7 +234,7 @@ div.pair div strong {
 						success : function(data) {
 							console.info(data);
 							$('body').find('strong').text('success!');
-							data.s[pedigree.mainIRI] = {
+							data.s[familytree.mainIRI] = {
 								//<c:forEach var="data" items="${results.getLiterals(param.IRI)}">
 								//<c:forEach items='${data.getValue()}' var="p"> 
 								"title" : "${p.getValue()}",
@@ -246,8 +246,8 @@ div.pair div strong {
 							if (localStorage) {
 								localStorage.setItem('${param.IRI}', JSON.stringify(data));
 							}
-							pedigree.data = data;
-							pedigree.process();
+							familytree.data = data;
+							familytree.process();
 						},
 						error : function(data) {
 							$('body').find('strong').text('error!');
@@ -266,11 +266,11 @@ div.pair div strong {
 					var broTemp = [];
 					if (!bro) {
 						bro = [];
-						broTemp.push(pedigree.mainIRI);
+						broTemp.push(familytree.mainIRI);
 					} else {
 						$.each(bro, function(k, v) {
 							if (k == 0) {
-								broTemp.push(pedigree.mainIRI);
+								broTemp.push(familytree.mainIRI);
 							}
 							broTemp.push(v);
 						});
@@ -278,28 +278,28 @@ div.pair div strong {
 
 					bro = broTemp;
 					$.each(bro, function(k, v) {
-						var pair = pedigree.buildPair(v, k == 0, $('<div id="spouse"><h3>SPOUSE</h3></div>'));
+						var pair = familytree.buildPair(v, k == 0, $('<div id="spouse"><h3>SPOUSE</h3></div>'));
 						if (k == 0) {
-							pedigree.c.find('#mainr').prepend(pair)
+							familytree.c.find('#mainr').prepend(pair)
 						} else {
-							pedigree.c.find('#sibl').children('*:last').before(pair)
+							familytree.c.find('#sibl').children('*:last').before(pair)
 						}
 
 					});
 					var sons = this.data[this.mainIRI].sons;
 					if (sons) {
 						$.each(sons, function(k, v) {
-							var pair = pedigree.buildPair(v, false);
+							var pair = familytree.buildPair(v, false);
 							if(pair.text()){
-								pedigree.c.children('#sons').append(pair);
+								familytree.c.children('#sons').append(pair);
 							}
-							if (pedigree.data[v]) {
-								var grandsons = pedigree.data[v].sons;
+							if (familytree.data[v]) {
+								var grandsons = familytree.data[v].sons;
 								if (grandsons) {
 									$.each(grandsons, function(ak, av) {
-										var apair = pedigree.buildPair(av, false);
+										var apair = familytree.buildPair(av, false);
 										if(apair.text()){
-											pedigree.c.children('#grandsons').append(apair)
+											familytree.c.children('#grandsons').append(apair)
 										}
 									});
 								}
@@ -311,17 +311,17 @@ div.pair div strong {
 					if (parents) {
 						var swit = false;
 						$.each(parents, function(k, v) {
-							var pair = pedigree.buildPair(v, true);
-							pedigree.c.children('#parents').append(pair);
-							if (pedigree.data[v]) {
-								var grampa = pedigree.data[v].parents;
+							var pair = familytree.buildPair(v, true);
+							familytree.c.children('#parents').append(pair);
+							if (familytree.data[v]) {
+								var grampa = familytree.data[v].parents;
 								if (grampa) {
 									$.each(grampa, function(ak, av) {
-										var apair = pedigree.buildPair(av, true);
+										var apair = familytree.buildPair(av, true);
 										if (swit) {
-											pedigree.c.find('#fgp').append(apair)
+											familytree.c.find('#fgp').append(apair)
 										} else {
-											pedigree.c.find('#mgp').append(apair)
+											familytree.c.find('#mgp').append(apair)
 										}
 										swit = true;
 									});
@@ -364,16 +364,16 @@ div.pair div strong {
 				console.info('building ' + person)
 				var pair = $('<div class="pair"></div>');
 				if ($('[data-iri="' + person + '"]').length == 0) {
-					var hb = $('<div class="e"><div class="hb" data-iri="' + person + '" data-family="' + (JSON.stringify(pedigree.data[person]) + '').replace(/"/g, '') + '"><strong>' + pedigree.data.s[person].title + '</strong>'+(pedigree.data.s[person].image?'<img src="'+ pedigree.data.s[person].image+'">':'')+'</div></div>');
-					if (person == pedigree.mainIRI) {
+					var hb = $('<div class="e"><div class="hb" data-iri="' + person + '" data-family="' + (JSON.stringify(familytree.data[person]) + '').replace(/"/g, '') + '"><strong>' + familytree.data.s[person].title + '</strong>'+(familytree.data.s[person].image?'<img src="'+ familytree.data.s[person].image+'">':'')+'</div></div>');
+					if (person == familytree.mainIRI) {
 						hb.addClass('mainIRI');
 					}
-					if (writeSpouse && pedigree.data[person]) {
+					if (writeSpouse && familytree.data[person]) {
 						//TODO: more then one spouse and string spouse
 						var sp;
-						if (pedigree.data[person].spouse && pedigree.data.s[pedigree.data[person].spouse[0]]) {
-							$.each(pedigree.data[person].spouse, function(k, v) {
-								sp = $('<div class="e"><div  class="wf" data-iri="' + v + '" data-family="' + (JSON.stringify(pedigree.data[v]) + '').replace(/"/g, '') + '"><strong>' + pedigree.data.s[v].title + '</strong>'+(pedigree.data.s[v].image?'<img src="'+ pedigree.data.s[v].image+'">':'')+'</div></div>');
+						if (familytree.data[person].spouse && familytree.data.s[familytree.data[person].spouse[0]]) {
+							$.each(familytree.data[person].spouse, function(k, v) {
+								sp = $('<div class="e"><div  class="wf" data-iri="' + v + '" data-family="' + (JSON.stringify(familytree.data[v]) + '').replace(/"/g, '') + '"><strong>' + familytree.data.s[v].title + '</strong>'+(familytree.data.s[v].image?'<img src="'+ familytree.data.s[v].image+'">':'')+'</div></div>');
 								if (wrapSpouse) {
 									wrapSpouse.append(sp);
 									pair.prepend(wrapSpouse);
@@ -397,7 +397,7 @@ div.pair div strong {
 			},
 			hasParent : function(iri) {
 				var yes = false;
-				$.each(pedigree.data, function(k, v) {
+				$.each(familytree.data, function(k, v) {
 					if (k == iri && v.parents) {
 						yes = true;
 						return false;
@@ -407,7 +407,7 @@ div.pair div strong {
 			},
 			isParent : function(iri) {
 				var yes = false;
-				$.each(pedigree.data, function(k, v) {
+				$.each(familytree.data, function(k, v) {
 					if (v.parents && $.inArray(iri, v.parents) != -1) {
 						yes = true;
 						return false;
@@ -417,7 +417,7 @@ div.pair div strong {
 			},
 			isBrother : function(iri) {
 				var yes = false;
-				$.each(pedigree.data, function(k, v) {
+				$.each(familytree.data, function(k, v) {
 					if (v.bro && $.inArray(iri, v.bro) != -1) {
 						yes = true;
 						return false;

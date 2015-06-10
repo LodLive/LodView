@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 public class ResultBean {
- 
+
 	public String title, latitude = null, longitude = null, mainIRI = null;
 	public PropertyBean descriptionProperty = null, typeProperty = null;
 	public List<String> images = null, linking = null, videos = null, audios = null;
- 
+	public boolean familytree = false;
+
+
 	public Map<String, LinkedHashMap<PropertyBean, List<TripleBean>>> literals = new HashMap<String, LinkedHashMap<PropertyBean, List<TripleBean>>>(), resources = new HashMap<String, LinkedHashMap<PropertyBean, List<TripleBean>>>(), bnodes = new HashMap<String, LinkedHashMap<PropertyBean, List<TripleBean>>>();
 
 	private Map<String, LinkedHashMap<PropertyBean, List<TripleBean>>> addEle(String IRI, TripleBean tripleBean, Map<String, LinkedHashMap<PropertyBean, List<TripleBean>>> ele) {
@@ -193,4 +195,12 @@ public class ResultBean {
 		this.audios = audios;
 	}
 
+	public void setHasFamilyTree(boolean familytree) {
+		this.familytree = familytree;
+
+	}
+
+	public boolean hasFamilyTree() {
+		return familytree;
+	}
 }

@@ -46,6 +46,10 @@
 				<map name="resourceMap" id="resourceMap" class="sp"></map>
 			</div></c:if><%
 			/* external resources link */
+		%><c:if test='${hasFamilyTree}'><div id="familytree">
+				<a href="#familytree" title="family tree"><span class="sp"></span></a>
+			</div></c:if>><%
+			/* external resources link */
 		%><c:if test='${hasLod}'><div id="linking">
 				<a href="#lodCloud" title="data from the lod cloud"><span class="sp"></span></a>
 			</div></c:if></div></aside>

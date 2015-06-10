@@ -304,8 +304,8 @@ public class ResourceBuilder {
 		// TODO: put this in conf file
 		List<String> list = conf.getTitleProperties();
 		list.addAll(conf.getImageProperties());
-		list.addAll(conf.getPedigreeData("birthDate"));
-		list.addAll(conf.getPedigreeData("deathDate"));
+		list.addAll(conf.getFamilyTreeData("birthDate"));
+		list.addAll(conf.getFamilyTreeData("deathDate"));
 
 		for (Object person : found) {
 
@@ -332,9 +332,9 @@ public class ResourceBuilder {
 				for (PropertyBean lit : lits.keySet()) {
 					List<TripleBean> l = lits.get(lit);
 					for (TripleBean trip : l) {
-						if (conf.getPedigreeData("birthDate").contains(trip.getProperty().getProperty())) {
+						if (conf.getFamilyTreeData("birthDate").contains(trip.getProperty().getProperty())) {
 							data.put("birth", trip.getValue());
-						} else if (conf.getPedigreeData("deathDate").contains(trip.getProperty().getProperty())) {
+						} else if (conf.getFamilyTreeData("deathDate").contains(trip.getProperty().getProperty())) {
 							data.put("death", trip.getValue());
 						}
 					}
@@ -384,7 +384,7 @@ public class ResourceBuilder {
 		controlList.add(IRI + key);
 
 		List<TripleBean> a = new ArrayList<TripleBean>();
-		for (String query : conf.getPedigreeData(key + "Query")) {
+		for (String query : conf.getFamilyTreeData(key + "Query")) {
 			a.addAll(findeRelatives(IRI, query, se, localMode));
 		}
 
@@ -496,6 +496,8 @@ public class ResourceBuilder {
 				linking.add(tripleBean.getValue());
 			} else if (conf.getTypeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getTypeProperties().contains(tripleBean.getProperty().getProperty())) {
 				result.setTypeProperty(tripleBean.getProperty());
+			} else if (conf.getFamilyTreeData("familytreeTestProperties").contains(tripleBean.getProperty().getNsProperty()) || conf.getTypeProperties().contains(tripleBean.getProperty().getProperty())) {
+				result.setHasFamilyTree(true);
 			}
 
 			if (tripleBean.getType().equals("iri")) {

@@ -30,7 +30,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	private List<String> colorPair = null, skipDomains = null, mainOntologiesPrefixes = null;
 	private Map<String, String> colorPairMatcher = null;
 	
-	private Map<String, List<String>> pedigreeData = new HashMap<String, List<String>>();
+	private Map<String, List<String>> familytreeData = new HashMap<String, List<String>>();
 	
 
 	Random rand = new Random();
@@ -95,13 +95,14 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 			colorPairMatcher = populateColorPairMatcher();
 		}
 		
-		if( getMultiConfValue("pedigree").size()>0) {
-			pedigreeData.put("birthDate",  getMultiConfValue("birthDate"));
-			pedigreeData.put("deathDeate",  getMultiConfValue("deathDeate"));
-			pedigreeData.put("parentsQuery",  getMultiConfValue("parentsQuery"));
-			pedigreeData.put("sonsQuery",  getMultiConfValue("sonsQuery"));
-			pedigreeData.put("spouseQuery",  getMultiConfValue("spouseQuery"));
-			pedigreeData.put("broQuery",  getMultiConfValue("broQuery"));
+		if( getMultiConfValue("familytree").size()>0) {
+			familytreeData.put("birthDate",  getMultiConfValue("birthDate"));
+			familytreeData.put("deathDeate",  getMultiConfValue("deathDeate"));
+			familytreeData.put("parentsQuery",  getMultiConfValue("parentsQuery"));
+			familytreeData.put("sonsQuery",  getMultiConfValue("sonsQuery"));
+			familytreeData.put("spouseQuery",  getMultiConfValue("spouseQuery"));
+			familytreeData.put("broQuery",  getMultiConfValue("broQuery"));
+			familytreeData.put("familytreeTestProperties",  getMultiConfValue("familytreeTestProperties"));
 		}
 
 		skipDomains = getMultiConfValue("skipDomains");
@@ -165,8 +166,8 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		return confModel;
 	}
 
-	public List<String > getPedigreeData(String key) {
-		return pedigreeData.get(key);
+	public List<String > getFamilyTreeData(String key) {
+		return familytreeData.get(key);
 	}
 	public Map<String, String> getPrefixes() {
 		return confModel.getNsPrefixMap();

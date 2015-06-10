@@ -29,8 +29,8 @@ import org.springframework.web.util.UrlPathHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
-@RequestMapping(value = "/pedigree")
-public class PedigreeController {
+@RequestMapping(value = "/familytree")
+public class FamilyTreeController {
 	@Autowired
 	private MessageSource messageSource;
 
@@ -41,24 +41,24 @@ public class PedigreeController {
 	OntologyBean ontoBean;
 
 	@RequestMapping(value = "/page")
-	public Object pedigreePageController(ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, @RequestParam(value = "IRI") String IRI, @RequestParam(value = "output", defaultValue = "") String output, @CookieValue(value = "colorPair", defaultValue = "") String colorPair) throws UnsupportedEncodingException {
+	public Object familytreePageController(ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, @RequestParam(value = "IRI") String IRI, @RequestParam(value = "output", defaultValue = "") String output, @CookieValue(value = "colorPair", defaultValue = "") String colorPair) throws UnsupportedEncodingException {
 		if (colorPair.equals("")) {
 			colorPair = conf.getRandomColorPair();
 			Cookie c = new Cookie("colorPair", colorPair);
 			c.setPath("/");
 			res.addCookie(c);
 		}
-		return pedigreePage(conf, model, req, res, locale, output, IRI, colorPair);
+		return familytreePage(conf, model, req, res, locale, output, IRI, colorPair);
 	}
 
-	private Object pedigreePage(ConfigurationBean conf, ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, String output, String IRI, String colorPair) {
+	private Object familytreePage(ConfigurationBean conf, ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, String output, String IRI, String colorPair) {
 
 		model.addAttribute("colorPair", colorPair);
 		model.addAttribute("conf", conf);
 		model.addAttribute("Misc", new Misc());
 
 		System.out.println("####################################################################");
-		System.out.println("#################  looking for " + IRI + " in pedigree ################# ");
+		System.out.println("#################  looking for " + IRI + " in familytree ################# ");
 
 		try {
 			model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
@@ -67,7 +67,7 @@ public class PedigreeController {
 			ResultBean results = builder.buildPartialHtmlResource(IRI, IRI.split("@@@@@@"), locale, conf, ontoBean, conf.getTitleProperties());
 			model.put("results", results);
 
-			return "widget/pedigree";
+			return "widget/familytree";
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (e.getMessage() != null && e.getMessage().startsWith("404")) {
@@ -81,22 +81,22 @@ public class PedigreeController {
 
 	@ResponseBody
 	@RequestMapping(value = "/data", produces = "application/json;charset=UTF-8")
-	public Object pedigreeDataController(ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, @RequestParam(value = "IRI") String IRI, @RequestParam(value = "output", defaultValue = "") String output, @CookieValue(value = "colorPair", defaultValue = "") String colorPair) throws UnsupportedEncodingException {
+	public Object familytreeDataController(ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, @RequestParam(value = "IRI") String IRI, @RequestParam(value = "output", defaultValue = "") String output, @CookieValue(value = "colorPair", defaultValue = "") String colorPair) throws UnsupportedEncodingException {
 		if (colorPair.equals("")) {
 			colorPair = conf.getRandomColorPair();
 			Cookie c = new Cookie("colorPair", colorPair);
 			c.setPath("/");
 			res.addCookie(c);
 		}
-		return pedigreeData(conf, model, req, res, locale, output, IRI, colorPair);
+		return familytreeData(conf, model, req, res, locale, output, IRI, colorPair);
 	}
 
-	public Object pedigreeData( ConfigurationBean conf, ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, String output, String IRI, String colorPair) throws UnsupportedEncodingException {
+	public Object familytreeData( ConfigurationBean conf, ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, String output, String IRI, String colorPair) throws UnsupportedEncodingException {
 		model.addAttribute("conf", conf);
 		model.addAttribute("Misc", new Misc());
 
 		System.out.println("####################################################################");
-		System.out.println("#################  looking for " + IRI + " in pedigreeData ################# ");
+		System.out.println("#################  looking for " + IRI + " in familytreeData ################# ");
 
 		try {
 			model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));

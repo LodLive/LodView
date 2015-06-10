@@ -52,7 +52,8 @@ div#loadPanel span.ok img {
 <c:set var="hasLod" scope="page" value="${results.getLinking()!=null && results.getLinking().size()>0}"></c:set>
 <c:set var="hasImages" scope="page" value="${results.getImages()!=null && results.getImages().size()>0}"></c:set>
 <c:set var="hasVideos" scope="page" value="${results.getVideos()!=null && results.getVideos().size()>0}"></c:set>
-<c:set var="hasAudios" scope="page" value="${results.getAudios()!=null && results.getAudios().size()>0}"></c:set>
+<c:set var="hasAudios" scope="page" value="${results.getAudios()!=null && results.getAudios().size()>0}"></c:set>>
+<c:set var="hasFamilyTree" scope="page" value="${results.gethasFamilyTree()}"></c:set>
 <c:if test="${hasAudios }">	 
 	<link rel="stylesheet" href="${conf.getStaticResourceURL()}vendor/jplayercircle/circle.skin/circle.player.css">
 	<script type="text/javascript" src="${conf.getStaticResourceURL()}vendor/jplayercircle/js/jquery.transform.js"></script>
