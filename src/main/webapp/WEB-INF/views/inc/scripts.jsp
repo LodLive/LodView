@@ -32,6 +32,9 @@
 			var map = $('body').find('#maphover');
 			if (map.length > 0)
 				lodview.zoomHelper($('body').find('.maphover'), map, true);
+			var ftree = $('body').find('.familytree-container');
+			if (ftree.length > 0)
+				lodview.zoomHelper($('body').find('.familytree-container').find('#familytree-container'), ftree, true);
 		});
 		lodview.betterTypes();
 
@@ -43,6 +46,10 @@
 				lodview.closeFull();
 			}
 		});
+		
+		/* enabling family tree*/
+		lodview.familytree();
+		
 		/* adding info tooltips */
 		lodview.infoTooltip('init');
 
@@ -142,12 +149,39 @@
 			}
 			img.fadeTo(300, 1);
 		},
+		familytree:function(){
+			var l = this;
+			$('#familytree').click(function(){
+				$('body').find('.hover').remove();
+				var layer = $('<div id="hover" class="hover"></div>');
+				var ele = $('<div class="hover familytree-container"><div class="closemapzoom sp"></div></div>');
+				layer.click(function() {
+					l.closeFull();
+				});
+				ele.find('.closemapzoom').click(function() {
+					l.closeFull();
+				});
+				$('body').append(layer);
+				$('body').append(ele);
+				
+				var familytree = $('#familytree-container').clone();
+				ele.prepend(familytree);
+				l.zoomHelper(familytree,ele,true)			
+				layer.fadeIn(300, function() {
+					/* add loading */
+					familytree.fadeIn(300, function() {
+						
+					});
+				});
+				return false;
+			});
+		},
 		betterTypes : function() {
 			$('.dType').each(function() {
 				var w = $(this).width();
 				$(this).closest('div.c2').css({
 					paddingRight : w + 7
-				})
+				});
 			});
 		},
 		drawMap : function drawMap(id, lat, lon, testoPopup, fullVersion) {

@@ -1,0 +1,182 @@
+@CHARSET "UTF-8";
+
+#familytree-container {
+	position: fixed;
+	z-index: 1007;
+	top: 0;
+	left: 0;
+	display: none;
+	overflow:hidden;
+}
+
+#familytree-content {
+	text-align: left;
+	white-space: nowrap;
+	background: #fff;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+#familytree-content div.pair {
+	display: inline-block;
+}
+
+#familytree-content .hb, #familytree-content .wf {
+	background-color: #e2e2e2;
+	width: 100px;
+	height: 100px;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	overflow: hidden;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	white-space: normal;
+	color: #6d6d6d;
+	font-weight: 700;
+	font-size: 12px;
+	line-height: 14px;
+}
+
+#familytree-content div.pair div.hb {
+	float: right;
+}
+
+#familytree-content div.pair div.wf {
+	float: left;
+}
+
+#familytree-content .e {
+	width: 100px;
+	height: 100px;
+	padding: 0 25px;
+	display: inline-block;
+}
+
+#familytree-content h3 {
+	line-height: 25px;
+	padding: 0 25px;
+}
+
+#familytree-content .mainIRI .hb, #familytree-content .mainIRI .wf {
+	color: #fff;
+	background: ${color1
+}
+
+;
+}
+#familytree-content #familytree-content .mainIRI {
+	height: 150px;
+	background-color: #fff;
+}
+
+#familytree-content div.pair img {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 100px;
+	height: auto;
+}
+
+#familytree-content div.pair div strong {
+	display: none;
+	margin-right: 5px;
+	margin-left: 5px;
+	overflow: hidden;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	text-align: center;
+}
+
+#familytree-content .sel {
+	background: #cdcdcd
+}
+
+#familytree-content #grampas {
+	height: 150px;
+	background: #878787;
+}
+
+#familytree-content #sons {
+	height: 150px;
+	background: #dadada;
+}
+
+#familytree-content #grandsons {
+	padding-left: 75px;
+	height: 150px;
+	background: #ededed;
+	height: 150px;
+}
+
+#familytree-content #bros {
+	height: 150px;
+	background: #c6c6c6;
+}
+
+#familytree-content #sibl, #familytree-content #mainr {
+	display: inline-block;
+}
+
+#familytree-content #spouse {
+	padding-left: 75px;
+	text-align: right;
+	background: #b2b2b2;
+	display: inline-block;
+	height: 150px;
+	float: left;
+	min-width: 150px;
+}
+
+#familytree-content #sibl {
+	position: relative;
+	top: -25px;
+}
+
+#familytree-content .mainIRI>div {
+	margin-top: 25px
+}
+
+#familytree-content #fgp {
+	min-width: 300px;
+	float: left;
+	height: 150px;
+	background-color: #706f6f;
+	text-align: right;
+}
+
+#familytree-content #fgp h3 {
+	text-align: right;
+}
+
+#familytree-content #mgp {
+	float: left;
+}
+
+#familytree-content #parents {
+	height: 150px;
+	padding-left: 150px;
+	background: #9d9d9c;
+}
+
+#familytree-content #parents h3 {
+	padding: 0;
+	width: 450px;
+	margin-left: -75px;
+	text-align: center;
+}
+
+#familytree-content #sons {
+	height: 150px;
+	padding-left: 75px;
+	background: #dadada;
+}
+
+#familytree-content #sons h3, #grandsons h3 {
+	padding: 0;
+	width: 450px;
+	margin-left: -75px;
+	text-align: center;
+}

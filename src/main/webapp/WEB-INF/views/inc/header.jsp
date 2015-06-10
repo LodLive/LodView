@@ -66,7 +66,8 @@ div#loadPanel span.ok img {
 <c:set var="hasAudios" scope="page" value="${results.getAudios()!=null && results.getAudios().size()>0}"></c:set>
 <c:set var="hasFamilyTree" scope="page" value="${results.hasFamilyTree()}"></c:set>
 <c:if test="${hasFamilyTree }">
-	<script type="text/javascript" src="${conf.getStaticResourceURL()}js/familytree.js"></script>
+	<script type="text/javascript" src="${conf.getStaticResourceURL()}familytree/familytree.js"></script>
+	<link rel="stylesheet" href="${conf.getStaticResourceURL()}familytree/familytree.css">
 </c:if>
 <c:if test="${hasAudios }">
 	<link rel="stylesheet" href="${conf.getStaticResourceURL()}vendor/jplayercircle/circle.skin/circle.player.css">
