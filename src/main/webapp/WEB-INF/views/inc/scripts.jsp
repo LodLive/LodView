@@ -11,7 +11,7 @@
 	};
 
 	$('#logo').click(function() {
-		document.location = '${conf.getHomeUrl()}';
+		document.location = conf.HomeUrl;
 	});
 
 	var callingPage = null;
@@ -34,8 +34,7 @@
 				lodview.zoomHelper($('body').find('.maphover'), map, true);
 		});
 		lodview.betterTypes();
-		
-		
+
 		lodview.imagesInWidget();
 		lodview.mapInWidget();
 		$(document).keyup(function(e) {
@@ -143,7 +142,7 @@
 			}
 			img.fadeTo(300, 1);
 		},
-		betterTypes:function(){
+		betterTypes : function() {
 			$('.dType').each(function() {
 				var w = $(this).width();
 				$(this).closest('div.c2').css({
@@ -318,12 +317,12 @@
 		},
 		doConnectedResourceTitles : function(abouts, onComplete) {
 			return $.ajax({
-				url : "${conf.getPublicUrlPrefix()}linkedResourceTitles",
+				url : conf.PublicUrlPrefix + "linkedResourceTitles",
 				data : {
 					"abouts" : abouts,
-					"IRI" : "${results.getMainIRI()}",
-					"sparql" : "${conf.getEndPointUrl()}",
-					"prefix" : "${conf.getIRInamespace()}"
+					"IRI" : conf.MainIRI,
+					"sparql" : conf.EndPointUrl,
+					"prefix" : conf.IRInamespace
 				},
 				method : 'POST',
 				beforeSend : function() {
@@ -354,7 +353,7 @@
 		},
 		multiLabels : function() {
 			var l = this;
-			var cLocale = '${locale}';
+			var cLocale = conf.locale;
 			$('.value').each(function() {
 				var cnt = $(this);
 				var multipleLang = false;
@@ -479,16 +478,16 @@
 			var l = this;
 			l.lMessage("<sp:message code='message.loadingConnected' text='loading connected resource titles' javaScriptEscape='true'/>");
 			var invCont = $('#inverses');
-			var iri = "${results.getMainIRI()}";
+			var iri = conf.MainIRI;
 			if (iri) {
 				$('#linverse').delay(100).fadeIn('fast');
 				$.ajax({
-					url : "${conf.getPublicUrlPrefix()}linkedResourceInverses",
+					url : conf.PublicUrlPrefix + "linkedResourceInverses",
 					method : 'POST',
 					data : {
-						"IRI" : iri,
-						"sparql" : "${conf.getEndPointUrl()}",
-						"prefix" : "${conf.getIRInamespace()}"
+						"IRI" : conf.MainIRI,
+						"sparql" : conf.EndPointUrl,
+						"prefix" : conf.IRInamespace
 					},
 					beforeSend : function() {
 
@@ -527,14 +526,14 @@
 									anchor.parent().addClass("isOpened");
 									var start = 0;
 									$.ajax({
-										url : "${conf.getPublicUrlPrefix()}linkedResourceInverses",
+										url : conf.PublicUrlPrefix + "linkedResourceInverses",
 										method : 'POST',
 										data : {
 											"start" : start,
-											"IRI" : "${results.getMainIRI()}",
 											"property" : property,
-											"sparql" : "${conf.getEndPointUrl()}",
-											"prefix" : "${conf.getIRInamespace()}"
+											"IRI" : conf.MainIRI,
+											"sparql" : conf.EndPointUrl,
+											"prefix" : conf.IRInamespace
 										},
 										beforeSend : function() {
 											anchor.parent().find('.toOneLine,.prevArrow,.nextArrow,.lloadingb').remove();
@@ -553,7 +552,7 @@
 												}
 												var title = $(this).find("title").text();
 												var url = $(this).attr("propertyurl")
-												contInverse.append($("<div class='toOneLine' style='display:none'> <a title=\"&lt;" + $(this).attr("about") + "&gt;\" href=\"" + url + "${suffix}\" class=\"isLocal\">" + IRI + "</a></div>"));
+												contInverse.append($("<div class='toOneLine' style='display:none'> <a title=\"&lt;" + $(this).attr("about") + "&gt;\" href=\"" + url + conf.suffix + "\" class=\"isLocal\">" + IRI + "</a></div>"));
 												abouts.push($(this).attr("about"));
 											});
 											$('.toOneLine', contInverse).show();
@@ -596,12 +595,12 @@
 							var value = $("<div class=\"c2 value\"></div>");
 							value.append(anchor);
 							invCont.append(value);
-							if ("open" == "${conf.getDefaultInverseBehaviour()}") {
+							if ("open" == conf.DefaultInverseBehaviour) {
 								anchor.click();
 							}
 						});
 						l.setColumnsSize(true);
-						$('#linverse').append('<span class="ok"><img src="${conf.getStaticResourceURL()}img/checked' + (isRetina ? '@2x' : '') + '.png" ></span>').find('img').fadeIn('fast');
+						$('#linverse').append('<span class="ok"><img src="' + conf.StaticResourceURL + 'img/checked' + (isRetina ? '@2x' : '') + '.png" ></span>').find('img').fadeIn('fast');
 					},
 					error : function(e) {
 						$('#linverse').append('<span class="error"></span>');
@@ -628,14 +627,14 @@
 				callingPageTitles.abort();
 			}
 			callingPage = $.ajax({
-				url : "${conf.getPublicUrlPrefix()}linkedResourceInverses",
+				url : conf.PublicUrlPrefix + "linkedResourceInverses",
 				method : 'POST',
 				data : {
 					"start" : start,
-					"IRI" : "${results.getMainIRI()}",
 					"property" : property,
-					"sparql" : "${conf.getEndPointUrl()}",
-					"prefix" : "${conf.getIRInamespace()}"
+					"IRI" : conf.MainIRI,
+					"sparql" : conf.EndPointUrl,
+					"prefix" : conf.IRInamespace
 				},
 				beforeSend : function() {
 					contInverse.find('.toOneLine').addClass('toRemove').css({
@@ -681,7 +680,7 @@
 						}
 						var title = $(this).find("title").text();
 						var url = $(this).attr("propertyurl")
-						contInverse.append($("<div class='toOneLine' style='display:none'> <a title=\"&lt;" + $(this).attr("about") + "&gt;\" href=\"" + url + "${suffix}\" class=\"isLocal\">" + IRI + "</a></div>"));
+						contInverse.append($("<div class='toOneLine' style='display:none'> <a title=\"&lt;" + $(this).attr("about") + "&gt;\" href=\"" + url + conf.suffix + "\" class=\"isLocal\">" + IRI + "</a></div>"));
 						abouts.push($(this).attr("about"));
 					});
 
@@ -750,7 +749,7 @@
 			if (counter < linkingList.length) {
 				var linking = $('#lodCloud').children("div");
 				$.ajax({
-					url : "${conf.getPublicUrlPrefix()}linkedResource${suffix}",
+					url : conf.PublicUrlPrefix + "linkedResource" + conf.suffix,
 					method : 'POST',
 					timeout : 10000, // 5 sec.
 					data : {
@@ -806,7 +805,7 @@
 							}
 							data.find('link').each(function() {
 								var a = $(this).attr("href");
-								if ($.inArray(a, linkingList) == -1 && a != "${results.getMainIRI()}") {
+								if ($.inArray(a, linkingList) == -1 && a != conf.MainIRI) {
 									linkingList.push(a);
 								}
 							});
@@ -882,7 +881,7 @@
 		setErrorImage : function(obj) {
 			obj.error(function() {
 				$(this).attr("title", "<sp:message code='message.noImage' text='image not available, broken URL?' javaScriptEscape='true' />\n" + $(this).attr("src"));
-				$(this).attr("src", "${conf.getStaticResourceURL()}img/no_image" + (isRetina ? "@2x" : "") + ".png");
+				$(this).attr("src", conf.StaticResourceURL + "img/no_image" + (isRetina ? "@2x" : "") + ".png");
 				$(this).addClass("errorImg");
 				$(this).unwrap("a");
 			});
