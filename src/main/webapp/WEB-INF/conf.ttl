@@ -177,6 +177,17 @@
 	conf:videoProperties		<http://schema.org/VideoObject>;
 	conf:audioProperties		<http://schema.org/AudioObject>;
 
+
+	conf:pedigree				[
+									conf:birthDate <http://dbpedia.org/ontology/birthDate>;
+									conf:deathDeate <http://dbpedia.org/ontology/deathDate>;
+									conf:parentsQuery 	"SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person>; a ?a FILTER(?a != <http://dbpedia.org/ontology/OfficeHolder>) . { <${IRI}> <http://dbpedia.org/property/parents> ?s. FILTER(?s != <${IRI}>)} UNION {?s <http://dbpedia.org/property/children>  <${IRI}> . }}";
+									conf:spouseQuery	"SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person>; a ?a FILTER(?a != <http://dbpedia.org/ontology/OfficeHolder>) . {<${IRI}> <http://dbpedia.org/ontology/spouse> ?s. FILTER(?s != <${IRI}>)} UNION {?s <http://dbpedia.org/ontology/spouse> <${IRI}>. FILTER(?s != <${IRI}>)}}";
+									conf:sonsQuery		"SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person>; a ?a FILTER(?a != <http://dbpedia.org/ontology/OfficeHolder>) . {?s <http://dbpedia.org/property/parents> <${IRI}>. FILTER(?s != <${IRI}>)} UNION {<${IRI}>  <http://dbpedia.org/property/children>  ?s. }}";
+									conf:broQuery 		"SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person>; a ?a FILTER(?a != <http://dbpedia.org/ontology/OfficeHolder>) . <${IRI}> <http://dbpedia.org/property/parents> ?parent.?s  <http://dbpedia.org/property/parents> ?parent . FILTER(?s != <${IRI}>) }";
+								];
+
+
 ##	preferred language for title and description ("auto" for delegate to the client)
 	
 	conf:preferredLanguage	"auto"; ## eg. "en" or "it"

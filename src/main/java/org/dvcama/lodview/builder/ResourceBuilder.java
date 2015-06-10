@@ -303,9 +303,9 @@ public class ResourceBuilder {
 
 		// TODO: put this in conf file
 		List<String> list = conf.getTitleProperties();
-		list.add("http://dbpedia.org/ontology/birthDate");
-		list.add("http://dbpedia.org/ontology/deathDate");
 		list.addAll(conf.getImageProperties());
+		list.addAll(conf.getPedigreeData("birthDate"));
+		list.addAll(conf.getPedigreeData("deathDate"));
 
 		for (Object person : found) {
 
@@ -332,11 +332,11 @@ public class ResourceBuilder {
 				for (PropertyBean lit : lits.keySet()) {
 					List<TripleBean> l = lits.get(lit);
 					for (TripleBean trip : l) {
-						if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/birthDate")) {
+						if (conf.getPedigreeData("birthDate").contains(trip.getProperty().getProperty())) {
 							data.put("birth", trip.getValue());
-						} else if (trip.getProperty().getProperty().equals("http://dbpedia.org/ontology/deathDate")) {
+						} else if (conf.getPedigreeData("deathDate").contains(trip.getProperty().getProperty())) {
 							data.put("death", trip.getValue());
-						}  
+						}
 					}
 				}
 			}
@@ -381,16 +381,12 @@ public class ResourceBuilder {
 	@SuppressWarnings("unchecked")
 	private void browseRelatives(String IRI, String key, Map<Object, Object> resultMap, Set<String> found, Set<String> controlList, boolean deep, SPARQLEndPoint se, ConfigurationBean conf, boolean localMode, Locale locale, OntologyBean ontoBean) throws Exception {
 
-		Map<String, String> map = new HashMap<String, String>();
-
 		controlList.add(IRI + key);
-		// TODO: put this in conf file
-		map.put("parentsQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person>; a ?a FILTER(?a != <http://dbpedia.org/ontology/OfficeHolder>) . { <" + IRI + "> <http://dbpedia.org/property/parents> ?s. FILTER(?s != <" + IRI + ">)} UNION {?s <http://dbpedia.org/property/children>  <" + IRI + "> . }}");
-		map.put("spouseQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person>; a ?a FILTER(?a != <http://dbpedia.org/ontology/OfficeHolder>) . {<" + IRI + "> <http://dbpedia.org/ontology/spouse> ?s. FILTER(?s != <" + IRI + ">)} UNION {?s <http://dbpedia.org/ontology/spouse> <" + IRI + ">. FILTER(?s != <" + IRI + ">)}}");
-		map.put("sonsQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person>; a ?a FILTER(?a != <http://dbpedia.org/ontology/OfficeHolder>) . {?s <http://dbpedia.org/property/parents> <" + IRI + ">. FILTER(?s != <" + IRI + ">)} UNION {<" + IRI + ">  <http://dbpedia.org/property/children>  ?s. }}");
-		map.put("broQuery", "SELECT distinct ?s {?s a <http://xmlns.com/foaf/0.1/Person>; a ?a FILTER(?a != <http://dbpedia.org/ontology/OfficeHolder>) . <" + IRI + "> <http://dbpedia.org/property/parents> ?parent.?s  <http://dbpedia.org/property/parents> ?parent . FILTER(?s != <" + IRI + ">) }");
 
-		List<TripleBean> a = findeRelatives(IRI, map.get(key + "Query"), se, localMode);
+		List<TripleBean> a = new ArrayList<TripleBean>();
+		for (String query : conf.getPedigreeData(key + "Query")) {
+			a.addAll(findeRelatives(IRI, query, se, localMode));
+		}
 
 		List<String> abouts = new ArrayList<String>();
 		System.out.println("looking for " + key + " of " + IRI);

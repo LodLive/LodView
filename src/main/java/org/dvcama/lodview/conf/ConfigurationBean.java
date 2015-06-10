@@ -29,6 +29,9 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null, defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null, audioProperties = null, imageProperties = null, videoProperties = null, linkingProperties = null, titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null, mainOntologiesPrefixes = null;
 	private Map<String, String> colorPairMatcher = null;
+	
+	private Map<String, List<String>> pedigreeData = new HashMap<String, List<String>>();
+	
 
 	Random rand = new Random();
 
@@ -91,9 +94,19 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		if (colorPair != null && colorPair.size() == 1 && colorPair.get(0).startsWith("http://")) {
 			colorPairMatcher = populateColorPairMatcher();
 		}
+		
+		if( getMultiConfValue("pedigree").size()>0) {
+			pedigreeData.put("birthDate",  getMultiConfValue("birthDate"));
+			pedigreeData.put("deathDeate",  getMultiConfValue("deathDeate"));
+			pedigreeData.put("parentsQuery",  getMultiConfValue("parentsQuery"));
+			pedigreeData.put("sonsQuery",  getMultiConfValue("sonsQuery"));
+			pedigreeData.put("spouseQuery",  getMultiConfValue("spouseQuery"));
+			pedigreeData.put("broQuery",  getMultiConfValue("broQuery"));
+		}
 
 		skipDomains = getMultiConfValue("skipDomains");
 	}
+   
 
 	private Map<String, String> populateColorPairMatcher() {
 		Map<String, String> result = new HashMap<String, String>();
@@ -152,6 +165,9 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		return confModel;
 	}
 
+	public List<String > getPedigreeData(String key) {
+		return pedigreeData.get(key);
+	}
 	public Map<String, String> getPrefixes() {
 		return confModel.getNsPrefixMap();
 	}
