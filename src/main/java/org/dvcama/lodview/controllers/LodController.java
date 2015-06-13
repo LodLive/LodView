@@ -27,7 +27,12 @@ public class LodController {
 
 	@Autowired
 	private MessageSource messageSource;
- 
+
+	@ResponseBody
+	@RequestMapping(value = { "/linkedResourceSession", "/lodview/linkedResourceSession" }, produces = "application/xml;charset=UTF-8")
+	public String linkedSession() throws IOException, Exception {
+		return "<ok>ok</ok>";
+	}
 
 	@ResponseBody
 	@RequestMapping(value = { "/linkedResource", "/lodview/linkedResource" }, produces = "application/xml;charset=UTF-8")

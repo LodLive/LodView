@@ -48,32 +48,7 @@
 			/* external resources link */
 		%><c:if test='${hasFamilyTree}'><div id="familytree">
 				<a href="#familytree" title="<sp:message code='widget.familytree' text='family tree' />"><span class="sp"><strong class="widgetTitle"><sp:message code='widget.familytree' text='family tree' /></strong></span></a>
-			</div><div id="familytree-container"><div id="familytree-content">
-		<div id="grampas">
-			<div id="fgp">
-				<h3>GRANDPARENTS</h3>
-			</div>
-			<div id="mgp">
-				<h3>GRANDPARENTS</h3>
-			</div>
-		</div>
-		<div id="parents">
-			<h3>PARENTS</h3>
-		</div>
-		<div id="bros">
-			<div id="mainr"></div>
-			<div id="sibl">
-				<h3>SIBLINGS</h3>
-				<div class="pair"><div class="e"></div></div>
-			</div>
-		</div>
-		<div id="sons">
-			<h3>CHILDRENS</h3>
-		</div>
-		<div id="grandsons">
-			<h3>GRANDCHILDRENS</h3>
-		</div>
-	</div></div></c:if><%
+			</div><jsp:include page="widgets/familytree.jsp"></jsp:include> </c:if><%
 			/* external resources link */
 		%><c:if test='${hasLod}'><div id="linking">
 				<a href="#lodCloud" title="<sp:message code='widget.lodcloud' text='lodcloud' />"><span class="sp"><strong class="widgetTitle"><sp:message code='widget.lodcloud' text='lodcloud' /></strong></span></a>

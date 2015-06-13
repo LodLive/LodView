@@ -306,8 +306,9 @@ public class ResourceBuilder {
 		list.addAll(conf.getImageProperties());
 		list.addAll(conf.getFamilyTreeData("birthDate"));
 		list.addAll(conf.getFamilyTreeData("deathDate"));
+		found.add(IRI);
 
-		for (Object person : found) {
+		for (String person : found) {
 
 			// getting more information about the person
 			System.out.println("found " + person);
@@ -380,16 +381,18 @@ public class ResourceBuilder {
 
 	@SuppressWarnings("unchecked")
 	private void browseRelatives(String IRI, String key, Map<Object, Object> resultMap, Set<String> found, Set<String> controlList, boolean deep, SPARQLEndPoint se, ConfigurationBean conf, boolean localMode, Locale locale, OntologyBean ontoBean) throws Exception {
-
 		controlList.add(IRI + key);
-
 		List<TripleBean> a = new ArrayList<TripleBean>();
+		if (!IRI.toLowerCase().startsWith("http:")) {
+			return;
+		}
+		System.out.println("------------------");
+		System.out.print("looking for " + key + " of " + IRI);
 		for (String query : conf.getFamilyTreeData(key + "Query")) {
 			a.addAll(findeRelatives(IRI, query, se, localMode));
 		}
 
 		List<String> abouts = new ArrayList<String>();
-		System.out.println("looking for " + key + " of " + IRI);
 		for (TripleBean tripleBean : a) {
 
 			abouts.add(tripleBean.getValue());
@@ -401,7 +404,9 @@ public class ResourceBuilder {
 			ele.put(key, abouts);
 
 			resultMap.put(IRI, ele);
-			found.add(tripleBean.getValue());
+			if (tripleBean.getValue().toLowerCase().startsWith("http:")) {
+				found.add(tripleBean.getValue());
+			}
 
 			if (!controlList.contains(tripleBean.getValue() + key)) {
 				// browseRelatives(tripleBean.getValue(), "spouse", resultMap,
@@ -428,6 +433,7 @@ public class ResourceBuilder {
 	private List<TripleBean> findeRelatives(String IRI, String query, SPARQLEndPoint se, boolean localMode) throws Exception {
 		List<TripleBean> triples = new ArrayList<TripleBean>();
 		List<String> queryList = new ArrayList<String>();
+		System.out.println("query: " + query);
 		queryList.add(query);
 		if (localMode) {
 			/* looking for data via content negotiation */
@@ -445,6 +451,7 @@ public class ResourceBuilder {
 		} else {
 			triples = se.doSubjectQuery(IRI, queryList, null);
 		}
+		System.out.println("found " + triples.size());
 		return triples;
 	}
 

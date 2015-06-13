@@ -1,57 +1,64 @@
+var totImage = 0;
 var familytree = {
 	"mainIRI" : null,
 	"data" : {},
 	"c" : null,
 	"mainOffset" : null,
-	"init" : function(mainIri) {
+	"template" : null,
+	"init" : function(setmainIRI, image) {
 		this.c = $('#familytree-content');
-		this.mainIri = mainIri;
+		this.mainIRI = setmainIRI;
 		this.sons = $('#familytree-content').find('#sons');
 		this.mainOffset = $('#familytree-content').offset().top;
-		if (localStorage && localStorage.getItem(familytree.mainIRI)) {
-			familytree.data = (JSON.parse(localStorage.getItem(familytree.mainIRI)));
-			familytree.process();
-		} else {
-			$.ajax({
-				url : conf.PublicUrlPrefix+"familytree/data",
-				data : {
-					"IRI" : familytree.mainIRI,
-					"sparql" : conf.EndPointUrl,
-					"prefix" : conf.IRInamespace
-				},
-				cache : true,
-				method : 'GET',
-				success : function(data) {
-					console.info(data);
-					$('body').find('strong').text('success!');
-					data.s[familytree.mainIRI] = {
-						// <c:forEach var="data"
-						// items="${results.getLiterals(param.IRI)}">
-						// <c:forEach items='${data.getValue()}' var="p">
-//						"title" : "${p.getValue()}",
-//						"url" : '${p.getProperty().getPropertyUrl()}',
-//						"nsIri" : '${p.getProperty().getNsProperty()}'
-					// </c:forEach>
-					// </c:forEach>
-					}
-					if (localStorage) {
-						localStorage.setItem(familytree.mainIRI, JSON.stringify(data));
-					}
-					familytree.data = data;
-					familytree.process();
-				},
-				error : function(data) {
-					$('body').find('strong').text('error!');
-				},
-				beforeSend : function() {
-					$('body').append('<strong>loading...</strong>');
-				}
-			});
+		$('.header').html('<div>' + $('h1').text() + '&rsquo;s family</div>');
+		familytree.load(image);
+	},
+	"load" : function(image) {
+		totImage = 0;
+		$('#familyload').children('div').empty();
+		if (image) {
+			$('#familyload').children('div').append(image);
+			this.betterImage(image);
+			image.load();
 		}
+		$('#familyload').fadeIn('fast', function() {
+			if (localStorage && localStorage.getItem(familytree.mainIRI)) {
+				familytree.data = (JSON.parse(localStorage.getItem(familytree.mainIRI)));
+				familytree.process();
+			} else {
+				$.ajax({
+					url : conf.PublicUrlPrefix + "familytree/data",
+					data : {
+						"IRI" : familytree.mainIRI,
+						"sparql" : conf.EndPointUrl,
+						"prefix" : conf.IRInamespace
+					},
+					cache : true,
+					method : 'GET',
+					success : function(data) {
+						console.info(data);
+						// $('body').find('strong').text('success!');
+
+						if (localStorage) {
+							localStorage.setItem(familytree.mainIRI, JSON.stringify(data));
+						}
+						familytree.data = data;
+						familytree.process();
+
+					},
+					error : function(data) {
+						$('body').find('strong').text('error!');
+					},
+					beforeSend : function() {
+
+					}
+				});
+			}
+		});
 	},
 	"process" : function() {
 		if (!this.data[this.mainIRI]) {
-			$('body').html('<strong>albero non generabile</strong>')
+			alert('<strong>albero non generabile</strong>')
 		} else {
 			var bro = this.data[this.mainIRI].bro;
 			var broTemp = [];
@@ -69,11 +76,11 @@ var familytree = {
 
 			bro = broTemp;
 			$.each(bro, function(k, v) {
-				var pair = familytree.buildPair(v, k == 0, $('<div id="spouse"><h3>SPOUSE</h3></div>'));
+				var pair = familytree.buildPair(v, k == 0, $('<div id="spouse" class="half"><h3>SPOUSE</h3></div>'));
 				if (k == 0) {
 					familytree.c.find('#mainr').prepend(pair)
 				} else {
-					familytree.c.find('#sibl').children('*:last').before(pair)
+					familytree.c.find('#sibl').append(pair)
 				}
 
 			});
@@ -120,69 +127,165 @@ var familytree = {
 					}
 				});
 			}
-
 			this.betterPage();
-
 		}
 	},
+	open : function() {
+		$('#familyload').fadeOut('fast', function() {
+			$('#familytree-content').fadeIn('fast');
+		});
+	},
+	betterImage : function(image, docount) {
+		image.load(function() {
+			if (docount) {
+				totImage--;
+			}
+
+			var w = $(this).width();
+			var h = $(this).height();
+			$(this).css({
+				height : 100,
+				width : 'auto'
+			});
+			w = $(this).width();
+			h = $(this).height();
+			if (w < 100) {
+				$(this).css({
+					width : 100,
+					height : 'auto'
+				});
+			}
+			if (h < 100) {
+				$(this).css({
+					height : 100,
+					width : 'auto'
+				});
+			}
+			w = $(this).width();
+			h = $(this).height();
+			$(this).css({
+				marginLeft : -(Math.abs(100 - w) / 2) + "px",
+				marginTop : -(Math.abs(100 - h) / 2) + "px"
+			});
+			if (docount && totImage < 2) {
+				familytree.open();
+			}
+		});
+		image.error(function() {
+			// todo: error image
+			$(this).remove();
+			if (docount) {
+				totImage--;
+			}
+		})
+	},
 	betterPage : function() {
+		totImage = $('#familytree-content').find('img').length;
+
+		$('#familytree-content').find('img').each(function() {
+			familytree.betterImage($(this), true);
+		});
+
+		setTimeout(function() {
+			$('#familytree-content').find('img').load();
+			totImage = 0;
+		}, 3000);
+
 		var left = $('.mainIRI').offset().left;
 		var tot = $('#sons').find('.pair').length;
-		$('#sons').find('h3').animate({
+		$('#sons').find('h3').css({
 			width : ((tot + 1) * 150) + 'px'
-		}, 'fast');
-		$('#sons').animate({
+		});
+		$('#sons').css({
 			paddingLeft : (left + 75 - (tot * 75)) + 'px'
-		}, 'fast', function() {
-			tot = $('#grandsons').find('.pair').length;
-			$('#grandsons').find('h3').animate({
-				width : ((tot + 1) * 150) + 'px'
-			}, 'fast');
-			$('#grandsons').animate({
-				paddingLeft : (left + 75 - (tot * 75)) + 'px'
-			}, 'fast', function() {
-				tot = $('#parents').find('.pair').length;
-				$('#parents').find('h3').animate({
-					width : ((tot + 1) * 150) + 'px'
-				}, 'fast');
-				$('#parents').animate({
-					paddingLeft : (left + 75 - (tot * 75)) + 'px'
-				}, 'fast');
-			});
+		});
+		tot = $('#sibl').find('.pair').length;
+		if (tot == 0) {
+			$('#sibl').append('<div class="pair"></div>');
+		}
+		tot = $('#spouse').find('.e').length;
+		if (tot == 0) {
+			$('#spouse').append('<div class="e"></div>');
+		}
+		tot = $('#grandsons').find('.pair').length;
+		$('#grandsons').find('h3').css({
+			width : ((tot + 1) * 150) + 'px'
+		});
+		$('#grandsons').css({
+			paddingLeft : (left + 75 - (tot * 75)) + 'px'
+		});
+		tot = $('#parents').find('.pair').length;
+		$('#parents').find('h3').css({
+			width : ((tot + 1) * 150) + 'px'
+		});
+		$('#parents').animate({
+			paddingLeft : (left + 75 - (tot * 75)) + 'px'
 		});
 	},
 	buildPair : function(person, writeSpouse, wrapSpouse) {
 		console.info('building ' + person)
 		var pair = $('<div class="pair"></div>');
 		if ($('[data-iri="' + person + '"]').length == 0) {
-			var hb = $('<div class="e"><div class="hb" data-iri="' + person + '" data-family="' + (JSON.stringify(familytree.data[person]) + '').replace(/"/g, '') + '"><strong>' + familytree.data.s[person].title + '</strong>' + (familytree.data.s[person].image ? '<img src="' + familytree.data.s[person].image + '">' : '') + '</div></div>');
-			if (person == familytree.mainIRI) {
-				hb.addClass('mainIRI');
-			}
-			if (writeSpouse && familytree.data[person]) {
-				// TODO: more then one spouse and string spouse
-				var sp;
-				if (familytree.data[person].spouse && familytree.data.s[familytree.data[person].spouse[0]]) {
-					$.each(familytree.data[person].spouse, function(k, v) {
-						sp = $('<div class="e"><div  class="wf" data-iri="' + v + '" data-family="' + (JSON.stringify(familytree.data[v]) + '').replace(/"/g, '') + '"><strong>' + familytree.data.s[v].title + '</strong>' + (familytree.data.s[v].image ? '<img src="' + familytree.data.s[v].image + '">' : '') + '</div></div>');
-						if (wrapSpouse) {
-							wrapSpouse.append(sp);
-							pair.prepend(wrapSpouse);
-						} else {
-							pair.prepend(sp);
-						}
+			var hb = null;
 
-					});
-					// simple pair, with no child
-					// pair.append('<div class="wf-connector"></div>')
-				} else if (wrapSpouse) {
-					pair.prepend(wrapSpouse);
+			if (!person.indexOf("http") == 0) {
+				hb = $('<div class="e"><div class="hb" data-iri="' + person + '" ><strong>' + person + '</strong></div></div>');
+				pair.append(hb);
+			} else {
+				hb = $('<div class="e"><div class="hb" data-iri="' + person + '" data-family="' + (JSON.stringify(familytree.data[person]) + '').replace(/"/g, '') + '">' + (familytree.data.s[person].image ? '<img src="' + familytree.data.s[person].image + '">' : '') + '<strong>' + familytree.data.s[person].title + '</strong></div></div>');
+
+				if (person == familytree.mainIRI) {
+					hb.addClass('mainIRI');
 				}
+				if (writeSpouse) {
+					console.info("write spouse")
+					// TODO: more then one spouse and string spouse
+					var sp;
+					if (familytree.data[person] && familytree.data[person].spouse) {
+						$.each(familytree.data[person].spouse, function(k, v) {
+							console.info("has spouse " + v)
+							if (v.indexOf("http") == -1) {
+								sp = $('<div class="e"><div  data-iri="' + v + '" class="wf" ><strong>' + v + '</strong></div></div>');
+								if (wrapSpouse) {
+									wrapSpouse.append(sp);
+									pair.prepend(wrapSpouse);
+								} else {
+									pair.prepend(sp);
+								}
+							} else if (familytree.data.s[v]) {
+								sp = $('<div class="e"><div  class="wf" data-iri="' + v + '" data-family="' + (JSON.stringify(familytree.data[v]) + '').replace(/"/g, '') + '">' + (familytree.data.s[v].image ? '<img src="' + familytree.data.s[v].image + '">' : '') + '<strong>' + familytree.data.s[v].title + '</strong></div></div>');
+								if (wrapSpouse) {
+									wrapSpouse.append(sp);
+									pair.prepend(wrapSpouse);
+								} else {
+									pair.prepend(sp);
+								}
+							}
+						});
+						// simple pair, with no child
+						// pair.append('<div class="wf-connector"></div>')
+					} else if (wrapSpouse) {
+						pair.prepend(wrapSpouse);
+					}
+				}
+				pair.append(hb);
+				pair.find('[data-iri]').css({
+					cursor : 'pointer'
+				});
+				pair.find('[data-iri]').click(function() {
+					var iri = $(this);	
+					$('#familytree-content').fadeOut('fast', function() {
+						var familytreeLayer = familytree.template.clone();
+						var ele = $('.familytree-container');
+						ele.prepend(familytreeLayer);
+						lodview.zoomHelper(familytreeLayer, ele, true)
+						/* add loading */
+						familytreeLayer.fadeIn(300, function() {
+							familytree.init(iri.attr("data-iri"), iri.find('img:first').clone());
+						});
+					});
+				});
 			}
-			pair.append(hb);
-			pair.find('[data-iri]').click(function() {
-				document.location = '?IRI=' + $(this).attr("data-iri");
-			});
 		}
 		return pair;
 	},

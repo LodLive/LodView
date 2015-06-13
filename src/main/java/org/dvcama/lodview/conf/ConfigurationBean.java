@@ -29,9 +29,8 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null, defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null, audioProperties = null, imageProperties = null, videoProperties = null, linkingProperties = null, titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null, mainOntologiesPrefixes = null;
 	private Map<String, String> colorPairMatcher = null;
-	
+
 	private Map<String, List<String>> familytreeData = new HashMap<String, List<String>>();
-	
 
 	Random rand = new Random();
 
@@ -94,19 +93,17 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		if (colorPair != null && colorPair.size() == 1 && colorPair.get(0).startsWith("http://")) {
 			colorPairMatcher = populateColorPairMatcher();
 		}
-		
-			familytreeData.put("birthDate",  getMultiConfValue("familytreeBirthDate"));
-			familytreeData.put("deathDate",  getMultiConfValue("familytreeDeathDate"));
-			familytreeData.put("parentsQuery",  getMultiConfValue("familytreeParentsQuery"));
-			familytreeData.put("sonsQuery",  getMultiConfValue("familytreeSonsQuery"));
-			familytreeData.put("spouseQuery",  getMultiConfValue("familytreeSpouseQuery"));
-			familytreeData.put("broQuery",  getMultiConfValue("familytreeBroQuery"));
-			familytreeData.put("familytreeTestProperties",  getMultiConfValue("familytreeTestProperties"));
-		System.out.println(familytreeData);
+
+		familytreeData.put("birthDate", getMultiConfValue("familytreeBirthDate"));
+		familytreeData.put("deathDate", getMultiConfValue("familytreeDeathDate"));
+		familytreeData.put("parentsQuery", getMultiConfValue("familytreeParentsQuery"));
+		familytreeData.put("sonsQuery", getMultiConfValue("familytreeSonsQuery"));
+		familytreeData.put("spouseQuery", getMultiConfValue("familytreeSpouseQuery"));
+		familytreeData.put("broQuery", getMultiConfValue("familytreeBroQuery"));
+		familytreeData.put("familytreeTestProperties", getMultiConfValue("familytreeTestProperties"));
 
 		skipDomains = getMultiConfValue("skipDomains");
 	}
-   
 
 	private Map<String, String> populateColorPairMatcher() {
 		Map<String, String> result = new HashMap<String, String>();
@@ -165,9 +162,10 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		return confModel;
 	}
 
-	public List<String > getFamilyTreeData(String key) {
+	public List<String> getFamilyTreeData(String key) {
 		return familytreeData.get(key);
 	}
+
 	public Map<String, String> getPrefixes() {
 		return confModel.getNsPrefixMap();
 	}

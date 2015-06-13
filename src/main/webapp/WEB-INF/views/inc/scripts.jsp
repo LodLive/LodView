@@ -46,10 +46,10 @@
 				lodview.closeFull();
 			}
 		});
-		
+
 		/* enabling family tree*/
-		lodview.familytree();
-		
+		lodview.buildfamilytree();
+
 		/* adding info tooltips */
 		lodview.infoTooltip('init');
 
@@ -149,9 +149,9 @@
 			}
 			img.fadeTo(300, 1);
 		},
-		familytree:function(){
+		buildfamilytree : function() {
 			var l = this;
-			$('#familytree').click(function(){
+			$('#familytree').click(function() {
 				$('body').find('.hover').remove();
 				var layer = $('<div id="hover" class="hover"></div>');
 				var ele = $('<div class="hover familytree-container"><div class="closemapzoom sp"></div></div>');
@@ -163,14 +163,16 @@
 				});
 				$('body').append(layer);
 				$('body').append(ele);
-				
-				var familytree = $('#familytree-container').clone();
-				ele.prepend(familytree);
-				l.zoomHelper(familytree,ele,true)			
+				if (!familytree.template) {
+					familytree.template = $('#familytree-container').detach();
+				}
+				var familytreeLayer = familytree.template.clone();
+				ele.prepend(familytreeLayer);
+				l.zoomHelper(familytreeLayer, ele, true)
 				layer.fadeIn(300, function() {
 					/* add loading */
-					familytree.fadeIn(300, function() {
-						
+					familytreeLayer.fadeIn(300, function() {
+						familytree.init(conf.MainIRI, $('aside').find('#images').find('img:first').clone());
 					});
 				});
 				return false;
@@ -782,8 +784,12 @@
 			var l = this;
 			if (counter < linkingList.length) {
 				var linking = $('#lodCloud').children("div");
+				var url = conf.PublicUrlPrefix + "linkedResource" + conf.suffix;
+				if (sessionStorage && sessionStorage.getItem(linkingList[counter])) {
+					url = conf.PublicUrlPrefix + "linkedResourceSession";
+				}
 				$.ajax({
-					url : conf.PublicUrlPrefix + "linkedResource" + conf.suffix,
+					url : url,
 					method : 'POST',
 					timeout : 10000, // 5 sec.
 					data : {
@@ -793,6 +799,14 @@
 						// console.debug(counter + " -- " + linkingList[counter])
 					},
 					success : function(data) {
+						if (sessionStorage && sessionStorage.getItem(linkingList[counter])) {
+							data = $.parseXML(sessionStorage.getItem(linkingList[counter]));
+						} else if (sessionStorage) {
+							try {
+								sessionStorage.setItem(linkingList[counter], new XMLSerializer().serializeToString(data));
+							} catch (e) {
+							}
+						}
 						data = $(data);
 						var dest = $('<div class="connected"></div>');
 						data.find('img:first').each(function() {
