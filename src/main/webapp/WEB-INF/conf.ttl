@@ -179,13 +179,30 @@
 
 
 
-	conf:familytreeTestProperties	<http://dbpedia.org/property/parents>,<http://dbpedia.org/ontology/spouse>,<http://dbpedia.org/property/parents>,<http://dbpedia.org/property/children>;
+	conf:familytreeTestProperties	<http://dbpedia.org/property/parents> , <http://dbpedia.org/ontology/spouse>,<http://dbpedia.org/property/parents>,<http://dbpedia.org/property/children> ,<http://dbpedia.org/ontology/parent>,<http://dbpedia.org/ontology/child>;
 	conf:familytreeBirthDate 		<http://dbpedia.org/ontology/birthDate>;
 	conf:familytreeDeathDate 		<http://dbpedia.org/ontology/deathDate>;
-	conf:familytreeParentsQuery 	"SELECT distinct ?s {{<${IRI}> <http://dbpedia.org/property/parents> ?s. FILTER(?s != <${IRI}>)} UNION {?s <http://dbpedia.org/property/children>  <${IRI}> . } UNION {<${IRI}> <http://dbpedia.org/ontology/parents> ?s. FILTER(?s != <${IRI}>)} UNION {?s <http://dbpedia.org/ontology/children>  <${IRI}> . }}";
-	conf:familytreeSpouseQuery		"SELECT distinct ?s {{<${IRI}> <http://dbpedia.org/property/spouse> ?s. FILTER(?s != <${IRI}>)} UNION {?s <http://dbpedia.org/property/spouse> <${IRI}>. FILTER(?s != <${IRI}>)} UNION {<${IRI}> <http://dbpedia.org/ontology/spouse> ?s. FILTER(?s != <${IRI}>)} UNION {?s <http://dbpedia.org/ontology/spouse> <${IRI}>. FILTER(?s != <${IRI}>)}}";
-	conf:familytreeSonsQuery		"SELECT distinct ?s {{?s <http://dbpedia.org/property/parents> <${IRI}>. FILTER(?s != <${IRI}>)} UNION {<${IRI}>  <http://dbpedia.org/property/children>  ?s. } UNION  {?s <http://dbpedia.org/ontology/parents> <${IRI}>. FILTER(?s != <${IRI}>)} UNION {<${IRI}>  <http://dbpedia.org/ontology/children>  ?s. }}";
-	conf:familytreeBroQuery 		"SELECT distinct ?s {{<${IRI}> <http://dbpedia.org/property/parents> ?parent.?s  <http://dbpedia.org/property/parents> ?parent . FILTER(?s != <${IRI}>)} UNION {<${IRI}> <http://dbpedia.org/ontology/parents> ?parent.?s  <http://dbpedia.org/ontology/parents> ?parent . FILTER(?s != <${IRI}>)  }}";
+	conf:familytreeParentsQuery 	"SELECT distinct ?s {FILTER(! REGEX(STR(?s),'[*]')) . FILTER(! REGEX(STR(?s),'timeline','i')) . FILTER(! REGEX(STR(?s),'family_','i')) . FILTER(! REGEX(STR(?s),'presidency_','i')) . FILTER(! REGEX(STR(?s),'career_','i')) {<${IRI}> <http://dbpedia.org/property/parents> ?s. FILTER(?s != <${IRI}>)} UNION {?s <http://dbpedia.org/property/children>  <${IRI}> . } UNION {<${IRI}> <http://dbpedia.org/ontology/parent> ?s. FILTER(?s != <${IRI}>)} UNION {?s <http://dbpedia.org/ontology/child>  <${IRI}> . }}";
+	conf:familytreeSpouseQuery		"""SELECT distinct ?s {  FILTER(?s != <${IRI}>) . FILTER(! REGEX(STR(?s),'[*]')) . FILTER(! REGEX(STR(?s),'timeline','i')) . FILTER(! REGEX(STR(?s),'family_','i')) . FILTER(! REGEX(STR(?s),'presidency_','i')) . FILTER(! REGEX(STR(?s),'career_','i')) 
+										{<${IRI}> <http://dbpedia.org/property/spouse> ?s} 
+										UNION 
+										{?s <http://dbpedia.org/property/spouse> <${IRI}>} 
+										UNION 
+										{<${IRI}> <http://dbpedia.org/ontology/spouse> ?s} 
+										UNION 
+										{?s <http://dbpedia.org/ontology/spouse> <${IRI}>}
+										UNION 
+										{<${IRI}> <http://dbpedia.org/property/children> ?c. ?c <http://dbpedia.org/property/parents> ?s}
+										UNION 
+										{<${IRI}> <http://dbpedia.org/ontology/child> ?c. ?c <http://dbpedia.org/ontology/parent> ?s}
+										UNION 
+										{<${IRI}> <http://dbpedia.org/property/children> ?c. ?c <http://dbpedia.org/ontology/parent> ?s}
+										UNION 
+										{<${IRI}> <http://dbpedia.org/property/children> ?c. ?c <http://dbpedia.org/ontology/parent> ?s}
+									
+									}""";
+	conf:familytreeSonsQuery		"SELECT distinct ?s {FILTER(! REGEX(STR(?s),'[*]')) . FILTER(! REGEX(STR(?s),'timeline','i')) . FILTER(! REGEX(STR(?s),'family_','i')) . FILTER(! REGEX(STR(?s),'presidency_','i')) . FILTER(! REGEX(STR(?s),'career_','i')) {?s <http://dbpedia.org/property/parents> <${IRI}>. FILTER(?s != <${IRI}>)} UNION {<${IRI}>  <http://dbpedia.org/property/children>  ?s. } UNION  {?s <http://dbpedia.org/ontology/parent> <${IRI}>. FILTER(?s != <${IRI}>)} UNION {<${IRI}>  <http://dbpedia.org/ontology/child>  ?s. }}";
+	conf:familytreeBroQuery 		"SELECT distinct ?s {FILTER(! REGEX(STR(?s),'[*]')) . FILTER(! REGEX(STR(?s),'timeline','i')) . FILTER(! REGEX(STR(?s),'family_','i')) . FILTER(! REGEX(STR(?s),'presidency_','i')) . FILTER(! REGEX(STR(?s),'career_','i')) {<${IRI}> <http://dbpedia.org/property/parents> ?parent.?s  <http://dbpedia.org/property/parents> ?parent . FILTER(?s != <${IRI}>)} UNION {<${IRI}> <http://dbpedia.org/ontology/parent> ?parent.?s  <http://dbpedia.org/ontology/parent> ?parent . FILTER(?s != <${IRI}>)  }}";
  
 
 ##	preferred language for title and description ("auto" for delegate to the client)

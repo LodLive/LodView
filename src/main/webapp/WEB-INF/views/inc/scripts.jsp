@@ -172,7 +172,7 @@
 				layer.fadeIn(300, function() {
 					/* add loading */
 					familytreeLayer.fadeIn(300, function() {
-						familytree.init(conf.MainIRI, $('aside').find('#images').find('img:first').clone());
+						familytree.init(conf.MainIRI,$('h1').text(), $('aside').find('#images').find('img:first').clone());
 					});
 				});
 				return false;

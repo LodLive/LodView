@@ -309,51 +309,55 @@ public class ResourceBuilder {
 		found.add(IRI);
 
 		for (String person : found) {
+			try {
 
-			// getting more information about the person
-			System.out.println("found " + person);
-			StringBuilder query = new StringBuilder("select ?p ?o {");
-			query.append("<" + person + "> ?p ?o. FILTER (");
-			for (String prop : list) {
-				query.append(" ?p = <" + prop + "> || ");
-			}
-			query.append("}");
-			List<String> queries = new ArrayList<String>();
-			queries.add(query.toString().replaceAll(" \\|\\| \\}", ")}"));
+				// getting more information about the person
+				System.out.println("found " + person);
+				StringBuilder query = new StringBuilder("select ?p ?o {");
+				query.append("<" + person + "> ?p ?o. FILTER (");
+				for (String prop : list) {
+					query.append(" ?p = <" + prop + "> || ");
+				}
+				query.append("}");
+				List<String> queries = new ArrayList<String>();
+				queries.add(query.toString().replaceAll(" \\|\\| \\}", ")}"));
 
-			ResultBean b = buildHtmlResource(person.toString(), locale, conf, ontoBean, localMode, queries);
+				ResultBean b = buildHtmlResource(person.toString(), locale, conf, ontoBean, localMode, queries);
 
-			Map<String, String> data = new HashMap<String, String>();
-			data.put("title", b.getTitle());
-			data.put("url", Misc.toBrowsableUrl(person.toString(), conf));
-			data.put("nsIri", Misc.toNsResource(person.toString(), conf));
+				Map<String, String> data = new HashMap<String, String>();
+				data.put("title", b.getTitle());
+				data.put("url", Misc.toBrowsableUrl(person.toString(), conf));
+				data.put("nsIri", Misc.toNsResource(person.toString(), conf));
 
-			Map<PropertyBean, List<TripleBean>> lits = b.getLiterals(person.toString());
-			if (lits != null) {
-				for (PropertyBean lit : lits.keySet()) {
-					List<TripleBean> l = lits.get(lit);
-					for (TripleBean trip : l) {
-						if (conf.getFamilyTreeData("birthDate").contains(trip.getProperty().getProperty())) {
-							data.put("birth", trip.getValue());
-						} else if (conf.getFamilyTreeData("deathDate").contains(trip.getProperty().getProperty())) {
-							data.put("death", trip.getValue());
+				Map<PropertyBean, List<TripleBean>> lits = b.getLiterals(person.toString());
+				if (lits != null) {
+					for (PropertyBean lit : lits.keySet()) {
+						List<TripleBean> l = lits.get(lit);
+						for (TripleBean trip : l) {
+							if (conf.getFamilyTreeData("birthDate").contains(trip.getProperty().getProperty())) {
+								data.put("birth", trip.getValue());
+							} else if (conf.getFamilyTreeData("deathDate").contains(trip.getProperty().getProperty())) {
+								data.put("death", trip.getValue());
+							}
 						}
 					}
 				}
-			}
-			lits = b.getResources(person.toString());
-			if (lits != null) {
-				for (PropertyBean lit : lits.keySet()) {
-					List<TripleBean> l = lits.get(lit);
-					for (TripleBean trip : l) {
-						if (conf.getImageProperties().contains(trip.getProperty().getNsProperty()) || conf.getImageProperties().contains(trip.getProperty().getProperty())) {
-							data.put("image", trip.getValue());
+				lits = b.getResources(person.toString());
+				if (lits != null) {
+					for (PropertyBean lit : lits.keySet()) {
+						List<TripleBean> l = lits.get(lit);
+						for (TripleBean trip : l) {
+							if (conf.getImageProperties().contains(trip.getProperty().getNsProperty()) || conf.getImageProperties().contains(trip.getProperty().getProperty())) {
+								data.put("image", trip.getValue());
+							}
 						}
 					}
 				}
-			}
-			s.put(person.toString(), data);
+				s.put(person.toString(), data);
 
+			} catch (Exception aaae) {
+				aaae.printStackTrace();
+			}
 		}
 
 		/* all the people we collected */
@@ -388,7 +392,7 @@ public class ResourceBuilder {
 		}
 		System.out.println("------------------");
 		System.out.print("looking for " + key + " of " + IRI);
-		for (String query : conf.getFamilyTreeData(key + "Query")) {
+		for (String query : conf.getFamilyTreeData(key.replaceAll("-last", "") + "Query")) {
 			a.addAll(findeRelatives(IRI, query, se, localMode));
 		}
 
@@ -401,14 +405,14 @@ public class ResourceBuilder {
 			if (ele == null) {
 				ele = new HashMap<Object, Object>();
 			}
-			ele.put(key, abouts);
+			ele.put(key.replaceAll("-last", ""), abouts);
 
 			resultMap.put(IRI, ele);
 			if (tripleBean.getValue().toLowerCase().startsWith("http:")) {
 				found.add(tripleBean.getValue());
 			}
 
-			if (!controlList.contains(tripleBean.getValue() + key)) {
+			if (!controlList.contains(tripleBean.getValue() + key.replaceAll("-last", ""))) {
 				// browseRelatives(tripleBean.getValue(), "spouse", resultMap,
 				// found, controlList, false, se, conf, localMode, locale,
 				// ontoBean);
@@ -420,8 +424,8 @@ public class ResourceBuilder {
 					if (key.equals("sons")) {
 						browseRelatives(tripleBean.getValue(), "sons", resultMap, found, controlList, false, se, conf, localMode, locale, ontoBean);
 					}
-					if (key.equals("parents")) {
-						browseRelatives(tripleBean.getValue(), "parents", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
+					if (key.equals("parents") || key.equals("parents-last")) {
+						browseRelatives(tripleBean.getValue(), key + "-last", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
 						browseRelatives(tripleBean.getValue(), "spouse", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
 					}
 				}
@@ -433,7 +437,7 @@ public class ResourceBuilder {
 	private List<TripleBean> findeRelatives(String IRI, String query, SPARQLEndPoint se, boolean localMode) throws Exception {
 		List<TripleBean> triples = new ArrayList<TripleBean>();
 		List<String> queryList = new ArrayList<String>();
-		System.out.println("query: " + query);
+		// System.out.println("IRI: " + IRI);
 		queryList.add(query);
 		if (localMode) {
 			/* looking for data via content negotiation */

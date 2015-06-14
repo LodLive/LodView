@@ -5,18 +5,54 @@ var familytree = {
 	"c" : null,
 	"mainOffset" : null,
 	"template" : null,
-	"init" : function(setmainIRI, image) {
+	"imgStatus" : "foto",
+	"init" : function(setmainIRI, name, image) {
 		this.c = $('#familytree-content');
 		this.mainIRI = setmainIRI;
-		this.sons = $('#familytree-content').find('#sons');
-		this.mainOffset = $('#familytree-content').offset().top;
-		$('.header').html('<div>' + $('h1').text() + '&rsquo;s family</div>');
+		this.sons = familytree.c.find('#sons');
+		this.mainOffset = familytree.c.offset().top;
+		$('.header').html('<div>' + name + '&rsquo;s family</div>');
+		this.aSwitch();
 		familytree.load(image);
+		document.location = '#family:' + this.mainIRI;
+	},
+	"aSwitch" : function() {
+		var familyswitch = 'foto';
+		if (localStorage && localStorage.getItem('family-switch')) {
+			familyswitch = localStorage.getItem('family-switch');
+			this.imgStatus = familyswitch;
+		}
+
+		var imgSwitch = $('<div class="family-switch sp ' + this.imgStatus + '" ></div>');
+		$('.header').find('div').append(imgSwitch);
+
+		imgSwitch.click(function() {
+			if ($(this).hasClass("foto")) {
+				$(this).removeClass("foto");
+				$(this).addClass("testo");
+				familytree.imgStatus = "testo";
+				familytree.c.find('img').fadeOut('fast');
+				if (localStorage) {
+					localStorage.setItem('family-switch', 'testo');
+				}
+			} else {
+				$(this).removeClass("testo");
+				$(this).addClass("foto");
+				familytree.imgStatus = "foto";
+				familytree.c.find('img').fadeIn('fast');
+				if (localStorage) {
+					localStorage.setItem('family-switch', 'foto');
+				}
+			}
+		});
 	},
 	"load" : function(image) {
 		totImage = 0;
 		$('#familyload').children('div').empty();
 		if (image) {
+			image.css({
+				display : 'block'
+			});
 			$('#familyload').children('div').append(image);
 			this.betterImage(image);
 			image.load();
@@ -36,15 +72,11 @@ var familytree = {
 					cache : true,
 					method : 'GET',
 					success : function(data) {
-						console.info(data);
-						// $('body').find('strong').text('success!');
-
 						if (localStorage) {
 							localStorage.setItem(familytree.mainIRI, JSON.stringify(data));
 						}
 						familytree.data = data;
 						familytree.process();
-
 					},
 					error : function(data) {
 						$('body').find('strong').text('error!');
@@ -73,7 +105,6 @@ var familytree = {
 					broTemp.push(v);
 				});
 			}
-
 			bro = broTemp;
 			$.each(bro, function(k, v) {
 				var pair = familytree.buildPair(v, k == 0, $('<div id="spouse" class="half"><h3>SPOUSE</h3></div>'));
@@ -82,7 +113,6 @@ var familytree = {
 				} else {
 					familytree.c.find('#sibl').append(pair)
 				}
-
 			});
 			var sons = this.data[this.mainIRI].sons;
 			if (sons) {
@@ -104,7 +134,6 @@ var familytree = {
 					}
 				});
 			}
-
 			var parents = this.data[this.mainIRI].parents;
 			if (parents) {
 				var swit = false;
@@ -132,139 +161,210 @@ var familytree = {
 	},
 	open : function() {
 		$('#familyload').fadeOut('fast', function() {
-			$('#familytree-content').fadeIn('fast');
+			familytree.c.css({
+				display : 'block',
+				opacity : 0
+			});
+			familytree.c.find('strong').each(function() {
+				familytree.betterTitle($(this));
+			});
+			familytree.c.fadeTo('fast', '1');
 		});
 	},
 	betterImage : function(image, docount) {
 		image.load(function() {
-			if (docount) {
-				totImage--;
-			}
+			//console.info(totImage + " - " + image.attr("src"))
+			if (!image.attr("style")) {
+				//console.info("starts")
+				var w = $(this).width();
+				var h = $(this).height();
 
-			var w = $(this).width();
-			var h = $(this).height();
-			$(this).css({
-				height : 100,
-				width : 'auto'
-			});
-			w = $(this).width();
-			h = $(this).height();
-			if (w < 100) {
+				try {
+					w = $(this).naturalWidth();
+					h = $(this).naturalHeight();
+				} catch (e) {
+				}
+
+				if (h > w) {
+					h = Math.round(h / w * 100);
+					w = 100;
+				} else if (w > h) {
+					w = Math.round(w / h * 100);
+					h = 100;
+				} else {
+					w = 100;
+					h = 100;
+				}
 				$(this).css({
-					width : 100,
-					height : 'auto'
+					width : w ? w : 'auto',
+					height : h ? h : 'auto',
+					marginLeft : -(Math.abs(100 - w) / 2) + "px",
+					marginTop : -(Math.min(Math.abs(100 - h) / 2, 0)) + "px"
 				});
+				$(this).fadeTo('fast', '1');
+				if (docount) {
+					totImage--;
+				}
 			}
-			if (h < 100) {
-				$(this).css({
-					height : 100,
-					width : 'auto'
-				});
+			if (familytree.imgStatus == 'testo') {
+				$(this).hide();
 			}
-			w = $(this).width();
-			h = $(this).height();
-			$(this).css({
-				marginLeft : -(Math.abs(100 - w) / 2) + "px",
-				marginTop : -(Math.abs(100 - h) / 2) + "px"
-			});
-			if (docount && totImage < 2) {
+			if (docount && totImage == 0) {
+				//console.info('open!')
 				familytree.open();
 			}
 		});
 		image.error(function() {
-			// todo: error image
-			$(this).remove();
-			if (docount) {
-				totImage--;
-			}
+			$(this).attr("src", conf.StaticResourceURL + 'familytree/avatar-neutro.png');
+			$(this).load();
 		})
 	},
+	betterTitle : function(title) {
+		var h = title.height();
+		//console.info(h)
+		title.css({
+			marginTop : (50 - (h / 2)) + "px"
+		});
+	},
 	betterPage : function() {
-		totImage = $('#familytree-content').find('img').length;
+		totImage = familytree.c.find('img').length;
 
-		$('#familytree-content').find('img').each(function() {
+		familytree.c.find('img').each(function() {
+			$(this).attr('src', $(this).attr("data-src"));
 			familytree.betterImage($(this), true);
 		});
 
 		setTimeout(function() {
-			$('#familytree-content').find('img').load();
-			totImage = 0;
-		}, 3000);
+			// familytree.c.find('img').load();
+		}, 2000);
 
 		var left = $('.mainIRI').offset().left;
-		var tot = $('#sons').find('.pair').length;
-		$('#sons').find('h3').css({
-			width : ((tot + 1) * 150) + 'px'
-		});
-		$('#sons').css({
-			paddingLeft : (left + 75 - (tot * 75)) + 'px'
-		});
-		tot = $('#sibl').find('.pair').length;
-		if (tot == 0) {
-			$('#sibl').append('<div class="pair"></div>');
+
+		var totG = $('#fgp').find('.e').length;
+		var totP = $('#parents').find('.e').length;
+		var totGP = $('#parents').find('.e').length;
+		var totS = $('#spouse').find('.e').length;
+		var totSO = $('#sons').find('.e').length;
+		var totGS = $('#grandsons').find('.e').length;
+		var totSI = $('#sibl').find('.e').length;
+		if (totSI == 0) {
+			$('#sibl').append('<div class="pair"><div class="e"></div></div>')
 		}
-		tot = $('#spouse').find('.e').length;
-		if (tot == 0) {
-			$('#spouse').append('<div class="e"></div>');
+		var center = totG * 150;
+		//console.info("grampas " + center)
+
+		if (totP > 2) {
+			center = center < ((150 * (totP + 1) / 2) + 75) ? (150 * (totP + 1) / 2) + 75 : center;
+			//console.info("parents " + center)
 		}
-		tot = $('#grandsons').find('.pair').length;
-		$('#grandsons').find('h3').css({
-			width : ((tot + 1) * 150) + 'px'
-		});
-		$('#grandsons').css({
-			paddingLeft : (left + 75 - (tot * 75)) + 'px'
-		});
-		tot = $('#parents').find('.pair').length;
+		if (totS > 1) {
+			center = center < (150 * totS + 75) ? (150 * totS + 75) : center;
+			//console.info("spouse " + center)
+		}
+		if (totG * 150 < center) {
+			$('#fgp').css({
+				paddingLeft : center - (totG * 150 > 300 ? totG * 150 : 300)
+			});
+		}
+		if (center < 300) {
+			center = 300
+		}
 		$('#parents').find('h3').css({
-			width : ((tot + 1) * 150) + 'px'
+			width : (totP * 150) + 'px',
+			padding : 0,
+			textAlign : 'center'
 		});
-		$('#parents').animate({
-			paddingLeft : (left + 75 - (tot * 75)) + 'px'
+		$('#parents').css({
+			paddingLeft : center - ((totP + 1) * 150 / 2) + 75
 		});
+		if (center > (150 * totS)) {
+			$('#spouse').css({
+				width : center - 75
+			});
+		}
+		if (totSO > 0 && center > (totSO * 150 / 2)) {
+			$('#sons').css({
+				paddingLeft : center - (totSO * 150 / 2)
+			});
+		} else if (center > (totSO * 150 / 2)) {
+			$('#sons').css({
+				paddingLeft : center - 75
+			});
+		}
+		if (totGS > 0 && center > (totGS * 150 / 2)) {
+			$('#grandsons').css({
+				paddingLeft : center - (totGS * 150 / 2)
+			});
+		} else if (center > (totGS * 150 / 2)) {
+			$('#grandsons').css({
+				paddingLeft : center - 75
+			});
+		}
+
+		$('#sons').find('h3').css({
+			width : 150,
+			paddingLeft : center - parseInt($('#sons').css('padding-left').replace(/px/, ''), 10) - 75,
+			textAlign : 'center'
+		});
+		$('#grandsons ').find('h3').css({
+			width : 150,
+			paddingLeft : center - parseInt($('#grandsons').css('padding-left').replace(/px/, ''), 10) - 75,
+			textAlign : 'center'
+		});
+
+		var max = Math.max(totG, totP, totP, totGP, totS, totSO, totGS, totSI + 2);
+		$('.familyarea').each(function() {
+			$(this).css({
+				width : Math.max(max * 150 - parseInt($(this).css('padding-left').replace(/px/, ''), 10), window.innerWidth)
+			});
+		});
+		familytree.c.wrap('<div class="dragcontainer" style="overflow:hidden"></div>')
+		familytree.c.draggable();
 	},
 	buildPair : function(person, writeSpouse, wrapSpouse) {
-		console.info('building ' + person)
 		var pair = $('<div class="pair"></div>');
-		if ($('[data-iri="' + person + '"]').length == 0) {
+		var pkey = encodeURI(person.replace(/[ ./:'"]/g, '').toLowerCase());
+		console.info(pkey+" -pkey- "+$('[data-test=' + pkey + ']').length)
+		if ($('[data-test=' + pkey + ']').length == 0) {
+			console.info(pkey+" -!!pkey- "+$('[data-test=' + pkey + ']').length)
 			var hb = null;
-
 			if (!person.indexOf("http") == 0) {
-				hb = $('<div class="e"><div class="hb" data-iri="' + person + '" ><strong>' + person + '</strong></div></div>');
+				hb = $('<div class="e"><div class="hb" data-test="' + pkey + '" ><strong>' + person + '</strong><img src="' + conf.StaticResourceURL + 'familytree/avatar-neutro.png"></div></div>');
 				pair.append(hb);
 			} else {
-				hb = $('<div class="e"><div class="hb" data-iri="' + person + '" data-family="' + (JSON.stringify(familytree.data[person]) + '').replace(/"/g, '') + '">' + (familytree.data.s[person].image ? '<img src="' + familytree.data.s[person].image + '">' : '') + '<strong>' + familytree.data.s[person].title + '</strong></div></div>');
-
+				hb = $('<div class="e"><div class="hb" data-iri="' + person + '" data-test="' + pkey + '" data-family="' + (JSON.stringify(familytree.data[person]) + '').replace(/"/g, '') + '"><strong>' + (familytree.data.s[person].title ? familytree.data.s[person].title : person.replace(/.+\/([^/]+)/g, '$1')) + '</strong>' + (familytree.data.s[person].image ? '<img data-src="' + familytree.data.s[person].image + '">' : '<img src="' + conf.StaticResourceURL + 'familytree/avatar-neutro.png">') + '</div></div>');
 				if (person == familytree.mainIRI) {
 					hb.addClass('mainIRI');
 				}
 				if (writeSpouse) {
-					console.info("write spouse")
-					// TODO: more then one spouse and string spouse
 					var sp;
 					if (familytree.data[person] && familytree.data[person].spouse) {
 						$.each(familytree.data[person].spouse, function(k, v) {
-							console.info("has spouse " + v)
-							if (v.indexOf("http") == -1) {
-								sp = $('<div class="e"><div  data-iri="' + v + '" class="wf" ><strong>' + v + '</strong></div></div>');
-								if (wrapSpouse) {
-									wrapSpouse.append(sp);
-									pair.prepend(wrapSpouse);
-								} else {
-									pair.prepend(sp);
-								}
-							} else if (familytree.data.s[v]) {
-								sp = $('<div class="e"><div  class="wf" data-iri="' + v + '" data-family="' + (JSON.stringify(familytree.data[v]) + '').replace(/"/g, '') + '">' + (familytree.data.s[v].image ? '<img src="' + familytree.data.s[v].image + '">' : '') + '<strong>' + familytree.data.s[v].title + '</strong></div></div>');
-								if (wrapSpouse) {
-									wrapSpouse.append(sp);
-									pair.prepend(wrapSpouse);
-								} else {
-									pair.prepend(sp);
+							var vkey = encodeURI(v.replace(/[ ./:'"]/g, '').toLowerCase());
+							console.info(vkey+" -vkey- "+$('[data-test=' + vkey + ']').length)
+							if ($('[data-test=' + vkey + ']').length == 0) {
+								console.info(vkey+" -!!vkey- "+$('[data-test=' + vkey + ']').length)
+								if (v.indexOf("http") == -1) {
+									sp = $('<div class="e"><div  data-test="' + vkey + '" class="wf" ><strong>' + v + '</strong><img src="' + conf.StaticResourceURL + 'familytree/avatar-neutro.png"></div></div>');
+									if (wrapSpouse) {
+										wrapSpouse.append(sp);
+										pair.prepend(wrapSpouse);
+									} else {
+										pair.prepend(sp);
+									}
+								} else if (familytree.data.s[v]) {
+									sp = $('<div class="e"><div data-iri="' + v + '" class="wf" data-test="' + vkey + '" data-family="' + (JSON.stringify(familytree.data[v]) + '').replace(/"/g, '') + '"><strong>' + (familytree.data.s[v].title ? familytree.data.s[v].title : v.replace(/.+\/([^/]+)/g, '$1')) + '</strong>' + (familytree.data.s[v].image ? '<img data-src="' + familytree.data.s[v].image + '">' : '<img src="' + conf.StaticResourceURL + 'familytree/avatar-neutro.png">') + '</div></div>');
+									if (wrapSpouse) {
+										wrapSpouse.append(sp);
+										pair.prepend(wrapSpouse);
+									} else {
+										pair.prepend(sp);
+									}
 								}
 							}
 						});
-						// simple pair, with no child
-						// pair.append('<div class="wf-connector"></div>')
 					} else if (wrapSpouse) {
+						wrapSpouse.append('<div class="e"></div>');
 						pair.prepend(wrapSpouse);
 					}
 				}
@@ -273,19 +373,37 @@ var familytree = {
 					cursor : 'pointer'
 				});
 				pair.find('[data-iri]').click(function() {
-					var iri = $(this);	
-					$('#familytree-content').fadeOut('fast', function() {
+					var iri = $(this);
+					familytree.c.fadeOut('fast', function() {
+						$('#familytree-container').remove();
 						var familytreeLayer = familytree.template.clone();
 						var ele = $('.familytree-container');
 						ele.prepend(familytreeLayer);
 						lodview.zoomHelper(familytreeLayer, ele, true)
-						/* add loading */
 						familytreeLayer.fadeIn(300, function() {
-							familytree.init(iri.attr("data-iri"), iri.find('img:first').clone());
+							familytree.init(iri.attr("data-iri"), iri.text(), iri.find('img:first').clone());
 						});
 					});
 				});
+
+				pair.find('[data-test]').on('mouseenter', function() {
+					if (familytree.imgStatus == 'testo') {
+						$(this).find('img').fadeIn('fast');
+					} else {
+						$(this).find('img').fadeOut();
+					}
+				});
+
+				pair.find('[data-test]').on('mouseleave', function() {
+					if (familytree.imgStatus == 'foto') {
+						$(this).find('img').fadeIn('fast');
+					} else {
+						$(this).find('img').fadeOut();
+					}
+				});
 			}
+		}else{
+			return "";
 		}
 		return pair;
 	},

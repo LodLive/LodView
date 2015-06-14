@@ -31,7 +31,9 @@
 #familyload>div img {
 	position: relative;
 	width: 98px;
-	width: 98px;
+	width: 98px; 
+	opacity: 1;
+	display:block;
 }
 
 #familytree-container {
@@ -56,7 +58,24 @@
 	padding-left: 20px;
 }
 
+#familytree-container .family-switch {
+	width: 57px;
+	float:right;
+	height: 15px;  margin-top: 17.5px;
+  	margin-right: 20px;
+  	cursor:pointer;
+}
+
+#familytree-container .family-switch.testo {
+	background-position: -430px -120px;
+}
+
+#familytree-container .family-switch.foto {
+	background-position: -430px -135px;
+}
+
 #familytree-content {
+	cursor: move;
 	text-align: left;
 	white-space: nowrap;
 	box-sizing: border-box;
@@ -84,10 +103,18 @@
 	font-size: 11px;
 }
 
+#familytree-content  #fgp {
+	min-width: 300px;
+	text-align: right;
+}
+
 #familytree-content div.pair img {
 	position: relative;
 	height: auto;
 	width: 100px;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity = 0);
+	opacity: 0;
 }
 
 #familytree-content .half {
@@ -123,13 +150,13 @@
 #familytree-content div.e>div {
 	width: 100px;
 	height: 100px;
+	background-color:#e6e6e4;
 	-webkit-border-radius: 50px;
 	-moz-border-radius: 50px;
 	border-radius: 50px;
 	overflow: hidden;
-	background-color: #e6e6e4;
 	white-space: normal;
-	color: #6d6d6d;
+	color: #222222;
 	font-weight: 700;
 	font-size: 12px;
 	line-height: 14px;
@@ -141,23 +168,61 @@
 
 #familytree-content #spouse {
 	border-right: 1px solid #aeaaa0;
+	min-width: 225px;
+	text-align: right;
 }
 
 #familytree-content strong {
 	margin-right: 5px;
-	margin-left: 5px;
-	overflow: hidden;
-	position: relative;
-	top: 50%;
-	margin-top: -50px;
+	margin-left: 5px; 
+	position: absolute;
+	font-weight: 300;
 	text-align: center;
+	width:90px;
+	display:block;
 }
 
-#mainr {
+#familytree-content #mainr {
 	position: relative;
 	top: -25px;
 }
 
-.wf *, .hb * ) {
-	display: none;
+#familytree-content #parents {
+	padding-left: 150px;
+}
+#familytree-content
+
+  
+
+.wf
+
+ 
+
+*
+,
+#familytree-content
+
+  
+
+.hb
+
+ 
+
+*
+
+ 
+
+)
+{
+display
+
+
+:
+
+ 
+
+none
+
+
+;
 }

@@ -23,7 +23,7 @@
 <c:set var="color1" value='${colorPair.replaceAll("-.+","") }' scope="page" />
 <c:set var="color2" value='${colorPair.replaceAll(".+-","") }' scope="page" />
 <style type="text/css">
-hgroup, #linking a span, #audio .audio , #familytree  a span {
+hgroup, #linking a span, #audio .audio, #familytree  a span {
 	background-color: ${color1
 }
 
@@ -68,6 +68,9 @@ div#loadPanel span.ok img {
 <c:if test="${hasFamilyTree }">
 	<script type="text/javascript" src="${conf.getStaticResourceURL()}familytree/familytree.js"></script>
 	<link rel="stylesheet" href="${conf.getStaticResourceURL()}familytree/familytree.css">
+	<link rel="stylesheet" href="${conf.getStaticResourceURL()}vendor/jqueryui/jquery-ui.min.css">
+	<script type="text/javascript" src="${conf.getStaticResourceURL()}vendor/jqueryui/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="${conf.getStaticResourceURL()}vendor/jqueryui/jquery-ui.structure.min.css">
 </c:if>
 <c:if test="${hasAudios }">
 	<link rel="stylesheet" href="${conf.getStaticResourceURL()}vendor/jplayercircle/circle.skin/circle.player.css">
