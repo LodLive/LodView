@@ -249,6 +249,10 @@ var familytree = {
 		if (totG == 0) {
 			$('#fgp').append('<div class="pair"><div class="e"></div></div>')
 		}
+		if ($('#mgp').find('.e').length == 0) {
+			$('#mgp').append('<div class="pair"><div class="e"></div></div>')
+		}
+		
 
 		var center = totG * 150;
 

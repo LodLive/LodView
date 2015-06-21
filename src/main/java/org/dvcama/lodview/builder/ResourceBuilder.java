@@ -301,7 +301,7 @@ public class ResourceBuilder {
 		/* find parents */
 		browseRelatives(IRI, "parents", resultMap, found, controlList, true, se, conf, localMode, locale, ontoBean);
 
-		// TODO: put this in conf file
+
 		List<String> list = conf.getTitleProperties();
 		list.addAll(conf.getImageProperties());
 		list.addAll(conf.getFamilyTreeData("birthDate"));
@@ -362,26 +362,10 @@ public class ResourceBuilder {
 
 		/* all the people we collected */
 		resultMap.put("s", s);
-
-		/*
-		 * for (String key : map.keySet()) { List<TripleBean> triples = new
-		 * ArrayList<TripleBean>();
-		 * 
-		 * List<String> queryList = new ArrayList<String>();
-		 * queryList.add(map.get(key)); System.out.println(map.get(key));
-		 * 
-		 * if (localMode) { Model m = ModelFactory.createDefaultModel(); try {
-		 * m.read(IRI); } catch (Exception e) { throw new
-		 * Exception(messageSource.getMessage("error.noContentNegotiation",
-		 * null, "sorry but content negotiation is not supported by the IRI",
-		 * locale)); } triples = se.doLocalSubjectQuery(m, IRI, queryList,
-		 * null); } else { triples = se.doSubjectQuery(IRI, queryList, null); }
-		 * System.out.println("trovati: " + triples.size()); resultMap.put(key,
-		 * triples); }
-		 */
+ 
 
 		return resultMap;
-	}
+	} 
 
 	@SuppressWarnings("unchecked")
 	private void browseRelatives(String IRI, String key, Map<Object, Object> resultMap, Set<String> found, Set<String> controlList, boolean deep, SPARQLEndPoint se, ConfigurationBean conf, boolean localMode, Locale locale, OntologyBean ontoBean) throws Exception {
@@ -472,42 +456,46 @@ public class ResourceBuilder {
 		List<String> linking = new ArrayList<String>();
 		List<String> videos = new ArrayList<String>();
 		List<String> audios = new ArrayList<String>();
+		System.out.println("images " + conf.getImageProperties());
+		System.out.println("conf " + conf);
 		for (TripleBean tripleBean : triples) {
 
 			if (tripleBean.getIRI() == null) {
 				tripleBean.setIRI(IRI);
 				tripleBean.setNsIRI(Misc.toNsResource(tripleBean.getIRI(), conf));
 			}
+			String nsTest = tripleBean.getProperty().getNsProperty();
+			String test = tripleBean.getProperty().getProperty();
 
-			if (conf.getTitleProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getTitleProperties().contains(tripleBean.getProperty().getProperty())) {
+			if (conf.getTitleProperties().contains(nsTest) || conf.getTitleProperties().contains(test)) {
 				if (tripleBean.getIRI().equals(IRI) && !betterTitleMatch && (result.getTitle() == null || result.getTitle().trim().equals("") || (tripleBean.getLang() != null && (preferredLanguage.equals(tripleBean.getLang()) || tripleBean.getLang().equals("en"))))) {
 					result.setTitle(Misc.stripHTML(tripleBean.getValue()));
 					if (preferredLanguage.equals(tripleBean.getLang())) {
 						betterTitleMatch = true;
 					}
 				}
-			} else if (conf.getDescriptionProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getDescriptionProperties().contains(tripleBean.getProperty().getProperty())) {
+			} else if (conf.getDescriptionProperties().contains(nsTest) || conf.getDescriptionProperties().contains(test)) {
 				if (tripleBean.getIRI().equals(IRI) && !betterDescrMatch && (result.getDescriptionProperty() == null || (tripleBean.getLang() != null && (preferredLanguage.equals(tripleBean.getLang()) || tripleBean.getLang().equals("en"))))) {
 					result.setDescriptionProperty(tripleBean.getProperty());
 					if (preferredLanguage.equals(tripleBean.getLang())) {
 						betterDescrMatch = true;
 					}
 				}
-			} else if (conf.getLatitudeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getLatitudeProperties().contains(tripleBean.getProperty().getProperty())) {
+			} else if (conf.getLatitudeProperties().contains(nsTest) || conf.getLatitudeProperties().contains(test)) {
 				result.setLatitude(tripleBean.getValue());
-			} else if (conf.getLongitudeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getLongitudeProperties().contains(tripleBean.getProperty().getProperty())) {
+			} else if (conf.getLongitudeProperties().contains(nsTest) || conf.getLongitudeProperties().contains(test)) {
 				result.setLongitude(tripleBean.getValue());
-			} else if (conf.getImageProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getImageProperties().contains(tripleBean.getProperty().getProperty())) {
-				images.add(tripleBean.getValue());
-			} else if (conf.getAudioProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getAudioProperties().contains(tripleBean.getProperty().getProperty())) {
+			} else if (conf.getImageProperties().contains(nsTest) || conf.getImageProperties().contains(test)) {
+				images.add(tripleBean.getValue()); 
+			} else if (conf.getAudioProperties().contains(nsTest) || conf.getAudioProperties().contains(test)) {
 				audios.add(tripleBean.getValue());
-			} else if (conf.getVideoProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getVideoProperties().contains(tripleBean.getProperty().getProperty())) {
+			} else if (conf.getVideoProperties().contains(nsTest) || conf.getVideoProperties().contains(test)) {
 				videos.add(tripleBean.getValue());
-			} else if (conf.getLinkingProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getLinkingProperties().contains(tripleBean.getProperty().getProperty())) {
+			} else if (conf.getLinkingProperties().contains(nsTest) || conf.getLinkingProperties().contains(test)) {
 				linking.add(tripleBean.getValue());
-			} else if (conf.getTypeProperties().contains(tripleBean.getProperty().getNsProperty()) || conf.getTypeProperties().contains(tripleBean.getProperty().getProperty())) {
+			} else if (conf.getTypeProperties().contains(nsTest) || conf.getTypeProperties().contains(test)) {
 				result.setTypeProperty(tripleBean.getProperty());
-			} else if (conf.getFamilyTreeData("familytreeTestProperties").contains(tripleBean.getProperty().getNsProperty()) || conf.getFamilyTreeData("familytreeTestProperties").contains(tripleBean.getProperty().getProperty())) {
+			} else if (conf.getFamilyTreeData("familytreeTestProperties").contains(nsTest) || conf.getFamilyTreeData("familytreeTestProperties").contains(test)) {
 				result.setHasFamilyTree(true);
 			}
 

@@ -1,8 +1,6 @@
 package org.dvcama.lodview.controllers;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -10,7 +8,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.jena.atlas.json.io.parser.JSONParser;
 import org.dvcama.lodview.bean.OntologyBean;
 import org.dvcama.lodview.bean.ResultBean;
 import org.dvcama.lodview.builder.ResourceBuilder;
@@ -101,8 +98,7 @@ public class FamilyTreeController {
 		try {
 			model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
 			model.addAttribute("ontoBean", ontoBean);
-			ResourceBuilder builder = new ResourceBuilder(messageSource);
-			Map<Object, Object> result = builder.buildPedegreeData(IRI, conf, ontoBean, locale);
+			Map<Object, Object> result = new ResourceBuilder(messageSource).buildPedegreeData(IRI, conf, ontoBean, locale);
 			ObjectMapper objectMapper = new ObjectMapper();
 			return objectMapper.writeValueAsString(result);
 		} catch (Exception e) {
