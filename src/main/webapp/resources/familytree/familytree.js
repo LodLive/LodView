@@ -173,9 +173,7 @@ var familytree = {
 	},
 	betterImage : function(image, docount) {
 		image.load(function() {
-			//console.info(totImage + " - " + image.attr("src"))
 			if (!image.attr("style")) {
-				//console.info("starts")
 				var w = $(this).width();
 				var h = $(this).height();
 
@@ -210,7 +208,6 @@ var familytree = {
 				$(this).hide();
 			}
 			if (docount && totImage == 0) {
-				//console.info('open!')
 				familytree.open();
 			}
 		});
@@ -221,7 +218,6 @@ var familytree = {
 	},
 	betterTitle : function(title) {
 		var h = title.height();
-		//console.info(h)
 		title.css({
 			marginTop : (50 - (h / 2)) + "px"
 		});
@@ -250,16 +246,17 @@ var familytree = {
 		if (totSI == 0) {
 			$('#sibl').append('<div class="pair"><div class="e"></div></div>')
 		}
+		if (totG == 0) {
+			$('#fgp').append('<div class="pair"><div class="e"></div></div>')
+		}
+
 		var center = totG * 150;
-		//console.info("grampas " + center)
 
 		if (totP > 2) {
 			center = center < ((150 * (totP + 1) / 2) + 75) ? (150 * (totP + 1) / 2) + 75 : center;
-			//console.info("parents " + center)
 		}
 		if (totS > 1) {
 			center = center < (150 * totS + 75) ? (150 * totS + 75) : center;
-			//console.info("spouse " + center)
 		}
 		if (totG * 150 < center) {
 			$('#fgp').css({
@@ -323,10 +320,8 @@ var familytree = {
 	},
 	buildPair : function(person, writeSpouse, wrapSpouse) {
 		var pair = $('<div class="pair"></div>');
-		var pkey = encodeURI(person.replace(/[ ./:'"]/g, '').toLowerCase());
-		console.info(pkey+" -pkey- "+$('[data-test=' + pkey + ']').length)
+		var pkey = encodeURI(person.replace(/[^\d\w]/g, '').toLowerCase());
 		if ($('[data-test=' + pkey + ']').length == 0) {
-			console.info(pkey+" -!!pkey- "+$('[data-test=' + pkey + ']').length)
 			var hb = null;
 			if (!person.indexOf("http") == 0) {
 				hb = $('<div class="e"><div class="hb" data-test="' + pkey + '" ><strong>' + person + '</strong><img src="' + conf.StaticResourceURL + 'familytree/avatar-neutro.png"></div></div>');
@@ -340,10 +335,8 @@ var familytree = {
 					var sp;
 					if (familytree.data[person] && familytree.data[person].spouse) {
 						$.each(familytree.data[person].spouse, function(k, v) {
-							var vkey = encodeURI(v.replace(/[ ./:'"]/g, '').toLowerCase());
-							console.info(vkey+" -vkey- "+$('[data-test=' + vkey + ']').length)
+							var vkey = encodeURI(v.replace(/[^\d\w]/g, '').toLowerCase());
 							if ($('[data-test=' + vkey + ']').length == 0) {
-								console.info(vkey+" -!!vkey- "+$('[data-test=' + vkey + ']').length)
 								if (v.indexOf("http") == -1) {
 									sp = $('<div class="e"><div  data-test="' + vkey + '" class="wf" ><strong>' + v + '</strong><img src="' + conf.StaticResourceURL + 'familytree/avatar-neutro.png"></div></div>');
 									if (wrapSpouse) {
@@ -402,7 +395,7 @@ var familytree = {
 					}
 				});
 			}
-		}else{
+		} else {
 			return "";
 		}
 		return pair;
