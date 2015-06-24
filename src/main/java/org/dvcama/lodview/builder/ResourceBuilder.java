@@ -456,8 +456,6 @@ public class ResourceBuilder {
 		List<String> linking = new ArrayList<String>();
 		List<String> videos = new ArrayList<String>();
 		List<String> audios = new ArrayList<String>();
-		System.out.println("images " + conf.getImageProperties());
-		System.out.println("conf " + conf);
 		for (TripleBean tripleBean : triples) {
 
 			if (tripleBean.getIRI() == null) {
