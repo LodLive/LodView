@@ -48,16 +48,21 @@ Lodview is beautiful and colorful: you can let it randomize the colors of the in
 LodView provides (and will provide) various widgets for displaying multimedia contents, thesaurus hierarchies, external connected resources and geographical information.
 
 ##### Image widget
-Easy access to the image referenced in the resource.
+Easy access to the image referenced in the resource.  
+(e.g. british museum http://lodview.it/lodview/?IRI=http%3A%2F%2Fcollection.britishmuseum.org%2Fid%2Fobject%2FYCA62958&sparql=http%3A%2F%2Fcollection.britishmuseum.org%2Fsparql&prefix=http%3A%2F%2Fcollection.britishmuseum.org%2Fid%2Fobject%2F)
 
 ##### Video and audio widget
-Players for videos and even audio files extracted form the resource.
+Players for videos and even audio files extracted form the resource.  
+(e.g. linkedjazz http://lodview.it/lodview/?IRI=http%3A%2F%2Flinkedjazz.org%2Fresource%2FMary_Lou_Williams&sparql=https%3A%2F%2Flinkedjazz.org%2Fsparql%2Fselect&prefix=http%3A%2F%2Flinkedjazz.org%2Fresource%2F) 
 
 ##### Linked LOD resources widget
-To make the context of the viewed resourced even more understandable and to prove the power of the linked data cloud, all connected resources (eg. sameAs) are automatically shown with their title, an image or a map, and an abstract.
+To make the context of the viewed resourced even more understandable and to prove the power of the linked data cloud, all connected resources (eg. sameAs) are automatically shown with their title, an image or a map, and an abstract.  
+(e.g. dati.camera http://lodview.it/lodview/?IRI=http%3A%2F%2Fdati.camera.it%2Focd%2Fpersona.rdf%2Fp4230&sparql=http%3A%2F%2Fdati.camera.it%2Fsparql&prefix=http%3A%2F%2Fdati.camera.it%2Focd%2F)
+
     
 ##### Map representation widget 
-Geographical information is shown as points on a map (thanks to OSM project).
+Geographical information is shown as points on a map (thanks to OSM project).  
+(e.g. geonames http://lodview.it/lodview/?IRI=http%3A%2F%2Fsws.geonames.org%2F6471849%2F&sparql=%3C%3E&prefix=http%3A%2F%2Fsws.geonames.org%2F)
 **TODO**: manage shape representation.
 
 ##### Hierarchy widget
