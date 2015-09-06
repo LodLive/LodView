@@ -64,7 +64,7 @@
 
 ## 	EndPoint
 
-	conf:endpoint <https://dbpedia.org/sparql>;
+	conf:endpoint <http://dbpedia.org/sparql>;
 
 ########## give it a try opening http://localhost:8080/lodview/Rome
 
