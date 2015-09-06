@@ -135,6 +135,10 @@
 	conf:publicUrlPrefix <auto>; ## or <auto>
 
 
+## solve IRI issues in particular environments (proxypass, etc.)
+
+	conf:forceIriEncoding "auto"; ## or "decode" or "encode"
+
 ##	home link (accessible from the banner)
 
 	conf:homeUrl <http://yoursitehome.com>;

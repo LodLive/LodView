@@ -23,8 +23,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	private Model confModel = null;
 	private ServletContext context;
-
-	private String confFile, homeUrl, license, httpRedirectSuffix, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
+	private String confFile, forceIriEncoding, homeUrl, license, httpRedirectSuffix, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
 
 	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null, defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null, audioProperties = null, imageProperties = null, videoProperties = null, linkingProperties = null, titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null, mainOntologiesPrefixes = null;
@@ -50,6 +49,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		EndPointUrl = getSingleConfValue("endpoint");
 		authPassword = getSingleConfValue("authPassword");
 		authUsername = getSingleConfValue("authUsername");
+		forceIriEncoding = getSingleConfValue("forceIriEncoding", "auto");
 
 		IRInamespace = getSingleConfValue("IRInamespace", "<not provided>");
 
@@ -354,6 +354,14 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	public void setMainOntologiesPrefixes(List<String> mainOntologiesPrefixes) {
 		this.mainOntologiesPrefixes = mainOntologiesPrefixes;
+	}
+
+	public String getForceIriEncoding() {
+		return forceIriEncoding;
+	}
+
+	public void setForceIriEncoding(String forceIriEncoding) {
+		this.forceIriEncoding = forceIriEncoding;
 	}
 
 }

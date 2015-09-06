@@ -176,7 +176,7 @@ public class ResourceController {
 						RedirectView r = new RedirectView();
 						r.setExposeModelAttributes(false);
 						r.setContentType("text/html");
-						r.setHttp10Compatible(false); 
+						r.setHttp10Compatible(false);
 						r.setUrl(req.getRequestURL() + redirectUrl + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
 
 						return r;
@@ -228,6 +228,19 @@ public class ResourceController {
 		if (forceIRI != null && !forceIRI.equals("")) {
 			IRI = forceIRI;
 		}
+
+		if (conf.getForceIriEncoding().equals("encode")) {
+			String[] IRItokens = IRI.split("/");
+			for (int i = 3; i < IRItokens.length; i++) {
+				IRItokens[i] = java.net.URLEncoder.encode(IRItokens[i], "UTF-8");
+			}
+		} else if (conf.getForceIriEncoding().equals("decode")) {
+			String[] IRItokens = IRI.split("/");
+			for (int i = 3; i < IRItokens.length; i++) {
+				IRItokens[i] = java.net.URLDecoder.decode(IRItokens[i], "UTF-8");
+			}
+		}
+
 		System.out.println("####################################################################");
 		System.out.println("#################  looking for " + IRI + "  ################# ");
 
@@ -238,6 +251,8 @@ public class ResourceController {
 			model.addAttribute("lodliveUrl", "http://lodlive.it?" + IRI.replaceAll("#", "%23"));
 		} else if (locale.getLanguage().equals("fr")) {
 			model.addAttribute("lodliveUrl", "http://fr.lodlive.it?" + IRI.replaceAll("#", "%23"));
+		} else if (locale.getLanguage().equals("gl")) {
+			model.addAttribute("lodliveUrl", "http://gl.lodlive.it?" + IRI.replaceAll("#", "%23"));
 		} else {
 			model.addAttribute("lodliveUrl", "http://en.lodlive.it?" + IRI.replaceAll("#", "%23"));
 		}
