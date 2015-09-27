@@ -23,7 +23,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	private Model confModel = null;
 	private ServletContext context;
-	private String confFile, forceIriEncoding, homeUrl, license, httpRedirectSuffix, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
+	private String confFile, redirectionStrategy, forceIriEncoding, homeUrl, license, httpRedirectSuffix, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
 
 	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null, defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null, audioProperties = null, imageProperties = null, videoProperties = null, linkingProperties = null, titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null, mainOntologiesPrefixes = null;
@@ -50,6 +50,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		authPassword = getSingleConfValue("authPassword");
 		authUsername = getSingleConfValue("authUsername");
 		forceIriEncoding = getSingleConfValue("forceIriEncoding", "auto");
+		redirectionStrategy = getSingleConfValue("redirectionStrategy", "");
 
 		IRInamespace = getSingleConfValue("IRInamespace", "<not provided>");
 
@@ -156,6 +157,9 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		return confModel.getNsPrefixMap();
 	}
 
+	public String getRedirectionStrategy() {
+		return redirectionStrategy;
+	}
 	public String getNsPrefixURI(String prefix) {
 		return confModel.getNsPrefixURI(prefix);
 	}

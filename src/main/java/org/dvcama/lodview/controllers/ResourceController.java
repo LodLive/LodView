@@ -2,12 +2,16 @@ package org.dvcama.lodview.controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.atlas.web.AcceptList;
 import org.apache.jena.atlas.web.MediaType;
 import org.apache.jena.riot.Lang;
@@ -26,6 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
@@ -77,21 +82,12 @@ public class ResourceController {
 	}
 
 	public Object resource(ConfigurationBean conf, ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, String output, String forceIRI, String colorPair) throws UnsupportedEncodingException {
-		// System.out.println("colorPaircolorPair " + colorPair);
-		// System.out.println("ResourceController.resource() " +
-		// conf.getEndPointUrl());
+
 		model.addAttribute("conf", conf);
 
 		String IRIsuffix = new UrlPathHelper().getLookupPathForRequest(req).replaceAll("/lodview/", "/");
-		// System.out.println("IRIsuffix " + IRIsuffix +
-		// " (getHttpRedirectSuffix " + conf.getHttpRedirectSuffix() + ")");
 
 		model.addAttribute("path", new UrlPathHelper().getContextPath(req).replaceAll("/lodview/", "/"));
-
-		String IRIprefix = conf.getIRInamespace().replaceAll("/$", "");
-		// System.out.println("IRIprefix " + IRIprefix);
-
-		// System.out.println("client locale " + locale.getLanguage());
 		model.addAttribute("locale", locale.getLanguage());
 
 		boolean redirect = false;
@@ -103,7 +99,6 @@ public class ResourceController {
 				// after redirect
 				IRIsuffix = IRIsuffix.replaceAll(conf.getHttpRedirectSuffix() + "$", "");
 				redirected = true;
-				System.out.println("is a 303 redirect!");
 			} else {
 				// before redirect
 				redirect = true;
@@ -111,21 +106,28 @@ public class ResourceController {
 		}
 		IRIsuffix = IRIsuffix.replaceAll("^/", "");
 
+		String IRIprefix = conf.getIRInamespace().replaceAll("/$", "");
 		String IRI = IRIprefix + "/" + IRIsuffix.replaceAll(" ", "%20");
 		if (forceIRI != null && !forceIRI.equals("")) {
 			IRI = forceIRI;
-
 		}
+
+		if (conf.getForceIriEncoding().equals("encode")) {
+			String[] IRItokens = IRI.split("/");
+			for (int i = 0; i < IRItokens.length; i++) {
+				IRItokens[i] = java.net.URLEncoder.encode(IRItokens[i], "UTF-8");
+			}
+			IRI = StringUtils.join("/");
+		} else if (conf.getForceIriEncoding().equals("decode")) {
+			String[] IRItokens = IRI.split("/");
+			for (int i = 0; i < IRItokens.length; i++) {
+				IRItokens[i] = java.net.URLDecoder.decode(IRItokens[i], "UTF-8");
+			}
+			IRI = StringUtils.join("/");
+		}
+
 		System.out.println("####################################################################");
 		System.out.println("#################  looking for " + IRI + "  ################# ");
-
-		if (locale.getLanguage().equals("it")) {
-			model.addAttribute("lodliveUrl", "http://lodlive.it?" + IRI.replaceAll("#", "%23"));
-		} else if (locale.getLanguage().equals("fr")) {
-			model.addAttribute("lodliveUrl", "http://fr.lodlive.it?" + IRI.replaceAll("#", "%23"));
-		} else {
-			model.addAttribute("lodliveUrl", "http://en.lodlive.it?" + IRI.replaceAll("#", "%23"));
-		}
 
 		String[] acceptedContent = req.getHeader("Accept").split(",");
 		if (redirected) {
@@ -153,49 +155,20 @@ public class ResourceController {
 			System.out.println("override content type " + matchItem.getContentType());
 		}
 
-		// System.out.println("content type " + matchItem.getContentType());
-		// System.out.println("lang " + lang);
-
-		// System.out.println("--------------");
 		try {
 			if (lang == null) {
 				matchItem = AcceptList.match(offeringResources, a);
-				// System.out.println("matchItem " + matchItem);
+				// probably you are asking for an HTML page
 				if (matchItem != null) {
-					// probably you are asking for an HTML page
 					if (redirect && !redirected) {
-						String redirectUrl = conf.getHttpRedirectSuffix();
-						// preventing redirect of model attributes
-						String[] redirectUrlArray = redirectUrl.split("/");
-						redirectUrl = "";
-						for (String string : redirectUrlArray) {
-							redirectUrl += URLEncoder.encode(string, "UTF-8") + "/";
-						}
-						redirectUrl = redirectUrl.replaceAll("/$", "");
-
-						RedirectView r = new RedirectView();
-						r.setExposeModelAttributes(false);
-						r.setContentType("text/html");
-						r.setHttp10Compatible(false);
-						r.setUrl(req.getRequestURL() + redirectUrl + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
-
-						return r;
+						return redirect(req);
 					} else {
-						model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
-						ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
-						model.addAttribute("results", Misc.guessClass(r, conf, ontoBean));
-						model.addAttribute("ontoBean", ontoBean);
-						enrichResponse(r, req, res);
-						model.addAttribute("colorPair", Misc.guessColor(colorPair, r, conf));
-						return "resource";
+						return htmlResource(model, IRI, colorPair, locale, req, res);
 					}
 				} else {
 					return new ErrorController(conf).error406(res, model, colorPair);
 				}
 			} else {
-				// return "forward:/rawdata?IRI=" + IRI + "&sparql=" +
-				// java.net.URLEncoder.encode(conf.getEndPointUrl(),"UTF-8") +
-				// "&contentType=" + matchItem.getContentType();
 				return resourceRaw(conf, model, IRI, conf.getEndPointUrl(), matchItem.getContentType());
 			}
 		} catch (Exception e) {
@@ -209,44 +182,90 @@ public class ResourceController {
 
 	}
 
-	public Object htmlResource(ConfigurationBean conf, ModelMap model, HttpServletRequest req, HttpServletResponse res, Locale locale, String output, String forceIRI, String colorPair) throws UnsupportedEncodingException {
-		// System.out.println("colorPaircolorPair " + colorPair);
-		// System.out.println("ResourceController.resource() " +
-		// conf.getEndPointUrl());
-		model.addAttribute("conf", conf);
-		model.addAttribute("colorPair", colorPair);
+	private String htmlResource(ModelMap model, String IRI, String colorPair, Locale locale, HttpServletRequest req, HttpServletResponse res) throws Exception {
+		model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
+		ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
+		model.addAttribute("colorPair", Misc.guessColor(colorPair, r, conf));
+		model.addAttribute("results", Misc.guessClass(r, conf, ontoBean));
+		model.addAttribute("ontoBean", ontoBean);
 
-		String IRIsuffix = new UrlPathHelper().getLookupPathForRequest(req).replaceAll("/lodview/", "/").replaceAll("^/", "");
-		// System.out.println("IRIsuffix " + IRIsuffix);
+		addDataLinks(model, req, locale);
+		addLodliveLink(locale, model, IRI);
+		enrichResponse(model, r, req, res);
+		return "resource";
+	}
 
-		model.addAttribute("path", new UrlPathHelper().getContextPath(req).replaceAll("/lodview/", "/"));
+	private void addDataLinks(ModelMap model, HttpServletRequest req, Locale locale) throws UnsupportedEncodingException {
 
-		String IRIprefix = conf.getIRInamespace().replaceAll("/$", "");
-		// System.out.println("IRIprefix " + IRIprefix);
+		Map<String, Map<String, String>> rawdatalinks = new LinkedHashMap<String, Map<String, String>>();
+		String url = req.getRequestURL().toString();
+		String queryString = (req.getQueryString() != null ? "&amp;" + req.getQueryString().replaceAll("&", "&amp;") : "");
 
-		String IRI = IRIprefix + "/" + IRIsuffix.replaceAll(" ", "%20");
-		if (forceIRI != null && !forceIRI.equals("")) {
-			IRI = forceIRI;
+		if (conf.getRedirectionStrategy().equals("pubby")) {
+			/*
+			 * rdf http://dbpedia.org/data/Barack_Obama.ntriples
+			 * http://dbpedia.org/data/Barack_Obama.n3
+			 * http://dbpedia.org/data/Barack_Obama.json
+			 * http://dbpedia.org/data/Barack_Obama.rdf
+			 * http://dbpedia.org/sparql
+			 * ?default-graph-uri=http%3A%2F%2Fdbpedia.org
+			 * &query=DESCRIBE+%3Chttp://dbpedia.org/resource/Barack_Obama%
+			 * 3E&output=application%2Fld%2Bjson OData
+			 * http://dbpedia.org/data/Barack_Obama.atom
+			 * http://dbpedia.org/data/Barack_Obama.jsod microdata
+			 * http://dbpedia
+			 * .org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org
+			 * &query=DESCRIBE+%3Chttp://dbpedia.org/resource/Barack_Obama%
+			 * 3E&output=application%2Fmicrodata%2Bjson
+			 * http://dbpedia.org/sparql
+			 * ?default-graph-uri=http%3A%2F%2Fdbpedia.org
+			 * &query=DESCRIBE+%3Chttp
+			 * ://dbpedia.org/resource/Barack_Obama%3E&output=text%2Fhtml raw
+			 * data
+			 * http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia
+			 * .org&query=DESCRIBE+%3Chttp://dbpedia.org/resource/Barack_Obama%
+			 * 3E&format=text%2Fcxml
+			 * http://dbpedia.org/sparql?default-graph-uri=
+			 * http%3A%2F%2Fdbpedia.org
+			 * &query=DESCRIBE+%3Chttp://dbpedia.org/resource
+			 * /Barack_Obama%3E&format=text%2Fcsv
+			 */
+
+		} else {
+			Map<String, String> list = new LinkedHashMap<String, String>();
+			list.put("xml", url + "?output=" + URLEncoder.encode("application/rdf+xml", "UTF-8") + queryString);
+			list.put("ntriples", url + "?output=" + URLEncoder.encode("text/plain", "UTF-8") + queryString);
+			list.put("turtle", url + "?output=" + URLEncoder.encode("text/turtle", "UTF-8") + queryString);
+			list.put("ld+json", url + "?output=" + URLEncoder.encode("application/ld+json", "UTF-8") + queryString);
+			rawdatalinks.put(messageSource.getMessage("footer.viewAs", null, "view as", locale), list);
 		}
 
-		if (conf.getForceIriEncoding().equals("encode")) {
-			String[] IRItokens = IRI.split("/");
-			for (int i = 3; i < IRItokens.length; i++) {
-				IRItokens[i] = java.net.URLEncoder.encode(IRItokens[i], "UTF-8");
-			}
-		} else if (conf.getForceIriEncoding().equals("decode")) {
-			String[] IRItokens = IRI.split("/");
-			for (int i = 3; i < IRItokens.length; i++) {
-				IRItokens[i] = java.net.URLDecoder.decode(IRItokens[i], "UTF-8");
-			}
+		model.addAttribute("rawdatalinks", rawdatalinks);
+
+	}
+
+	private RedirectView redirect(HttpServletRequest req) throws UnsupportedEncodingException {
+
+		String redirectUrl = conf.getHttpRedirectSuffix();
+		// preventing redirect of model attributes
+		String[] redirectUrlArray = redirectUrl.split("/");
+		redirectUrl = "";
+		for (String string : redirectUrlArray) {
+			redirectUrl += URLEncoder.encode(string, "UTF-8") + "/";
 		}
+		redirectUrl = redirectUrl.replaceAll("/$", "");
 
-		System.out.println("####################################################################");
-		System.out.println("#################  looking for " + IRI + "  ################# ");
+		RedirectView r = new RedirectView();
+		r.setExposeModelAttributes(false);
+		r.setContentType("text/html");
+		r.setHttp10Compatible(false);
+		r.setUrl(req.getRequestURL() + redirectUrl + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
 
-		// System.out.println("client locale " + locale.getLanguage());
-		model.addAttribute("locale", locale.getLanguage());
+		return r;
 
+	}
+
+	private void addLodliveLink(Locale locale, ModelMap model, String IRI) {
 		if (locale.getLanguage().equals("it")) {
 			model.addAttribute("lodliveUrl", "http://lodlive.it?" + IRI.replaceAll("#", "%23"));
 		} else if (locale.getLanguage().equals("fr")) {
@@ -256,78 +275,20 @@ public class ResourceController {
 		} else {
 			model.addAttribute("lodliveUrl", "http://en.lodlive.it?" + IRI.replaceAll("#", "%23"));
 		}
-
-		// System.out.println("Accept " + req.getHeader("Accept"));
-
-		AcceptList a = AcceptList.create(req.getHeader("Accept").split(","));
-		// System.out.println("-- AcceptList: " + a);
-		// System.out.println("-- OffertList: " + offeringRDF);
-
-		MediaType matchItem = AcceptList.match(offeringRDF, a);
-		Lang lang = RDFLanguages.contentTypeToLang(matchItem.getContentType());
-
-		// override content negotiation
-		if (!output.equals("")) {
-			try {
-				output = output.replaceAll("([a-zA-Z]) ([a-zA-Z])", "$1+$2");
-				a = AcceptList.create(output.split(","));
-				matchItem = AcceptList.match(offeringRDF, a);
-				lang = RDFLanguages.contentTypeToLang(matchItem.getContentType());
-			} catch (Exception e) {
-				return new ErrorController(conf).error406(res, model, colorPair);
-			}
-			System.out.println("override content type " + matchItem.getContentType());
-		}
-
-		// System.out.println("content type " + matchItem.getContentType());
-		// System.out.println("lang " + lang);
-
-		// System.out.println("--------------");
-		try {
-			if (lang == null) {
-				matchItem = AcceptList.match(offeringResources, a);
-				// System.out.println("matchItem " + matchItem);
-				if (matchItem != null) {
-					// probably you are asking for an HTML page
-					model.addAttribute("contextPath", new UrlPathHelper().getContextPath(req));
-					ResultBean r = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, conf, ontoBean);
-					model.addAttribute("results", Misc.guessClass(r, conf, ontoBean));
-					enrichResponse(r, req, res);
-					model.addAttribute("colorPair", Misc.guessColor(colorPair, r, conf));
-					return "resource";
-				} else {
-					return new ErrorController(conf).error406(res, model, colorPair);
-				}
-			} else {
-				// return "forward:/rawdata?IRI=" + IRI + "&sparql=" +
-				// java.net.URLEncoder.encode(conf.getEndPointUrl(),"UTF-8") +
-				// "&contentType=" + matchItem.getContentType();
-				return resourceRaw(conf, model, IRI, conf.getEndPointUrl(), matchItem.getContentType());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (e.getMessage() != null && e.getMessage().startsWith("404")) {
-				return new ErrorController(conf).error404(res, model, e.getMessage(), colorPair, IRI, conf.getEndPointUrl());
-			} else {
-				return new ErrorController(conf).error500(res, model, e.getMessage(), colorPair, IRI, conf.getEndPointUrl());
-			}
-		}
-
 	}
 
-	private void enrichResponse(ResultBean r, HttpServletRequest req, HttpServletResponse res) {
+	private void enrichResponse(ModelMap model, ResultBean r, HttpServletRequest req, HttpServletResponse res) {
 
 		String publicUrl = r.getMainIRI();
 		res.addHeader("Link", "<" + publicUrl + ">; rel=\"about\"");
-		if (req.getParameter("IRI") != null) {
-			publicUrl = req.getRequestURL().toString() + "?" + req.getQueryString() + "&";
-		} else {
-			publicUrl += "?";
+
+		@SuppressWarnings("unchecked")
+		Map<String, Map<String, String>> rawdatalinks = (LinkedHashMap<String, Map<String, String>>) model.get("rawdatalinks");
+		for (String k : rawdatalinks.keySet()) {
+			for (String k1 : rawdatalinks.get(k).keySet()) {
+				res.addHeader("Link", "<" + rawdatalinks.get(k).get(k1) + ">; rel=\"alternate\"; type=\"application/rdf+xml\"; title=\"Structured Descriptor Document (" + k1 + ")\"");
+			}
 		}
-		res.addHeader("Link", "<" + publicUrl + "output=application%2Frdf%2Bxml>; rel=\"alternate\"; type=\"application/rdf+xml\"; title=\"Structured Descriptor Document (xml)\"");
-		res.addHeader("Link", "<" + publicUrl + "output=text%2Fplain>; rel=\"alternate\"; type=\"text/plain\"; title=\"Structured Descriptor Document (ntriples)\"");
-		res.addHeader("Link", "<" + publicUrl + "output=text%2Fturtle>; rel=\"alternate\"; type=\"text/turtle\"; title=\"Structured Descriptor Document (turtle)\"");
-		res.addHeader("Link", "<" + publicUrl + "output=application%2Fld%2Bjson>; rel=\"alternate\"; type=\"application/ld+json\"; title=\"Structured Descriptor Document (ld+json)\"");
 		try {
 			for (TripleBean t : r.getResources(r.getMainIRI()).get(r.getTypeProperty())) {
 				res.addHeader("Link", "<" + t.getProperty().getProperty() + ">; rel=\"type\"");

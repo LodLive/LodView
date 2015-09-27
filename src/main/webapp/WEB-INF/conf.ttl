@@ -73,7 +73,10 @@
 ##	to the HTML representation of the resources, live it blank if you want to 
 ##  use the "pure content negotiation mode"
 	
-	conf:httpRedirectSuffix "/html"; ## or ""
+	conf:httpRedirectSuffix ""; ## or eg. "/html"
+
+	conf:redirectionStrategy ""; ## set it to "pubby" to use exactly the dbpedia redirection behaviour
+
 
 
 ##  mode configurations
