@@ -60,11 +60,13 @@
 ## 	IRIs namespace we use to replace the webapp base (eg. http://localhost:8080/lodview/), an
 ##	installation on dbpedia domain should use <http://dbpedia.org/resource/> 
 	
-	conf:IRInamespace <http://dbpedia.org/resource/>  ;
+	conf:IRInamespace <http://dbpedia.org/>  ;
 
 ## 	EndPoint
 
 	conf:endpoint <http://dbpedia.org/sparql>;
+	conf:endpointType "virtuoso"; 	## 	just "virtuoso" is handled right now, this will add some "rawdata" 
+									##	options in the footer, leave this blank if you don't want these links
 
 ########## give it a try opening http://localhost:8080/lodview/Rome
 
@@ -75,7 +77,7 @@
 	
 	conf:httpRedirectSuffix ""; ## or eg. "/html"
 
-	conf:redirectionStrategy ""; ## set it to "pubby" to use exactly the dbpedia redirection behaviour
+	conf:redirectionStrategy "pubby"; ## set it to "pubby" to use exactly the dbpedia redirection behaviour
 
 
 

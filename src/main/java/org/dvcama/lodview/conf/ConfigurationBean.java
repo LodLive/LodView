@@ -23,7 +23,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	private Model confModel = null;
 	private ServletContext context;
-	private String confFile, redirectionStrategy, forceIriEncoding, homeUrl, license, httpRedirectSuffix, EndPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
+	private String confFile, endPointType, redirectionStrategy, forceIriEncoding, homeUrl, license, httpRedirectSuffix, endPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
 
 	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null, defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null, audioProperties = null, imageProperties = null, videoProperties = null, linkingProperties = null, titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null, mainOntologiesPrefixes = null;
@@ -46,7 +46,8 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		}
 		confModel = RDFDataMgr.loadModel(configFile.getAbsolutePath());
 
-		EndPointUrl = getSingleConfValue("endpoint");
+		endPointUrl = getSingleConfValue("endpoint");
+		endPointType = getSingleConfValue("endpointType","");
 		authPassword = getSingleConfValue("authPassword");
 		authUsername = getSingleConfValue("authUsername");
 		forceIriEncoding = getSingleConfValue("forceIriEncoding", "auto");
@@ -160,6 +161,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	public String getRedirectionStrategy() {
 		return redirectionStrategy;
 	}
+
 	public String getNsPrefixURI(String prefix) {
 		return confModel.getNsPrefixURI(prefix);
 	}
@@ -169,11 +171,11 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	}
 
 	public String getEndPointUrl() {
-		return EndPointUrl;
+		return endPointUrl;
 	}
 
-	public void setEndPointUrl(String EndPointUrl) {
-		this.EndPointUrl = EndPointUrl;
+	public void setEndPointUrl(String endPointUrl) {
+		this.endPointUrl = endPointUrl;
 	}
 
 	public void setIRInamespace(String IRInamespace) {
@@ -332,7 +334,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	@Override
 	public String toString() {
-		return "ConfigurationBean [confModel=" + confModel + ", context=" + context + ", confFile=" + confFile + ", EndPointUrl=" + EndPointUrl + ", IRInamespace=" + IRInamespace + ", contentEncoding=" + contentEncoding + ", staticResourceURL=" + staticResourceURL + ", preferredLanguage=" + preferredLanguage + ", publicUrlPrefix=" + publicUrlPrefix + ", authUsername=" + authUsername + ", authPassword=" + authPassword + ", defaultInverseBehaviour=" + defaultInverseBehaviour + ", defaultQueries=" + defaultQueries + ", defaultRawDataQueries=" + defaultRawDataQueries + ", defaultInversesQueries=" + defaultInversesQueries + ", defaultInversesTest=" + defaultInversesTest + ", defaultInversesCountQueries=" + defaultInversesCountQueries + ", typeProperties=" + typeProperties
+		return "ConfigurationBean [confModel=" + confModel + ", context=" + context + ", confFile=" + confFile + ", endPointUrl=" + endPointUrl + ", IRInamespace=" + IRInamespace + ", contentEncoding=" + contentEncoding + ", staticResourceURL=" + staticResourceURL + ", preferredLanguage=" + preferredLanguage + ", publicUrlPrefix=" + publicUrlPrefix + ", authUsername=" + authUsername + ", authPassword=" + authPassword + ", defaultInverseBehaviour=" + defaultInverseBehaviour + ", defaultQueries=" + defaultQueries + ", defaultRawDataQueries=" + defaultRawDataQueries + ", defaultInversesQueries=" + defaultInversesQueries + ", defaultInversesTest=" + defaultInversesTest + ", defaultInversesCountQueries=" + defaultInversesCountQueries + ", typeProperties=" + typeProperties
 				+ ", imageProperties=" + imageProperties + ", audioProperties=" + audioProperties + ", videoProperties=" + videoProperties + ", linkingProperties=" + linkingProperties + ", titleProperties=" + titleProperties + ", descriptionProperties=" + descriptionProperties + ", longitudeProperties=" + longitudeProperties + ", latitudeProperties=" + latitudeProperties + ", colorPair=" + colorPair + ", skipDomains=" + skipDomains + ", rand=" + rand + "]";
 	}
 
@@ -366,6 +368,10 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	public void setForceIriEncoding(String forceIriEncoding) {
 		this.forceIriEncoding = forceIriEncoding;
+	}
+
+	public String getEndPointType() {
+		return endPointType;
 	}
 
 }

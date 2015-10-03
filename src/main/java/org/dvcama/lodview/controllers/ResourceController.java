@@ -56,7 +56,7 @@ public class ResourceController {
 			+ "text/plain, application/n-triples, text/trig, " //
 			+ "application/n-quads, application/x-trig, application/trig, " //
 			+ "text/n-quads, text/nquads, application/trix+xml, " //
-			+ "application/rdf+json, text/rdf+n3, application/n3, " //
+			+ "text/rdf+n3, application/n3, " //
 			+ "text/n3");
 
 	final AcceptList offeringResources = new AcceptList("text/html, application/xhtml+xml");
@@ -126,6 +126,33 @@ public class ResourceController {
 			IRI = StringUtils.join("/");
 		}
 
+		if (conf.getRedirectionStrategy().equals("pubby")) {
+			/*
+			 * http://dbpedia.org/data/Barack_Obama.ntriples
+			 * http://dbpedia.org/data/Barack_Obama.n3
+			 * http://dbpedia.org/data/Barack_Obama.json
+			 * http://dbpedia.org/data/Barack_Obama.rdf
+			 */
+			String requestUrl = req.getRequestURL().toString();
+			if (requestUrl.matches(".+\\.(ntriples|n3|json|rdf)")) {
+				String outputType = "";
+				String newUrl = requestUrl.replaceFirst("/data/", "/resource/").replaceAll("\\.(ntriples|n3|json|rdf)$", "");
+				RedirectView r = new RedirectView();
+				r.setExposeModelAttributes(false);
+				if (requestUrl.endsWith(".ntriples")) {
+					outputType = "text/plain";
+				} else if (requestUrl.endsWith(".n3")) {
+					outputType = "text/turtle";
+				} else if (requestUrl.endsWith(".json")) {
+					outputType = "application/rdf+json";
+				} else if (requestUrl.endsWith(".rdf")) {
+					outputType = "application/rdf+xml";
+				}
+				r.setUrl(newUrl + "?" + (req.getQueryString() != null ? req.getQueryString() + "&" : "") + "output=" + outputType);
+				return r;
+			}
+		}
+
 		System.out.println("####################################################################");
 		System.out.println("#################  looking for " + IRI + "  ################# ");
 
@@ -189,13 +216,13 @@ public class ResourceController {
 		model.addAttribute("results", Misc.guessClass(r, conf, ontoBean));
 		model.addAttribute("ontoBean", ontoBean);
 
-		addDataLinks(model, req, locale);
+		addDataLinks(IRI, model, req, locale);
 		addLodliveLink(locale, model, IRI);
 		enrichResponse(model, r, req, res);
 		return "resource";
 	}
 
-	private void addDataLinks(ModelMap model, HttpServletRequest req, Locale locale) throws UnsupportedEncodingException {
+	private void addDataLinks(String IRI, ModelMap model, HttpServletRequest req, Locale locale) throws UnsupportedEncodingException {
 
 		Map<String, Map<String, String>> rawdatalinks = new LinkedHashMap<String, Map<String, String>>();
 		String url = req.getRequestURL().toString();
@@ -203,33 +230,22 @@ public class ResourceController {
 
 		if (conf.getRedirectionStrategy().equals("pubby")) {
 			/*
-			 * rdf http://dbpedia.org/data/Barack_Obama.ntriples
-			 * http://dbpedia.org/data/Barack_Obama.n3
-			 * http://dbpedia.org/data/Barack_Obama.json
-			 * http://dbpedia.org/data/Barack_Obama.rdf
-			 * http://dbpedia.org/sparql
-			 * ?default-graph-uri=http%3A%2F%2Fdbpedia.org
-			 * &query=DESCRIBE+%3Chttp://dbpedia.org/resource/Barack_Obama%
-			 * 3E&output=application%2Fld%2Bjson OData
-			 * http://dbpedia.org/data/Barack_Obama.atom
-			 * http://dbpedia.org/data/Barack_Obama.jsod microdata
-			 * http://dbpedia
-			 * .org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org
-			 * &query=DESCRIBE+%3Chttp://dbpedia.org/resource/Barack_Obama%
-			 * 3E&output=application%2Fmicrodata%2Bjson
-			 * http://dbpedia.org/sparql
-			 * ?default-graph-uri=http%3A%2F%2Fdbpedia.org
-			 * &query=DESCRIBE+%3Chttp
-			 * ://dbpedia.org/resource/Barack_Obama%3E&output=text%2Fhtml raw
-			 * data
-			 * http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia
-			 * .org&query=DESCRIBE+%3Chttp://dbpedia.org/resource/Barack_Obama%
-			 * 3E&format=text%2Fcxml
-			 * http://dbpedia.org/sparql?default-graph-uri=
-			 * http%3A%2F%2Fdbpedia.org
-			 * &query=DESCRIBE+%3Chttp://dbpedia.org/resource
+			 * 
+			 * 
+			 * raw data
+			 * http://dbpedia.org/sparql?query=DESCRIBE+%3Chttp://dbpedia
+			 * .org/resource/Barack_Obama%3E&format=text%2Fcxml
+			 * http://dbpedia.org
+			 * /sparql?query=DESCRIBE+%3Chttp://dbpedia.org/resource
 			 * /Barack_Obama%3E&format=text%2Fcsv
 			 */
+			Map<String, String> list = new LinkedHashMap<String, String>();
+			list.put("xml", url + "?output=" + URLEncoder.encode("application/rdf+xml", "UTF-8") + queryString);
+			list.put("ntriples", url + "?output=" + URLEncoder.encode("text/plain", "UTF-8") + queryString);
+			list.put("turtle", url + "?output=" + URLEncoder.encode("text/turtle", "UTF-8") + queryString);
+			list.put("json", url + "?output=" + URLEncoder.encode("application/rdf+json", "UTF-8") + queryString);
+			list.put("ld+json", url + "?output=" + URLEncoder.encode("application/ld+json", "UTF-8") + queryString);
+			rawdatalinks.put("rdf:", list);
 
 		} else {
 			Map<String, String> list = new LinkedHashMap<String, String>();
@@ -240,6 +256,26 @@ public class ResourceController {
 			rawdatalinks.put(messageSource.getMessage("footer.viewAs", null, "view as", locale), list);
 		}
 
+		if (conf.getEndPointType().equals("virtuoso")) {
+			{
+				Map<String, String> list = new LinkedHashMap<String, String>();
+				list.put("atom", conf.getEndPointUrl() + "?output=application%2Fatom%2Bxml&amp;query=DESCRIBE+%3C" + IRI + "%3E");
+				list.put("json", conf.getEndPointUrl() + "?output=application%2Fodata%2Bjson&amp;query=DESCRIBE+%3C" + IRI + "%3E");
+				rawdatalinks.put("odata:", list);
+			}
+			{
+				Map<String, String> list = new LinkedHashMap<String, String>();
+				list.put("html", conf.getEndPointUrl() + "?output=text%2Fhtml&amp;query=DESCRIBE+%3C" + IRI + "%3E");
+				list.put("json", conf.getEndPointUrl() + "?output=application%2Fmicrodata%2Bjson&amp;query=DESCRIBE+%3C" + IRI + "%3E");
+				rawdatalinks.put("microdata:", list);
+			}
+			{
+				Map<String, String> list = new LinkedHashMap<String, String>();
+				list.put("csv", conf.getEndPointUrl() + "?output=text%2Fcsv&amp;query=DESCRIBE+%3C" + IRI + "%3E");
+				list.put("cxml", conf.getEndPointUrl() + "?output=format=text%2Fcxml&amp;query=DESCRIBE+%3C" + IRI + "%3E");
+				rawdatalinks.put("rawdata:", list);
+			}
+		}
 		model.addAttribute("rawdatalinks", rawdatalinks);
 
 	}
