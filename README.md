@@ -23,10 +23,10 @@ See the wiki page https://github.com/dvcama/LodView/wiki
 LodView allows you to publish RDF data offering a lot of different serializations. It handles content negotiation requests with or without 303 redirections: at the same IRI you can fully access different versions of the resource ( HTML, turtle, n-triples, json, json-ld, and many more) or you can set a suffix useful to redirect some requests to an HTML representation of the resource (eg. http://yourIRI.html). You can also override content negotiation features adding the  'output' parameter to the URL and specifying which serialization format you want to access. (eg. http://yourIRI?output=application/ld-json)
 
 ##### Internationalization and content language
-Available languages: english, italian, french, slovak and galician.  
+Available languages: english, italian, french, slovak, galician and dutch.  
 LodView interface uses a very few words (labels and system messages) all managed with a language configuration file. It's able to use the client locale to manage not only the interface language but also the RDF literal values for a full i18n experience. You also have the possibility to override your default locale using 'locale' parameter.  (eg. http://yourIRI?locale=fr) 
 We will appreciate any help in translating LodView, please commit your translation using GitHub or send us the translation file (https://github.com/dvcama/LodView/blob/master/src/main/resources/messages_en.properties)  
-Special thanks to Jana Ivanová for the Slovak translation and to Miguel Solla for the Galician translation. 
+Special thanks to Jana Ivanová for the Slovak translation, to Miguel Solla for the Galician translation and to Roland Cornelissen for the Dutch translation. 
 
 ##### Information about used properties
 LodView provides info about every property found in the resource, just hover on the property to get a "info tooltip" that shows label and comment from the referring ontology (according to the locale of the client).  
