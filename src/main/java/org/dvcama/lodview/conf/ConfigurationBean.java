@@ -23,7 +23,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	private Model confModel = null;
 	private ServletContext context;
-	private String confFile, endPointType, redirectionStrategy, forceIriEncoding, homeUrl, license, httpRedirectSuffix, endPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
+	private String confFile, endPointType, redirectionStrategy, forceIriEncoding, httpRedirectExcludeList, homeUrl, license, httpRedirectSuffix, httpRedirectPrefix, endPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
 
 	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null, defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null, audioProperties = null, imageProperties = null, videoProperties = null, linkingProperties = null, titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null, mainOntologiesPrefixes = null;
@@ -47,7 +47,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		confModel = RDFDataMgr.loadModel(configFile.getAbsolutePath());
 
 		endPointUrl = getSingleConfValue("endpoint");
-		endPointType = getSingleConfValue("endpointType","");
+		endPointType = getSingleConfValue("endpointType", "");
 		authPassword = getSingleConfValue("authPassword");
 		authUsername = getSingleConfValue("authUsername");
 		forceIriEncoding = getSingleConfValue("forceIriEncoding", "auto");
@@ -56,6 +56,8 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		IRInamespace = getSingleConfValue("IRInamespace", "<not provided>");
 
 		httpRedirectSuffix = getSingleConfValue("httpRedirectSuffix", "");
+		httpRedirectPrefix = getSingleConfValue("httpRedirectPrefix", "");
+		httpRedirectExcludeList = getSingleConfValue("httpRedirectExcludeList", "");
 
 		publicUrlPrefix = getSingleConfValue("publicUrlPrefix", "");
 		publicUrlPrefix = publicUrlPrefix.replaceAll(".+/auto$", context.getContextPath() + "/");
@@ -79,6 +81,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 		defaultQueries = getMultiConfValue("defaultQueries");
 		defaultRawDataQueries = getMultiConfValue("defaultRawDataQueries");
+
 		defaultInversesQueries = getMultiConfValue("defaultInversesQueries");
 		defaultInversesTest = getMultiConfValue("defaultInversesTest");
 		defaultInversesCountQueries = getMultiConfValue("defaultInversesCountQueries");
@@ -135,10 +138,6 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		return result;
 	}
 
-	public void setConfFile(String confFile) {
-		this.confFile = confFile;
-	}
-
 	@Override
 	public void setServletContext(ServletContext arg0) {
 		this.context = arg0;
@@ -162,6 +161,10 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		return redirectionStrategy;
 	}
 
+	public String getPreferredLanguage() {
+		return preferredLanguage;
+	}
+
 	public String getNsPrefixURI(String prefix) {
 		return confModel.getNsPrefixURI(prefix);
 	}
@@ -172,14 +175,6 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	public String getEndPointUrl() {
 		return endPointUrl;
-	}
-
-	public void setEndPointUrl(String endPointUrl) {
-		this.endPointUrl = endPointUrl;
-	}
-
-	public void setIRInamespace(String IRInamespace) {
-		this.IRInamespace = IRInamespace;
 	}
 
 	public List<String> getDefaultQueries() {
@@ -200,14 +195,6 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	public String getPublicUrlSuffix() {
 		return publicUrlSuffix;
-	}
-
-	public void setPublicUrlPrefix(String publicUrlPrefix) {
-		this.publicUrlPrefix = publicUrlPrefix;
-	}
-
-	public void setPublicUrlSuffix(String publicUrlSuffix) {
-		this.publicUrlSuffix = publicUrlSuffix;
 	}
 
 	public List<String> getDefaultRawDataQueries() {
@@ -266,10 +253,6 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		return linkingProperties;
 	}
 
-	public String getPreferredLanguage() {
-		return preferredLanguage;
-	}
-
 	public String getLicense() {
 		return license;
 	}
@@ -283,40 +266,20 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		return colorPair.get(randomNum);
 	}
 
-	public void setColorPair(List<String> colorPair) {
-		this.colorPair = colorPair;
-	}
-
 	public List<String> getSkipDomains() {
 		return skipDomains;
-	}
-
-	public void setSkipDomains(List<String> skipDomains) {
-		this.skipDomains = skipDomains;
 	}
 
 	public String getAuthPassword() {
 		return authPassword;
 	}
 
-	public void setAuthPassword(String authPassword) {
-		this.authPassword = authPassword;
-	}
-
 	public String getAuthUsername() {
 		return authUsername;
 	}
 
-	public void setAuthUsername(String authUsername) {
-		this.authUsername = authUsername;
-	}
-
 	public String getDefaultInverseBehaviour() {
 		return defaultInverseBehaviour;
-	}
-
-	public void setDefaultInverseBehaviour(String defaultInverseBehaviour) {
-		this.defaultInverseBehaviour = defaultInverseBehaviour;
 	}
 
 	public Map<String, String> getColorPairMatcher() {
@@ -342,36 +305,32 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		return homeUrl;
 	}
 
-	public void setHomeUrl(String homeUrl) {
-		this.homeUrl = homeUrl;
-	}
-
 	public String getHttpRedirectSuffix() {
 		return httpRedirectSuffix;
 	}
 
-	public void setHttpRedirectSuffix(String httpRedirectSuffix) {
-		this.httpRedirectSuffix = httpRedirectSuffix;
+	public String getHttpRedirectPrefix() {
+		return httpRedirectPrefix;
+	}
+
+	public String getHttpRedirectExcludeList() {
+		return httpRedirectExcludeList;
 	}
 
 	public List<String> getMainOntologiesPrefixes() {
 		return mainOntologiesPrefixes;
 	}
 
-	public void setMainOntologiesPrefixes(List<String> mainOntologiesPrefixes) {
-		this.mainOntologiesPrefixes = mainOntologiesPrefixes;
-	}
-
 	public String getForceIriEncoding() {
 		return forceIriEncoding;
 	}
 
-	public void setForceIriEncoding(String forceIriEncoding) {
-		this.forceIriEncoding = forceIriEncoding;
-	}
-
 	public String getEndPointType() {
 		return endPointType;
+	}
+
+	public void setConfFile(String confFile) {
+		this.confFile = confFile;
 	}
 
 }

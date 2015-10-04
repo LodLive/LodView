@@ -30,7 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
@@ -86,28 +86,60 @@ public class ResourceController {
 		model.addAttribute("conf", conf);
 
 		String IRIsuffix = new UrlPathHelper().getLookupPathForRequest(req).replaceAll("/lodview/", "/");
+		String requestUrl = req.getRequestURL().toString();
+
+		System.out.println("IRIsuffix " + IRIsuffix);
+		System.out.println("requestUrl " + requestUrl);
 
 		model.addAttribute("path", new UrlPathHelper().getContextPath(req).replaceAll("/lodview/", "/"));
 		model.addAttribute("locale", locale.getLanguage());
 
 		boolean redirect = false;
 		boolean redirected = false;
+		boolean avoidRedirection = false;
 
-		if (!conf.getHttpRedirectSuffix().equals("")) {
+		// managing redirections
+		if (!conf.getHttpRedirectExcludeList().equals("")) {
+			String[] excList = conf.getHttpRedirectExcludeList().split(",");
+			for (String exclude : excList) {
+				if (requestUrl.matches(exclude)) {
+					avoidRedirection = true;
+					break;
+				}
+			}
+		}
+		if (!avoidRedirection && !conf.getHttpRedirectSuffix().equals("")) {
 			// 303 dereferencing mode
 			if (IRIsuffix.matches(".+" + conf.getHttpRedirectSuffix() + "$")) {
 				// after redirect
 				IRIsuffix = IRIsuffix.replaceAll(conf.getHttpRedirectSuffix() + "$", "");
+
+				redirected = true;
+			} else {
+				// before redirect
+				redirect = true;
+			}
+		} else if (!avoidRedirection && !conf.getHttpRedirectPrefix().equals("")) {
+			// 303 dereferencing mode
+			if (IRIsuffix.matches("^" + conf.getHttpRedirectPrefix() + ".+")) {
+				// after redirect
+				IRIsuffix = IRIsuffix.replaceAll("^" + conf.getHttpRedirectPrefix(), "");
+				if (conf.getRedirectionStrategy().equals("pubby")) {
+					IRIsuffix = "/resource/" + IRIsuffix;
+					IRIsuffix = IRIsuffix.replaceAll("//", "/");
+				}
 				redirected = true;
 			} else {
 				// before redirect
 				redirect = true;
 			}
 		}
+
 		IRIsuffix = IRIsuffix.replaceAll("^/", "");
 
 		String IRIprefix = conf.getIRInamespace().replaceAll("/$", "");
 		String IRI = IRIprefix + "/" + IRIsuffix.replaceAll(" ", "%20");
+
 		if (forceIRI != null && !forceIRI.equals("")) {
 			IRI = forceIRI;
 		}
@@ -133,7 +165,6 @@ public class ResourceController {
 			 * http://dbpedia.org/data/Barack_Obama.json
 			 * http://dbpedia.org/data/Barack_Obama.rdf
 			 */
-			String requestUrl = req.getRequestURL().toString();
 			if (requestUrl.matches(".+\\.(ntriples|n3|json|rdf)")) {
 				String outputType = "";
 				String newUrl = requestUrl.replaceFirst("/data/", "/resource/").replaceAll("\\.(ntriples|n3|json|rdf)$", "");
@@ -188,7 +219,7 @@ public class ResourceController {
 				// probably you are asking for an HTML page
 				if (matchItem != null) {
 					if (redirect && !redirected) {
-						return redirect(req);
+						return redirect(req, IRIsuffix);
 					} else {
 						return htmlResource(model, IRI, colorPair, locale, req, res);
 					}
@@ -229,16 +260,7 @@ public class ResourceController {
 		String queryString = (req.getQueryString() != null ? "&amp;" + req.getQueryString().replaceAll("&", "&amp;") : "");
 
 		if (conf.getRedirectionStrategy().equals("pubby")) {
-			/*
-			 * 
-			 * 
-			 * raw data
-			 * http://dbpedia.org/sparql?query=DESCRIBE+%3Chttp://dbpedia
-			 * .org/resource/Barack_Obama%3E&format=text%2Fcxml
-			 * http://dbpedia.org
-			 * /sparql?query=DESCRIBE+%3Chttp://dbpedia.org/resource
-			 * /Barack_Obama%3E&format=text%2Fcsv
-			 */
+
 			Map<String, String> list = new LinkedHashMap<String, String>();
 			list.put("xml", url + "?output=" + URLEncoder.encode("application/rdf+xml", "UTF-8") + queryString);
 			list.put("ntriples", url + "?output=" + URLEncoder.encode("text/plain", "UTF-8") + queryString);
@@ -280,22 +302,32 @@ public class ResourceController {
 
 	}
 
-	private RedirectView redirect(HttpServletRequest req) throws UnsupportedEncodingException {
-
-		String redirectUrl = conf.getHttpRedirectSuffix();
-		// preventing redirect of model attributes
-		String[] redirectUrlArray = redirectUrl.split("/");
-		redirectUrl = "";
-		for (String string : redirectUrlArray) {
-			redirectUrl += URLEncoder.encode(string, "UTF-8") + "/";
-		}
-		redirectUrl = redirectUrl.replaceAll("/$", "");
+	private RedirectView redirect(HttpServletRequest req, String IRIsuffix) throws UnsupportedEncodingException {
 
 		RedirectView r = new RedirectView();
+		// preventing redirect of model attributes
 		r.setExposeModelAttributes(false);
 		r.setContentType("text/html");
 		r.setHttp10Compatible(false);
-		r.setUrl(req.getRequestURL() + redirectUrl + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
+		if (!conf.getHttpRedirectPrefix().equals("")) {
+			// prefix mode
+			String redirectUrl = conf.getHttpRedirectPrefix().replaceAll("^/", "");
+			if (conf.getRedirectionStrategy().equals("pubby")) {
+				r.setUrl(req.getRequestURL().toString().replaceAll(IRIsuffix + "$", "") + redirectUrl + IRIsuffix.replaceAll("^resource/", "") + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
+			} else {
+				r.setUrl(req.getRequestURL().toString().replaceAll(IRIsuffix + "$", "") + redirectUrl + IRIsuffix + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
+			}
+		} else {
+			// suffix mode
+			String redirectUrl = conf.getHttpRedirectSuffix();
+			// String[] redirectUrlArray = redirectUrl.split("/");
+			// redirectUrl = "";
+			// for (String string : redirectUrlArray) {
+			// redirectUrl += URLEncoder.encode(string, "UTF-8") + "/";
+			// }
+			// redirectUrl = redirectUrl.replaceAll("/$", "");
+			r.setUrl(req.getRequestURL() + redirectUrl + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
+		}
 
 		return r;
 
