@@ -25,7 +25,7 @@
 									<span class="dType">${ela.getNsDataType().replaceAll("null:(.*)","&lt;$1&gt;")}</span>
 									<c:set var="done" value="true" />
 								</c:if>
-							</c:if> ${ela.getValue()}
+							</c:if> ${ela.getValue()}&#160;
 						</span>
 					</c:when>
 					<c:otherwise>
@@ -34,7 +34,7 @@
 								<c:if test='${ela.getDataType()!=null && !ela.getDataType().equals("")}'>
 									<span class="dType">${ela.getNsDataType().replaceAll("null:(.*)","&lt;$1&gt;")}</span>
 								</c:if>
-								${ela.getValue()}
+								${ela.getValue()}&#160;
 							</div>
 						</div>
 					</c:otherwise>
