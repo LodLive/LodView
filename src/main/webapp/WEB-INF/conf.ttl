@@ -60,20 +60,30 @@
 ## 	IRIs namespace we use to replace the webapp base (eg. http://localhost:8080/lodview/), an
 ##	installation on dbpedia domain should use <http://dbpedia.org/resource/> 
 	
-	conf:IRInamespace <http://dbpedia.org/resource/>  ;
+	conf:IRInamespace <http://dbpedia.org/>  ;
 
 ## 	EndPoint
 
 	conf:endpoint <http://dbpedia.org/sparql>;
+	conf:endpointType "virtuoso"; 	## 	just "virtuoso" is handled right now, this will add some "rawdata" 
+									##	options in the footer, leave this blank if you don't want these links
 
 ########## give it a try opening http://localhost:8080/lodview/Rome
 
 
 ## 	we don't like it so much, but you can set a prefix to activate 303 redirects
 ##	to the HTML representation of the resources, live it blank if you want to 
-##  use the "pure content negotiation mode"
+##  use the "pure content negotiation mode", WARNING use suffix OR prefix, not both
 	
-	conf:httpRedirectSuffix "/html"; ## or ""
+	conf:httpRedirectSuffix ".html"; ## or eg. ".html";
+	##conf:httpRedirectPrefix "/page/"; ## or eg. "";
+
+	##conf:httpRedirectExcludeList ""; 	## a comma separeted list of regex to match which resources will use "pure content negotiation mode"
+										## usually you have to leave this blank but if conf:redirectionStrategy is setted to "pubby" this could be
+										## useful (eg. dbpedia uses /resource --> /page but leaves /ontology --> /ontology)
+
+	conf:redirectionStrategy "pubby"; ## set it to "pubby" to use exactly the dbpedia redirection behaviour
+
 
 
 ##  mode configurations
