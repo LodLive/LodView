@@ -86,7 +86,7 @@ public class ResourceController {
 		model.addAttribute("conf", conf);
 
 		String IRIsuffix = new UrlPathHelper().getLookupPathForRequest(req).replaceAll("/lodview/", "/");
-		String requestUrl = req.getRequestURL().toString();
+		String requestUrl = req.getRequestURI();
 
 		System.out.println("IRIsuffix " + IRIsuffix);
 		System.out.println("requestUrl " + requestUrl);
@@ -256,25 +256,24 @@ public class ResourceController {
 	private void addDataLinks(String IRI, ModelMap model, HttpServletRequest req, Locale locale) throws UnsupportedEncodingException {
 
 		Map<String, Map<String, String>> rawdatalinks = new LinkedHashMap<String, Map<String, String>>();
-		String url = req.getRequestURL().toString();
 		String queryString = (req.getQueryString() != null ? "&amp;" + req.getQueryString().replaceAll("&", "&amp;") : "");
 
 		if (conf.getRedirectionStrategy().equals("pubby")) {
 
 			Map<String, String> list = new LinkedHashMap<String, String>();
-			list.put("xml", url + "?output=" + URLEncoder.encode("application/rdf+xml", "UTF-8") + queryString);
-			list.put("ntriples", url + "?output=" + URLEncoder.encode("text/plain", "UTF-8") + queryString);
-			list.put("turtle", url + "?output=" + URLEncoder.encode("text/turtle", "UTF-8") + queryString);
-			list.put("json", url + "?output=" + URLEncoder.encode("application/rdf+json", "UTF-8") + queryString);
-			list.put("ld+json", url + "?output=" + URLEncoder.encode("application/ld+json", "UTF-8") + queryString);
+			list.put("xml", "?output=" + URLEncoder.encode("application/rdf+xml", "UTF-8") + queryString);
+			list.put("ntriples", "?output=" + URLEncoder.encode("text/plain", "UTF-8") + queryString);
+			list.put("turtle", "?output=" + URLEncoder.encode("text/turtle", "UTF-8") + queryString);
+			list.put("json", "?output=" + URLEncoder.encode("application/rdf+json", "UTF-8") + queryString);
+			list.put("ld+json", "?output=" + URLEncoder.encode("application/ld+json", "UTF-8") + queryString);
 			rawdatalinks.put("rdf:", list);
 
 		} else {
 			Map<String, String> list = new LinkedHashMap<String, String>();
-			list.put("xml", url + "?output=" + URLEncoder.encode("application/rdf+xml", "UTF-8") + queryString);
-			list.put("ntriples", url + "?output=" + URLEncoder.encode("text/plain", "UTF-8") + queryString);
-			list.put("turtle", url + "?output=" + URLEncoder.encode("text/turtle", "UTF-8") + queryString);
-			list.put("ld+json", url + "?output=" + URLEncoder.encode("application/ld+json", "UTF-8") + queryString);
+			list.put("xml", "?output=" + URLEncoder.encode("application/rdf+xml", "UTF-8") + queryString);
+			list.put("ntriples", "?output=" + URLEncoder.encode("text/plain", "UTF-8") + queryString);
+			list.put("turtle", "?output=" + URLEncoder.encode("text/turtle", "UTF-8") + queryString);
+			list.put("ld+json", "?output=" + URLEncoder.encode("application/ld+json", "UTF-8") + queryString);
 			rawdatalinks.put(messageSource.getMessage("footer.viewAs", null, "view as", locale), list);
 		}
 
@@ -313,9 +312,9 @@ public class ResourceController {
 			// prefix mode
 			String redirectUrl = conf.getHttpRedirectPrefix().replaceAll("^/", "");
 			if (conf.getRedirectionStrategy().equals("pubby")) {
-				r.setUrl(req.getRequestURL().toString().replaceAll(IRIsuffix + "$", "") + redirectUrl + IRIsuffix.replaceAll("^resource/", "") + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
+				r.setUrl(conf.getPublicUrlPrefix() + redirectUrl + IRIsuffix.replaceAll("^resource/", "") + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
 			} else {
-				r.setUrl(req.getRequestURL().toString().replaceAll(IRIsuffix + "$", "") + redirectUrl + IRIsuffix + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
+				r.setUrl(conf.getPublicUrlPrefix().replaceAll(IRIsuffix + "$", "") + redirectUrl + IRIsuffix + (req.getQueryString() != null ? "?" + req.getQueryString() : ""));
 			}
 		} else {
 			// suffix mode

@@ -16,15 +16,17 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
-public class Misc { 
+public class Misc {
 
 	public static String toNsResource(String iri, ConfigurationBean conf) {
 		if (iri != null && !iri.equals("")) {
-			if (iri.startsWith(conf.getIRInamespace())) {
-				return conf.getNsURIPrefix(conf.getIRInamespace()) + ":" + iri.replaceAll(conf.getIRInamespace() + "(.+)$", "$1");
-			} else {
-				return conf.getNsURIPrefix(iri.replaceAll("[^/#]+$", "")) + ":" + iri.replaceAll(".+[/|#]([^/#]+)$", "$1");
-			}
+			// if (iri.startsWith(conf.getIRInamespace())) {
+			// return conf.getNsURIPrefix(conf.getIRInamespace()) + ":" +
+			// iri.replaceAll(conf.getIRInamespace() + "(.+)$", "$1");
+			// } else {
+			// }
+			return conf.getNsURIPrefix(iri.replaceAll("[^/#]+$", "")) + ":" + iri.replaceAll(".+[/|#]([^/#]+)$", "$1");
+
 		} else {
 			return null;
 		}
