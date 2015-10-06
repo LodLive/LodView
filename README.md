@@ -19,8 +19,8 @@ See the wiki page https://github.com/dvcama/LodView/wiki
 
 ## Some interesting features
 ##### Content negotiation and serialization
-
-LodView allows you to publish RDF data offering a lot of different serializations. It handles content negotiation requests with or without 303 redirections: at the same IRI you can fully access different versions of the resource ( HTML, turtle, n-triples, json, json-ld, and many more) or you can set a suffix useful to redirect some requests to an HTML representation of the resource (eg. http://yourIRI.html). You can also override content negotiation features adding the  'output' parameter to the URL and specifying which serialization format you want to access. (eg. http://yourIRI?output=application/ld-json)
+LodView allows you to publish RDF data offering a lot of different serializations. It handles content negotiation requests with or without 303 redirections: at the same IRI you can fully access different versions of the resource ( HTML, turtle, n-triples, json, json-ld, and many more) or you can set a suffix useful to redirect some requests to an HTML representation of the resource (eg. http://yourIRI.html/resource/aaaa/html). You can also override content negotiation features adding the  'output' parameter to the URL and specifying which serialization format you want to access. (eg. http://yourIRI?output=application/ld-json). 
+From Lodview v1.2.0 you can also use prefixes (eg. http://yourIRI.html/page/aaaa) or set a full "Pubby compliant" redirection strategy (eg. http://yourIRI.html/page/aaaa, http://yourIRI.html/data/aaaa.ntriples, etc.) to easly update to LodView but still offering the same URLs to the users. 
 
 ##### Internationalization and content language
 Available languages: english, italian, french, slovak, galician and dutch.  
