@@ -26,7 +26,7 @@ public class SPARQLEndPoint {
 
 	OntologyBean ontoBean;
 	String locale = "en";
-	ConfigurationBean conf;
+	protected ConfigurationBean conf;
 
 	public SPARQLEndPoint(ConfigurationBean conf, OntologyBean ontoBean, String locale) {
 		this.locale = locale;
@@ -35,7 +35,8 @@ public class SPARQLEndPoint {
 		// TODO Auto-generated constructor stub
 	}
 
-	public List<TripleBean> doQuery(String IRI, String aProperty, int start, List<String> queries, String filter, String overrideProperty) throws Exception {
+	public List<TripleBean> doQuery(String IRI, String aProperty, int start, List<String> queries, String filter,
+			String overrideProperty) throws Exception {
 		// System.out.println("executing query on " + conf.getEndPointUrl());
 		List<TripleBean> results = new ArrayList<TripleBean>();
 		HttpAuthenticator auth = null;
@@ -45,26 +46,32 @@ public class SPARQLEndPoint {
 		for (String query : queries) {
 			// System.out.println("-- " + parseQuery(query, IRI, aProperty,
 			// start, filter));
-			QueryExecution qe = QueryExecutionFactory.sparqlService(conf.getEndPointUrl(), parseQuery(query, IRI, aProperty, start, filter), auth);
+			QueryExecution qe = QueryExecutionFactory.sparqlService(conf.getEndPointUrl(),
+					parseQuery(query, IRI, aProperty, start, filter), auth);
 			results = moreThenOneQuery(qe, results, 0, overrideProperty);
 		}
 
 		if (results.size() == 0) {
-			boolean hasInverses = false;
-			for (String query : conf.getDefaultInversesTest()) {
-				QueryExecution qe = QueryExecutionFactory.sparqlService(conf.getEndPointUrl(), parseQuery(query, IRI, aProperty, start, filter), auth);
-				if (!hasInverses) {
-					hasInverses = qe.execAsk();
+			if (IRI != null) {
+				boolean hasInverses = false;
+				for (String query : conf.getDefaultInversesTest()) {
+					//System.out.println("query!!! " + parseQuery(query, IRI, aProperty, start, filter));
+					QueryExecution qe = QueryExecutionFactory.sparqlService(conf.getEndPointUrl(),
+							parseQuery(query, IRI, aProperty, start, filter), auth);
+					if (!hasInverses) {
+						hasInverses = qe.execAsk();
+					}
 				}
-			}
-			if (!hasInverses) {
-				throw new Exception("404 - not found");
+				if (!hasInverses) {
+					throw new Exception("404 - not found");
+				}
 			}
 		}
 		return results;
 	}
 
-	private List<TripleBean> moreThenOneQuery(QueryExecution qe, List<TripleBean> results, int retry, String overrideProperty) throws Exception {
+	private List<TripleBean> moreThenOneQuery(QueryExecution qe, List<TripleBean> results, int retry,
+			String overrideProperty) throws Exception {
 
 		try {
 			ResultSet rs = qe.execSelect();
@@ -79,10 +86,17 @@ public class SPARQLEndPoint {
 				}
 
 				try {
-					if (qs.get("s") != null) { // probably a blanknode
+					if (qs.get("s") != null && !qs.get("s").asNode().toString().startsWith("http://")) { // probably
+																											// a
+																											// bn
 						rb.setIRI(qs.get("s").asNode().toString());
 						rb.setNsIRI("_:" + rb.getIRI());
+					} else if (qs.get("s") != null && qs.get("s").asNode().toString().startsWith("http://")) {
+						rb.setIRI(qs.get("s").asNode().toString());
+						rb.setNsIRI(Misc.toNsResource(rb.getIRI(), conf));
+						rb.setUrl(Misc.toBrowsableUrl(rb.getIRI(), conf));
 					}
+
 					PropertyBean p = new PropertyBean();
 					p.setNsProperty(Misc.toNsResource(property, conf));
 					p.setProperty(property);
@@ -114,7 +128,7 @@ public class SPARQLEndPoint {
 					results.add(rb);
 				} catch (Exception e) {
 					System.err.println("error? " + e.getMessage());
-					//e.printStackTrace();
+					// e.printStackTrace();
 				}
 			}
 		} catch (Exception ez) {
@@ -143,7 +157,8 @@ public class SPARQLEndPoint {
 		return doLocalQuery(model, IRI, null, -1, queries, null);
 	}
 
-	public List<TripleBean> doLocalQuery(Model model, String IRI, String localProperty, int start, List<String> queries, String overrideProperty) throws Exception {
+	public List<TripleBean> doLocalQuery(Model model, String IRI, String localProperty, int start, List<String> queries,
+			String overrideProperty) throws Exception {
 		// System.out.println("executing query on model based on " + IRI);
 		List<TripleBean> results = new ArrayList<TripleBean>();
 
@@ -159,11 +174,15 @@ public class SPARQLEndPoint {
 				} else if (qs.get("p") != null) {
 					property = qs.get("p").asNode().toString();
 				}
-
 				try {
-					if (qs.get("s") != null) { // probably a blanknode
+					if (qs.get("s") != null && !qs.get("s").asNode().toString().startsWith("http://")) { // probably
+						// blanknode
 						rb.setIRI(qs.get("s").asNode().toString());
 						rb.setNsIRI("_:" + rb.getIRI());
+					} else if (qs.get("s") != null && qs.get("s").asNode().toString().startsWith("http://")) {
+						rb.setIRI(qs.get("s").asNode().toString());
+						rb.setNsIRI(Misc.toNsResource(rb.getIRI(), conf));
+						rb.setUrl(Misc.toBrowsableUrl(rb.getIRI(), conf));
 					}
 					PropertyBean p = new PropertyBean();
 					p.setNsProperty(Misc.toNsResource(property, conf));
@@ -221,7 +240,8 @@ public class SPARQLEndPoint {
 					RDFNode subject2 = qs.get("s");
 					RDFNode property = qs.get("p");
 					RDFNode object = qs.get("o");
-					result.add(result.createStatement(subject2 != null ? subject2.asResource() : subject, property.as(Property.class), object));
+					result.add(result.createStatement(subject2 != null ? subject2.asResource() : subject,
+							property.as(Property.class), object));
 				}
 				result.add(sl);
 			}
@@ -246,7 +266,8 @@ public class SPARQLEndPoint {
 					RDFNode subject2 = qs.get("s");
 					RDFNode property = qs.get("p");
 					RDFNode object = qs.get("o");
-					result.add(result.createStatement(subject2 != null ? subject2.asResource() : subject, property.as(Property.class), object));
+					result.add(result.createStatement(subject2 != null ? subject2.asResource() : subject,
+							property.as(Property.class), object));
 				}
 				result.add(sl);
 			}
@@ -268,7 +289,7 @@ public class SPARQLEndPoint {
 		if (filter != null) {
 			query = query.replaceAll("\\$\\{FILTERPROPERTY\\}", filter);
 		}
-		if (query.indexOf("STARTFROM")>0) {
+		if (query.indexOf("STARTFROM") > 0) {
 			query = query.replaceAll("\\$\\{STARTFROM\\}", "" + start);
 		} else if (start > 0) {
 			query = query.replaceAll("LIMIT (.+)$", "OFFSET " + start + " LIMIT $1");

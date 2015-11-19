@@ -914,7 +914,7 @@
 				var prev = null;
 				var e = $(this);
 				$.each(paginator, function(k, v) {
-					if (v && y > v.position().top) {
+					if (v && v.position()  && y > v.position().top) {
 						prev = {};
 						prev[k] = v;
 					}
@@ -943,7 +943,7 @@
 				var next = null;
 				var e = $(this);
 				$.each(paginator, function(k, v) {
-					if (!next && v && y < v.position().top && y + window.innerHeight < $(document).height()) {
+					if (!next && v && v.position() && y < v.position().top && y + window.innerHeight < $(document).height()) {
 						next = {};
 						next[k] = v;
 					}
