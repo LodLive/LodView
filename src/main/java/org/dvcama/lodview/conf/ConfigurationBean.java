@@ -21,9 +21,27 @@ import com.hp.hpl.jena.rdf.model.Resource;
 
 public class ConfigurationBean implements ServletContextAware, Cloneable {
 
-	private Model confModel = null;
-	private ServletContext context;
-	private String confFile, endPointType, redirectionStrategy, forceIriEncoding, httpRedirectExcludeList, homeUrl, license, httpRedirectSuffix, httpRedirectPrefix, endPointUrl, IRInamespace, contentEncoding, staticResourceURL, preferredLanguage, publicUrlPrefix = null, publicUrlSuffix = "", authUsername = null, authPassword = null, defaultInverseBehaviour = "collapse";
+	protected Model confModel = null;
+	protected ServletContext context;
+	protected String confFile;
+	private String endPointType;
+	private String redirectionStrategy;
+	private String forceIriEncoding;
+	private String httpRedirectExcludeList;
+	private String homeUrl;
+	private String license;
+	private String httpRedirectSuffix;
+	private String httpRedirectPrefix;
+	private String endPointUrl;
+	private String IRInamespace;
+	private String contentEncoding;
+	private String staticResourceURL;
+	private String preferredLanguage;
+	private String publicUrlPrefix = null;
+	private String publicUrlSuffix = "";
+	private String authUsername = null;
+	private String authPassword = null;
+	private String defaultInverseBehaviour = "collapse";
 
 	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null, defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null, audioProperties = null, imageProperties = null, videoProperties = null, linkingProperties = null, titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null, mainOntologiesPrefixes = null;
