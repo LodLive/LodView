@@ -257,7 +257,7 @@ public class SPARQLEndPoint {
 		return result;
 	}
 
-	private String parseQuery(String query, String IRI, String property, int start, String filter) {
+	public String parseQuery(String query, String IRI, String property, int start, String filter) {
 		if (IRI != null) {
 			/* managing issues depending on "$" in some IRIs */
 			query = query.replaceAll("\\$\\{IRI\\}", IRI.replaceAll("\\$", "%24")).replaceAll("%24", "\\$");
@@ -268,8 +268,11 @@ public class SPARQLEndPoint {
 		if (filter != null) {
 			query = query.replaceAll("\\$\\{FILTERPROPERTY\\}", filter);
 		}
-		query = query.replaceAll("\\$\\{STARTFROM\\}", "" + start);
-
+		if (query.indexOf("STARTFROM")>0) {
+			query = query.replaceAll("\\$\\{STARTFROM\\}", "" + start);
+		} else if (start > 0) {
+			query = query.replaceAll("LIMIT (.+)$", "OFFSET " + start + " LIMIT $1");
+		}
 		return query;
 	}
 
