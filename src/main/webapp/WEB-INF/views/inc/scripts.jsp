@@ -178,7 +178,7 @@
 				var zoom = $('<span class="zoom sp" style="margin-top:' + (h / 2 - 15) + 'px;margin-left:' + (w / 2 - 15) + 'px;"></span>');
 				tools.append(zoom);
 				zoom.click(function() {
-					l.fullMap('${results.getLatitude()}', '${results.getLongitude()}', '${results.getTitle().replaceAll("\\n"," ").replaceAll("\'","&acute;")}');
+					l.fullMap('${results.getLatitude()}', '${results.getLongitude()}', '${results.getTitle().replaceAll("\\n"," ").replaceAll("\\'","&acute;")}');
 				});
 				a.prepend(tools);
 				a.hover(function() {
