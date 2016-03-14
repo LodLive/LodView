@@ -151,7 +151,7 @@
 
 ##	home link (accessible from the banner)
 
-	conf:homeUrl <http://yoursitehome.com>;
+	conf:homeUrl <http://remember to change this in conf.ttl>;
 
   	
 ##	static resources publishing point, "staticResources/" is needed if you are going 
