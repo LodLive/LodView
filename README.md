@@ -2,6 +2,11 @@
 LodView is a Java web application based on Spring and Jena, it's a tool able to offer a W3C standard compliant IRI dereferenciation. LodView, in conjunction with a SPARQL endpoint, allows you to publish RDF data according to all defined standards for Linked Open Data.  
 LodView is easy to configure and deploy for any developer and it dramatically improves the enduser’s experience in accessing HTML based representations of RDF resources.
 
+## About us
+Lodview (as LodLive) is ideated and maintained by Diego Valerio Camarda and Alessandro Antonuccio.  
+Diego is the RDF guy behind the technology (see https://www.linkedin.com/in/dvcama)   
+Alessandro is the designer responsible for the interface and the UX (see http://hstudio.it)
+
 ## Why develop it (for free)
 We believe that the dereferencing layer has to be independent from the SPARQL endpoint implementation so, during these last years, we preferred using Pubby to other software for publishing our data. Probably you don't know this but you already know Pubby, it is used to publish dbpedia data and a lot of other Linked Open Data out there, sadly it is pretty old and its development appears to have stopped, so we created LodView taking inspiration from some of the features in it we really appreciated. 
 LodView shares Pubby philosophy; the configuration approach (an RDF file) and the basic technologies (we also use Apache Jena) are very similar, both interfaces even look somewhat alike, but we have made some important improvements according to the RDF 1.1 standard. We have added new features and changed the ones we didn’t like (such as the 303 redirection for HTML representation). 
