@@ -163,9 +163,14 @@
 				}).setView([ lat, lon ], 3);
 				L.marker([ lat, lon ]).addTo(map);
 			}
-			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+			var osmurl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
+			if(document.location.href.indexOf('https://') == 0){
+				osmurl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+			}
+			L.tileLayer(osmurl, {
 				attribution : '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}).addTo(map);
+			
 		},
 		mapInWidget : function(forceLoad) {
 			if ($('map').length > 0) {
