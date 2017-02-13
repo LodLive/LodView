@@ -43,6 +43,10 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	private String authPassword = null;
 	private String defaultInverseBehaviour = "collapse";
 
+	public enum ColorStrategy {RANDOM, CLASS, PREFIX}
+	private ColorStrategy colorStrategy =  ColorStrategy.RANDOM;
+	public ColorStrategy getColorStrategy() {return colorStrategy;}
+
 	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null, defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null, audioProperties = null, imageProperties = null, videoProperties = null, linkingProperties = null, titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null, mainOntologiesPrefixes = null;
 	private Map<String, String> colorPairMatcher = null;
@@ -111,10 +115,16 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 		colorPair = getMultiConfValue("colorPair");
 
-		if (colorPair != null && colorPair.size() == 1 && colorPair.get(0).startsWith("http://")) {
+		if (colorPair != null && colorPair.size() == 1 && colorPair.get(0).startsWith("http://"))
+		{
+			switch(colorPair.get(0).replace("http://lodview.it/conf#", ""))
+			{
+			case "byClass": colorStrategy= ColorStrategy.CLASS; break;
+			case "byPrefix": colorStrategy= ColorStrategy.PREFIX; break;
+			}
 			colorPairMatcher = populateColorPairMatcher();
 		}
-
+				
 		skipDomains = getMultiConfValue("skipDomains");
 	}
 
@@ -280,6 +290,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	}
 
 	public String getRandomColorPair() {
+		if(colorStrategy!=ColorStrategy.RANDOM) {return "#914848-#7d3e3e";}
 		int randomNum = rand.nextInt(colorPair.size());
 		return colorPair.get(randomNum);
 	}

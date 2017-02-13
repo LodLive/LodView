@@ -11,6 +11,7 @@ import org.dvcama.lodview.bean.PropertyBean;
 import org.dvcama.lodview.bean.ResultBean;
 import org.dvcama.lodview.bean.TripleBean;
 import org.dvcama.lodview.conf.ConfigurationBean;
+import org.dvcama.lodview.conf.ConfigurationBean.ColorStrategy;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
@@ -47,23 +48,30 @@ public class Misc {
 	}
 
 	public static String guessColor(String colorPair, ResultBean r, ConfigurationBean conf) {
-
-		if (conf.getColorPairMatcher() != null && conf.getColorPairMatcher().size() > 0) {
+		switch(conf.getColorStrategy())
+		{
+		case CLASS: {
 			try {
 				List<TripleBean> m = r.getResources(r.getMainIRI()).get(r.getTypeProperty());
-				for (String key : conf.getColorPairMatcher().keySet()) {
-					for (TripleBean tripleBean : m) {
-						if (tripleBean.getValue().equals(key)) {
-							colorPair = conf.getColorPairMatcher().get(key);
-							return colorPair;
-						}
-					}
+				for (TripleBean tripleBean : m)
+				{
+					colorPair = conf.getColorPairMatcher().get(tripleBean.getValue());			
+					if(colorPair!=null) return colorPair;
 				}
 			} catch (Exception e) {
 			}
-			return conf.getColorPairMatcher().get("http://lodview.it/conf#otherClasses");
+			return conf.getColorPairMatcher().get("http://lodview.it/conf#otherClasses");			
 		}
-
+		case PREFIX: {
+			for (String prefix : conf.getColorPairMatcher().keySet()) {
+				if(r.getMainIRI().startsWith(prefix))
+				{
+					return conf.getColorPairMatcher().get(prefix);
+				}
+			}
+		}
+		default: break;
+		}
 		return colorPair;
 	}
 
