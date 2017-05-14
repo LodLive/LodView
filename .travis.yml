@@ -9,3 +9,5 @@ deploy:
   file: target/lodview.war
   on:
     repo: zazukoians/LodView
+    tags: true
+
