@@ -1,0 +1,13 @@
+language: java
+sudo: false
+script: mvn compile war:war
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: eWWzjthOJxgVcJmOZdZNv7nuMyIcp4Yyqt8EvajN27nkIeNg1QsQ1WZ87jhlXWo9X/2fB5WlO1Bmjct/G79PxL8oD3TH2fVN9tHpW4+wloN+kPodWedhDlyrG8oZtBewER1l5fzGoc7yV+I+USNuSmNTXB1uUDyEFs242fp7kKMy927tN0+MsZfsgj97BP+GdLgNdLUdovK4kvApj0QWvAlbDmHXrhzGiLk/2LVBfSJuo6FZ8TU2UpD7WwilvnccQG8KCbd6fzmpS9aL2L+D9dA0capSGqSA5q5IVeoBfampEoHO0IRS+fU90vXxWTxbt3SfTpN3lQbE6Am95+/78psV+Rc/s0NPm0L/VKg4gnDQyx3V7tjV53D5Z7CqXRiTaVe/R+ZAAJgvtokjbrHcwbXfHdIsX/66dIhOg468q1Ql10ZDe9JjvidN2tFRvGojuf9FY9+qITl0qzQnWR9EU264tl7RuxXc/QNQLyCRKpCJcAmUAxYVuTK9mBZQD+RZy4gtsX2YvyT6QDrLiDLeL9AC7An3MOHVbGUjQj6SUGhRxf/qeCg/hQ6JeCcI2oouZeYPQaDbKaf68xIA5n/gVvFcQy8fGLT/0aY9pCHqhBFzKGSGgkw6/eMTAaIKUop1yd9hGiFpiAC6msMNk5sTNi6yqqEnokgSY7grRkQQ+KE=
+  file: target/lodview.war
+  on:
+    repo: zazukoians/LodView
+    tags: true
+
