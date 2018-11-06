@@ -98,6 +98,7 @@
 
 ## 	default query used to get direct properties, you can add a "FROM" clause here,
 ##	${IRI} will be replaced, it's always recommended to specify a limit for the query 
+##	the query can be seplified removing the last 2 unions to improve performance (usually not needed)
 
 	conf:defaultQueries """select distinct ?s ?p ?o { 
 		{<${IRI}> ?p ?o} 
@@ -113,6 +114,7 @@
 ## 	default query used to get resource to be included in serializations different 
 ##	from HTML, it's always recommended to specify a limit for the query 
 ##	${IRI} will be replaced
+##	the query can be seplified removing the last 2 unions to improve performance (usually not needed)
  
 	conf:defaultRawDataQueries	"""select distinct ?s ?p ?o { 
 		{<${IRI}> ?p ?o} 
