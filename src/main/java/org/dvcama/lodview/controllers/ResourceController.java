@@ -351,7 +351,7 @@ public class ResourceController {
 
 	private void addLodliveLink(Locale locale, ModelMap model, String IRI, String lodlive) {
 		if (lodlive != null) {
-			model.addAttribute("lodliveUrl", lodlive + IRI.replaceAll("#", "%23"));
+			model.addAttribute("lodliveUrl", lodlive + "?" + IRI.replaceAll("#", "%23"));
 		} else if (locale.getLanguage().equals("it")) {
 			model.addAttribute("lodliveUrl", "http://lodlive.it?" + IRI.replaceAll("#", "%23"));
 		} else if (locale.getLanguage().equals("fr")) {

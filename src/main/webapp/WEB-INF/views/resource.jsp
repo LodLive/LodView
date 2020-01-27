@@ -24,7 +24,7 @@
 					</c:forEach>
 				  </span>
 					<div id="seeOnLodlive" class="sp">
-						<a title="view resource on lodlive" target="_blank" href="${lodliveUrl }"></a>
+						<a title="view resource on lodlive" target="_blank" href="${lodliveUrl}"></a>
 					</div>
 				</h2>
 			</hgroup>
