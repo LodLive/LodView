@@ -65,7 +65,7 @@
 ## 	EndPoint
 
 	conf:endpoint <http://dbpedia.org/sparql>;
-	conf:lodliveUrl <http://lodliveUrl>;
+	#conf:lodliveUrl <http://lodliveUrl>;
 	conf:endpointType "virtuoso"; 	## 	just "virtuoso" is handled right now, this will add some "rawdata"
 									##	options in the footer, leave this blank if you don't want these links
 
