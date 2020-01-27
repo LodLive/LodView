@@ -13,7 +13,7 @@
 					<li><sp:message code='footer.yesSparql' text='data from:' /> <a href="${conf.getEndPointUrl()}">${conf.getEndPointUrl()}</a></li>
 				</c:otherwise>
 			</c:choose>
-			<!--<li><a target="_blank" href="${lodliveUrl}"><sp:message code='footer.viewLodlive' text='view on lodlive' /></a></li>-->
+			<li><a target="_blank" href="${lodliveUrl}"><sp:message code='footer.viewLodlive' text='view on lodlive' /></a></li>
 			<c:forEach items="${rawdatalinks.keySet()}" var="list">
 				<li class="viewas"><span>${list}</span>
 					<c:set var="tot" value="${rawdatalinks.get(list).size()}" />
