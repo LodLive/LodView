@@ -44,10 +44,11 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	private String authPassword = null;
 	private String defaultInverseBehaviour = "collapse";
 
-	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null,
-			defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null,
-			audioProperties = null, imageProperties = null, videoProperties = null, linkingProperties = null,
-			titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
+	public enum ColorStrategy {RANDOM, CLASS, PREFIX}
+	private ColorStrategy colorStrategy =  ColorStrategy.RANDOM;
+	public ColorStrategy getColorStrategy() {return colorStrategy;}
+
+	private List<String> defaultQueries = null, defaultRawDataQueries = null, defaultInversesQueries = null, defaultInversesTest = null, defaultInversesCountQueries = null, typeProperties = null, audioProperties = null, imageProperties = null, videoProperties = null, linkingProperties = null, titleProperties = null, descriptionProperties = null, longitudeProperties = null, latitudeProperties = null;
 	private List<String> colorPair = null, skipDomains = null, mainOntologiesPrefixes = null;
 	private Map<String, String> colorPairMatcher = null;
 
