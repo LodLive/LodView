@@ -1,8 +1,10 @@
-FROM tomcat
-MAINTAINER adrian.gschwend@zazuko.com
+FROM maven:3-jdk-8 AS builder
+WORKDIR /app
+COPY . /app
+RUN mvn compile war:war
 
-RUN cd /usr/local/tomcat/webapps/ && \
-    curl -Ls $(curl -s https://api.github.com/repos/zazukoians/LodView/releases | grep browser_download_url | head -n 1 | cut -d '"' -f 4) > lodview.war
-
+FROM tomcat:7
+LABEL maintainer=adrian.gschwend@zazuko.com
+COPY --from=builder /app/target/lodview.war  /usr/local/tomcat/webapps/lodview.war
 CMD ["catalina.sh", "run"]
 EXPOSE 8080 8009
