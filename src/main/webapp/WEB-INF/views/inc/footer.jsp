@@ -15,7 +15,7 @@
 			</c:choose>
 			<li><a target="_blank" href="${lodliveUrl}"><sp:message code='footer.viewLodlive' text='view on lodlive' /></a></li>
 			<c:forEach items="${rawdatalinks.keySet()}" var="list">
-				<li class="viewas"><span>${list}</span> 
+				<li class="viewas"><span>${list}</span>
 					<c:set var="tot" value="${rawdatalinks.get(list).size()}" />
 					<c:forEach items="${rawdatalinks.get(list)}" var="ele" varStatus="status">
 						<a href="${ele.value}">${ele.key}</a><c:if test="${status.count < tot}">, </c:if>

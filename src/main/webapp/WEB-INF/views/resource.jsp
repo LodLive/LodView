@@ -4,7 +4,7 @@
 				<%@include file="inc/header.jsp"%>
 </head><body id="top">
 	<article>
-		<div id="logoBanner"> 
+		<div id="logoBanner">
 			<div id="logo">
 				<!-- placeholder for logo -->
 			</div>
@@ -22,12 +22,12 @@
 					</c:choose>
 					</a>
 					</c:forEach>
-					</span>
+				  </span>
 					<div id="seeOnLodlive" class="sp">
-						<a title="view resource on lodlive" target="_blank" href="${lodliveUrl }"></a>
+						<a title="view resource on lodlive" target="_blank" href="${lodliveUrl}"></a>
 					</div>
 				</h2>
-			</hgroup> 
+			</hgroup>
 			<c:choose>
 				<c:when test="${results.getDescriptionProperty() != null}">
 					<div id="abstract">
