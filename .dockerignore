@@ -1,0 +1,15 @@
+.project
+.metadata
+.idea
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+.springBeans
+target/
