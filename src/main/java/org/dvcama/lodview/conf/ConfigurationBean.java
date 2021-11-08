@@ -18,6 +18,7 @@ import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class ConfigurationBean implements ServletContextAware, Cloneable {
 
@@ -52,6 +53,8 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	private Map<String, String> colorPairMatcher = null;
 
 	Random rand = new Random();
+	
+	private Dotenv dotenv = Dotenv.load();
 
 	public ConfigurationBean() throws IOException, Exception {
 
@@ -148,7 +151,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	}
 
 	private String getSingleConfValue(String prop, String defaultValue) {
-		String value = System.getenv("LodView"+prop);
+		String value = dotenv.get("LodView"+prop);
 		if(value!=null) {return value;}
 		NodeIterator iter = confModel.listObjectsOfProperty(confModel.createProperty(confModel.getNsPrefixURI("conf"), prop));
 		while (iter.hasNext()) {
