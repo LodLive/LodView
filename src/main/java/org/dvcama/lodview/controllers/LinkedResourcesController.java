@@ -25,8 +25,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 public class LinkedResourcesController implements MessageSourceAware {
+
+ 	final Logger logger = LoggerFactory.getLogger(LinkedResourcesController.class);
 
 	@Autowired
 	private MessageSource messageSource;
@@ -51,7 +56,7 @@ public class LinkedResourcesController implements MessageSourceAware {
 	}
 
 	public String resourceTitles(ModelMap model, ConfigurationBean conf, HttpServletRequest req, HttpServletResponse res, Locale locale, String IRI, String[] abouts) throws IOException, Exception {
-		// System.out.println("LinkedResourcesController.resourceTitles() locale: "
+		// logger.trace("LinkedResourcesController.resourceTitles() locale: "
 		// + locale.getLanguage());
 		StringBuilder result = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<root>");
 		try {
@@ -84,7 +89,7 @@ public class LinkedResourcesController implements MessageSourceAware {
 
 	public String resourceInverses(ModelMap model, ConfigurationBean conf, OntologyBean ontoBean, HttpServletRequest req, HttpServletResponse res, Locale locale, String IRI, String property, int start) throws IOException, Exception {
 		StringBuilder result = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<root>");
-		// System.out.println("LinkedResourcesController.resourceInverses()");
+		// logger.trace("LinkedResourcesController.resourceInverses()");
 		if (property.equals("")) {
 			/* counting inverse relations */
 			try {

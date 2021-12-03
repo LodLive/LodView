@@ -19,9 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 public class LodController {
 
+	final Logger logger = LoggerFactory.getLogger(LodController.class);
+	
 	@Autowired
 	ConfigurationBean confLinked;
 
@@ -34,13 +39,13 @@ public class LodController {
 	public String resource(HttpServletRequest req, HttpServletResponse res, Locale locale, @RequestParam(value = "IRI") String IRI) throws IOException, Exception {
 
 		if (confLinked.getSkipDomains().contains(IRI.replaceAll("http[s]*://([^/]+)/.*", "$1"))) {
-			// System.out.println("LodController.resource() - skip - " + IRI);
+			// logger.info("LodController.resource() - skip - " + IRI);
 			return "<root error=\"true\" about=\"" + StringEscapeUtils.escapeXml11(IRI) + "\"><title>" + //
 					StringEscapeUtils.escapeXml11(messageSource.getMessage("error.skipedDomain", null, "skiping this URI", locale)) + //
 					"</title><msg><![CDATA[skiping this URI, probably offline]]></msg></root>";
 		}
 		try {
-			System.out.println("				LodController.resource() - load - " + IRI);
+			logger.info("				LodController.resource() - load - " + IRI);
 			/* TODO: change this in UNION queries for better performance */
 			ResultBean results = new ResourceBuilder(messageSource).buildHtmlResource(IRI, locale, confLinked, null, true);
 
@@ -102,7 +107,7 @@ public class LodController {
 
 		} catch (Exception e) {
 			// e.printStackTrace();
-			System.out.println(IRI + " unable to retrieve data " + e.getMessage());
+			logger.error(IRI + " unable to retrieve data " + e.getMessage());
 			return "<root error=\"true\" about=\"" + StringEscapeUtils.escapeXml11(IRI) + "\"><title>" + //
 					messageSource.getMessage("error.linkedResourceUnavailable", null, "unable to retrieve data", locale) + //
 					"</title><msg><![CDATA[" + e.getMessage() + "]]></msg></root>";

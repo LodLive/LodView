@@ -17,11 +17,15 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.util.FileManager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class OntologyBean implements ServletContextAware {
 
 	private String ontoDir;
 	private ServletContext context;
 	private Model model;
+ 	final Logger logger = LoggerFactory.getLogger(OntologyBean.class);
 
 	public void init() { 
 		File ontoDirFile = new File(ontoDir);
@@ -30,27 +34,27 @@ public class OntologyBean implements ServletContextAware {
 		}
 		model = ModelFactory.createDefaultModel();
 		if (ontoDirFile.exists()) {
-			System.out.println("ontologies dir founded!");
+			logger.debug("ontologies dir founded!");
 			File[] list = ontoDirFile.listFiles();
 			for (File file : list) {
 				if (!file.isDirectory()) {
 					try {
-						System.out.println("loading " + file.getCanonicalPath());
+						logger.debug("loading " + file.getCanonicalPath());
 						FileManager.get().readModel(model, file.getAbsolutePath());
-						System.out.println("read successfully!");
+						logger.debug("read successfully!");
 					} catch (Exception e) {
-						System.err.println("error loading " + e.getMessage());
+						logger.error("error loading " + e.getMessage());
 						// e.printStackTrace();
 					}
 				}
 			}
 		} else {
-			System.out.println("no ontologies founded " + ontoDirFile.getAbsolutePath());
+			logger.debug("no ontologies founded " + ontoDirFile.getAbsolutePath());
 		}
 
-		// System.out.println("------------------- " + getHashResult("en",
+		// logger.debug("------------------- " + getHashResult("en",
 		// "http://dati.camera.it/ocd/parentCountry"));
-		// System.out.println("------------------- " + getHashResult("it",
+		// logger.debug("------------------- " + getHashResult("it",
 		// "http://dati.camera.it/ocd/parentCountry"));
 
 	}
@@ -98,7 +102,7 @@ public class OntologyBean implements ServletContextAware {
 		while (iter.hasNext()) {
 			RDFNode node = iter.nextNode();
 			Literal l = node.asLiteral();
-			//System.out.println(IRI + " " + preferredLanguage + " --> " + l.getLanguage() + " --> " + l.getLexicalForm());
+			//logger.debug(IRI + " " + preferredLanguage + " --> " + l.getLanguage() + " --> " + l.getLexicalForm());
 			if (!betterTitleMatch && (result.equals(defaultValue) || l.getLanguage().equals("en") || l.getLanguage().equals(preferredLanguage))) {
 				if (preferredLanguage.equals(l.getLanguage())) {
 					betterTitleMatch = true;
