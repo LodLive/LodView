@@ -19,7 +19,12 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ConfigurationBean implements ServletContextAware, Cloneable {
+
+ 	final Logger logger = LoggerFactory.getLogger(ConfigurationBean.class);
 
 	protected Model confModel = null;
 	protected ServletContext context;
@@ -58,7 +63,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	}
 
 	public void populateBean() throws IOException, Exception {
-		System.out.println("Initializing configuration " + confFile);
+		logger.debug("Initializing configuration " + confFile);
 		File configFile = new File(confFile);
 		if (!configFile.isAbsolute()) {
 			configFile = new File(context.getRealPath("/") + "/WEB-INF/" + confFile);

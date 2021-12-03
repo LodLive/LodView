@@ -13,8 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 public class ErrorController {
+
+ 	final Logger logger = LoggerFactory.getLogger(ErrorController.class);
+	
 	@Autowired
 	ConfigurationBean conf;
 
@@ -29,7 +35,7 @@ public class ErrorController {
 	@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE, reason = "unhandled encoding")
 	@RequestMapping(value = "/406")
 	public String error406(HttpServletResponse res, ModelMap model, @CookieValue(value = "colorPair") String colorPair) {
-		System.out.println("not acceptable");
+		logger.error("not acceptable");
 		model.addAttribute("statusCode", "406");
 		model.addAttribute("conf", conf);
 		colors(colorPair, res, model);
@@ -39,7 +45,7 @@ public class ErrorController {
 
 	@RequestMapping(value = "/404")
 	public String error404(HttpServletResponse res, ModelMap model, @RequestParam(value = "error", defaultValue = "") String error, @CookieValue(value = "colorPair", defaultValue = "") String colorPair, @RequestParam(value = "IRI", defaultValue = "") String IRI, @RequestParam(value = "endpoint", defaultValue = "") String endpoint) {
-		System.out.println("not found " + error + " -- " + IRI + " -- " + endpoint);
+		logger.error("not found " + error + " -- " + IRI + " -- " + endpoint);
 		/* spring bug? */
 		model.addAttribute("IRI", IRI);
 		model.addAttribute("endpoint", endpoint);
@@ -53,7 +59,7 @@ public class ErrorController {
 
 	@RequestMapping(value = "/400")
 	public String error400(HttpServletResponse res, ModelMap model, @RequestParam(value = "IRI", defaultValue = "") String IRI, @CookieValue(value = "colorPair", defaultValue = "") String colorPair) {
-		System.out.println("error on " + IRI);
+		logger.error("error on " + IRI);
 		/* spring bug? */
 		model.addAttribute("IRI", IRI.replaceAll("(http://.+),http://.+", "$1"));
 		model.addAttribute("conf", conf);
@@ -65,7 +71,7 @@ public class ErrorController {
 
 	@RequestMapping(value = { "/500", "/error" })
 	public String error500(HttpServletResponse res, ModelMap model, @RequestParam(value = "error", defaultValue = "") String error, @CookieValue(value = "colorPair", defaultValue = "") String colorPair, @RequestParam(value = "IRI", defaultValue = "") String IRI, @RequestParam(value = "endpoint", defaultValue = "") String endpoint) {
-		System.out.println("error on " + error + " -- " + IRI + " -- " + endpoint);
+		logger.error("error on " + error + " -- " + IRI + " -- " + endpoint);
 		/* spring bug? */
 		model.addAttribute("IRI", IRI);
 		model.addAttribute("endpoint", endpoint);

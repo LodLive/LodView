@@ -22,7 +22,12 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SPARQLEndPoint {
+
+ 	private static Logger logger = LoggerFactory.getLogger(SPARQLEndPoint.class);
 
 	OntologyBean ontoBean;
 	String locale = "en";
@@ -36,14 +41,14 @@ public class SPARQLEndPoint {
 	}
 
 	public List<TripleBean> doQuery(String IRI, String aProperty, int start, List<String> queries, String filter, String overrideProperty) throws Exception {
-		// System.out.println("executing query on " + conf.getEndPointUrl());
+		// logger.trace("executing query on " + conf.getEndPointUrl());
 		List<TripleBean> results = new ArrayList<TripleBean>();
 		HttpAuthenticator auth = null;
 		if (conf.getAuthPassword() != null && !conf.getAuthPassword().equals("")) {
 			auth = new SimpleAuthenticator(conf.getAuthUsername(), conf.getAuthPassword().toCharArray());
 		}
 		for (String query : queries) {
-			// System.out.println("-- " + parseQuery(query, IRI, aProperty,
+			// logger.trace("-- " + parseQuery(query, IRI, aProperty,
 			// start, filter));
 			QueryExecution qe = QueryExecutionFactory.sparqlService(conf.getEndPointUrl(), parseQuery(query, IRI, aProperty, start, filter), auth);
 			results = moreThenOneQuery(qe, results, 0, overrideProperty);
@@ -54,7 +59,7 @@ public class SPARQLEndPoint {
 			if (IRI != null) {
 				boolean hasInverses = false;
 				for (String query : conf.getDefaultInversesTest()) {
-					// System.out.println("query!!! " + parseQuery(query, IRI,
+					// logger.trace("query!!! " + parseQuery(query, IRI,
 					// aProperty, start, filter));
 					QueryExecution qe = QueryExecutionFactory.sparqlService(conf.getEndPointUrl(), parseQuery(query, IRI, aProperty, start, filter), auth);
 					if (!hasInverses) {
@@ -126,14 +131,14 @@ public class SPARQLEndPoint {
 					}
 					results.add(rb);
 				} catch (Exception e) {
-					System.err.println("error? " + e.getMessage());
+					logger.error("error? " + e.getMessage());
 					// e.printStackTrace();
 				}
 			}
 		} catch (Exception ez) {
 			if (retry < 3) {
 				retry++;
-				// System.out.println("query failed (" + ez.getMessage() +
+				// logger.trace("query failed (" + ez.getMessage() +
 				// "), I'm giving another chance (" + retry + "/3)");
 				return moreThenOneQuery(qe, results, retry, overrideProperty);
 			}
@@ -157,7 +162,7 @@ public class SPARQLEndPoint {
 	}
 
 	public List<TripleBean> doLocalQuery(Model model, String IRI, String localProperty, int start, List<String> queries, String overrideProperty) throws Exception {
-		// System.out.println("executing query on model based on " + IRI);
+		// logger.trace("executing query on model based on " + IRI);
 		List<TripleBean> results = new ArrayList<TripleBean>();
 
 		for (String query : queries) {
@@ -213,7 +218,7 @@ public class SPARQLEndPoint {
 						}
 						results.add(rb);
 					} catch (Exception e) {
-						System.err.println("error? " + e.getMessage());
+						logger.error("error? " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -232,7 +237,7 @@ public class SPARQLEndPoint {
 
 	public Model extractData(Model result, String IRI, String sparql, List<String> queries) throws Exception {
 
-		// System.out.println("executing query on " + sparql);
+		// logger.trace("executing query on " + sparql);
 		Resource subject = result.createResource(IRI);
 		for (String query : queries) {
 			QueryExecution qe = QueryExecutionFactory.sparqlService(sparql, parseQuery(query, IRI, null, -1, null));
@@ -260,7 +265,7 @@ public class SPARQLEndPoint {
 
 	public Model extractLocalData(Model result, String IRI, Model m, List<String> queries) throws Exception {
 
-		// System.out.println("executing query on IRI");
+		// logger.trace("executing query on IRI");
 		Resource subject = result.createResource(IRI);
 		for (String query : queries) {
 			QueryExecution qe = QueryExecutionFactory.create(parseQuery(query, IRI, null, -1, null), m);
@@ -305,20 +310,20 @@ public class SPARQLEndPoint {
 	}
 
 	public String testEndpoint(ConfigurationBean conf) {
-		System.out.println("testing connection on " + conf.getEndPointUrl());
+		logger.info("testing connection on " + conf.getEndPointUrl());
 		QueryExecution qe = QueryExecutionFactory.sparqlService(conf.getEndPointUrl(), "select ?s {?s ?p ?o} LIMIT 1");
 		String msg = "";
 		try {
 			ResultSet rs = qe.execSelect();
 			if (rs.hasNext()) {
-				System.out.println("is online");
+				logger.info("is online");
 				msg = "online";
 			} else {
-				System.out.println("is offline");
+				logger.info("is offline");
 				msg = "offline";
 			}
 		} catch (Exception e) {
-			System.out.println("is offline " + e.getMessage());
+			logger.info("is offline " + e.getMessage());
 			msg = "offline " + e.getMessage();
 		} finally {
 			qe.close();

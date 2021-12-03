@@ -38,9 +38,15 @@ import org.springframework.web.util.UrlPathHelper;
 
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 @RequestMapping(value = "/")
 public class ResourceController {
+ 	
+	final Logger logger = LoggerFactory.getLogger(ResourceController.class);
+
 	@Autowired
 	private MessageSource messageSource;
 
@@ -88,8 +94,8 @@ public class ResourceController {
 		String IRIsuffix = new UrlPathHelper().getLookupPathForRequest(req).replaceAll("/lodview/", "/");
 		String requestUrl = req.getRequestURI();
 
-		System.out.println("IRIsuffix " + IRIsuffix);
-		System.out.println("requestUrl " + requestUrl);
+		logger.info("IRIsuffix " + IRIsuffix);
+		logger.info("requestUrl " + requestUrl);
 
 		model.addAttribute("path", new UrlPathHelper().getContextPath(req).replaceAll("/lodview/", "/"));
 		model.addAttribute("locale", locale.getLanguage());
@@ -184,18 +190,18 @@ public class ResourceController {
 			}
 		}
 
-		System.out.println("####################################################################");
-		System.out.println("#################  looking for " + IRI + "  ################# ");
+		logger.info("####################################################################");
+		logger.info("#################  looking for " + IRI + "  ################# ");
 
 		String[] acceptedContent = req.getHeader("Accept").split(",");
 		if (redirected) {
 			acceptedContent = "text/html".split(",");
 		}
-		// System.out.println("Accept " + req.getHeader("Accept"));
+		// log.trace("Accept " + req.getHeader("Accept"));
 
 		AcceptList a = AcceptList.create(acceptedContent);
-		// System.out.println("-- AcceptList: " + a);
-		// System.out.println("-- OffertList: " + offeringRDF);
+		// log.trace("-- AcceptList: " + a);
+		// log.trace("-- OffertList: " + offeringRDF);
 
 		MediaType matchItem = AcceptList.match(offeringRDF, a);
 		Lang lang = matchItem != null ? RDFLanguages.contentTypeToLang(matchItem.getContentType()) : null;
@@ -210,7 +216,7 @@ public class ResourceController {
 			} catch (Exception e) {
 				return new ErrorController(conf).error406(res, model, colorPair);
 			}
-			System.out.println("override content type " + matchItem.getContentType());
+			logger.debug("override content type " + matchItem.getContentType());
 		}
 
 		try {
@@ -371,7 +377,7 @@ public class ResourceController {
 	}
 
 	public ResponseEntity<String> resourceRaw(ConfigurationBean conf, ModelMap model, @RequestParam(value = "IRI") String IRI, @RequestParam(value = "sparql") String sparql, @RequestParam(value = "contentType", defaultValue = "application/rdf+xml") String contentType) {
-		// System.out.println("ResourceController.resourceRaw()");
+		// logger.trace("ResourceController.resourceRaw()");
 		contentType = contentType.replaceAll("([a-zA-Z]) ([a-zA-Z])", "$1+$2");
 		Lang lang = RDFLanguages.contentTypeToLang(contentType);
 		try {

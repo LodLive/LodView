@@ -18,8 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UrlPathHelper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 public class StaticController {
+
+	final Logger logger = LoggerFactory.getLogger(StaticController.class);
+	
 	@Autowired
 	ConfigurationBean conf;
 
@@ -44,7 +50,7 @@ public class StaticController {
 		model.addAttribute("conf", conf);
 		model.addAttribute("locale", locale.getLanguage());
 		model.addAttribute("path", new UrlPathHelper().getContextPath(req).replaceAll("/lodview/", "/"));
-		System.out.println("home controller");
+		logger.debug("home controller");
 		return "home";
 	}
 
