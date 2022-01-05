@@ -1,9 +1,10 @@
-FROM maven:3-jdk-8 AS builder
+FROM maven:3-jdk-11 AS builder
 WORKDIR /app
 COPY . /app
 RUN mvn compile war:war
 
-FROM tomcat:7
+# Tomcat 10 needs further changes, see https://tomcat.apache.org/migration-10.html
+FROM tomcat:9
 LABEL maintainer=adrian.gschwend@zazuko.com
 ENV CATALINA_OPTS="-XX:+UseSerialGC"
 COPY --from=builder /app/target/lodview.war /usr/local/tomcat/webapps/lodview.war

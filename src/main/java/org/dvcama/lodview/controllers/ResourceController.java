@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UrlPathHelper;
 
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.ModelFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -385,7 +385,7 @@ public class ResourceController {
 			headers.add("Content-Type", contentType + "; charset=" + conf.getContentEncoding());
 
 			if (sparql != null && sparql.equals("<>")) {
-				com.hp.hpl.jena.rdf.model.Model m = ModelFactory.createDefaultModel();
+				org.apache.jena.rdf.model.Model m = ModelFactory.createDefaultModel();
 				try {
 					m.read(IRI);
 				} catch (Exception e) {

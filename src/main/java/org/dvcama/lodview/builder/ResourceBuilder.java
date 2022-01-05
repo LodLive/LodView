@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFWriterI;
 import org.apache.jena.riot.Lang;
 import org.dvcama.lodview.bean.OntologyBean;
 import org.dvcama.lodview.bean.ResultBean;
@@ -15,10 +18,6 @@ import org.dvcama.lodview.conf.ConfigurationBean;
 import org.dvcama.lodview.endpoint.SPARQLEndPoint;
 import org.dvcama.lodview.utils.Misc;
 import org.springframework.context.MessageSource;
-
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.RDFWriter;
 
 public class ResourceBuilder {
 
@@ -133,7 +132,7 @@ public class ResourceBuilder {
 		model = se.extractData(model, IRI, sparql, conf.getDefaultRawDataQueries());
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		RDFWriter rdfWriter = model.getWriter(lang.getName());
+		RDFWriterI rdfWriter = model.getWriter(lang.getName());
 		rdfWriter.setProperty("showXMLDeclaration","true");
 		rdfWriter.setProperty("relativeURIs","");
  
@@ -154,7 +153,7 @@ public class ResourceBuilder {
 		model = se.extractLocalData(model, IRI, m, conf.getDefaultRawDataQueries());
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		RDFWriter rdfWriter = model.getWriter(lang.getName());
+		RDFWriterI rdfWriter = model.getWriter(lang.getName());
 		rdfWriter.setProperty("showXMLDeclaration","true");
 		rdfWriter.setProperty("relativeURIs","");
 

@@ -1,27 +1,26 @@
 package org.dvcama.lodview.endpoint;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.jena.atlas.web.auth.HttpAuthenticator;
-import org.apache.jena.atlas.web.auth.SimpleAuthenticator;
+import org.apache.jena.graph.Node;
+import org.apache.jena.http.auth.AuthEnv;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.sparql.exec.http.QueryExecutionHTTP;
 import org.dvcama.lodview.bean.OntologyBean;
 import org.dvcama.lodview.bean.PropertyBean;
 import org.dvcama.lodview.bean.TripleBean;
 import org.dvcama.lodview.conf.ConfigurationBean;
 import org.dvcama.lodview.utils.Misc;
-
-import com.hp.hpl.jena.graph.Node;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,14 +42,13 @@ public class SPARQLEndPoint {
 	public List<TripleBean> doQuery(String IRI, String aProperty, int start, List<String> queries, String filter, String overrideProperty) throws Exception {
 		// logger.trace("executing query on " + conf.getEndPointUrl());
 		List<TripleBean> results = new ArrayList<TripleBean>();
-		HttpAuthenticator auth = null;
 		if (conf.getAuthPassword() != null && !conf.getAuthPassword().equals("")) {
-			auth = new SimpleAuthenticator(conf.getAuthUsername(), conf.getAuthPassword().toCharArray());
+		    AuthEnv.get().registerUsernamePassword(new URI(conf.getEndPointUrl()), conf.getAuthUsername(), conf.getAuthPassword());
 		}
 		for (String query : queries) {
 			// logger.trace("-- " + parseQuery(query, IRI, aProperty,
 			// start, filter));
-			QueryExecution qe = QueryExecutionFactory.sparqlService(conf.getEndPointUrl(), parseQuery(query, IRI, aProperty, start, filter), auth);
+			QueryExecution qe = QueryExecutionHTTP.service(conf.getEndPointUrl(), parseQuery(query, IRI, aProperty, start, filter));
 			results = moreThenOneQuery(qe, results, 0, overrideProperty);
 			qe.close();
 		}
@@ -61,7 +59,7 @@ public class SPARQLEndPoint {
 				for (String query : conf.getDefaultInversesTest()) {
 					// logger.trace("query!!! " + parseQuery(query, IRI,
 					// aProperty, start, filter));
-					QueryExecution qe = QueryExecutionFactory.sparqlService(conf.getEndPointUrl(), parseQuery(query, IRI, aProperty, start, filter), auth);
+					QueryExecution qe = QueryExecutionHTTP.service(conf.getEndPointUrl(), parseQuery(query, IRI, aProperty, start, filter));
 					if (!hasInverses) {
 						hasInverses = qe.execAsk();
 					}
@@ -240,7 +238,7 @@ public class SPARQLEndPoint {
 		// logger.trace("executing query on " + sparql);
 		Resource subject = result.createResource(IRI);
 		for (String query : queries) {
-			QueryExecution qe = QueryExecutionFactory.sparqlService(sparql, parseQuery(query, IRI, null, -1, null));
+			QueryExecution qe = QueryExecutionHTTP.service(sparql, parseQuery(query, IRI, null, -1, null));
 			try {
 				ResultSet rs = qe.execSelect();
 
@@ -311,7 +309,7 @@ public class SPARQLEndPoint {
 
 	public String testEndpoint(ConfigurationBean conf) {
 		logger.info("testing connection on " + conf.getEndPointUrl());
-		QueryExecution qe = QueryExecutionFactory.sparqlService(conf.getEndPointUrl(), "select ?s {?s ?p ?o} LIMIT 1");
+		QueryExecution qe = QueryExecutionHTTP.service(conf.getEndPointUrl(), "select ?s {?s ?p ?o} LIMIT 1");
 		String msg = "";
 		try {
 			ResultSet rs = qe.execSelect();
