@@ -87,12 +87,12 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 		httpRedirectExcludeList = getSingleConfValue("httpRedirectExcludeList", "");
 
 		publicUrlPrefix = getSingleConfValue("publicUrlPrefix", "");
-		publicUrlPrefix = publicUrlPrefix.replaceAll(".+/auto$", context.getContextPath() + "/");
+		publicUrlPrefix = publicUrlPrefix.replaceAll("^(.+/)?auto$", context.getContextPath() + "/");
 
 		contentEncoding = getSingleConfValue("contentEncoding");
 		staticResourceURL = getSingleConfValue("staticResourceURL", "");
 		homeUrl = getSingleConfValue("homeUrl", "/");
-		staticResourceURL = staticResourceURL.replaceAll(".+/auto$", context.getContextPath() + "/staticResources/");
+		staticResourceURL = staticResourceURL.replaceAll("^(.+/)?auto$", context.getContextPath() + "/staticResources/");
 
 		preferredLanguage = getSingleConfValue("preferredLanguage");
 
@@ -153,6 +153,8 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	}
 
 	private String getSingleConfValue(String prop, String defaultValue) {
+		String value = System.getenv("LodView"+prop);
+		if(value!=null) {return value;}
 		NodeIterator iter = confModel.listObjectsOfProperty(confModel.createProperty(confModel.getNsPrefixURI("conf"), prop));
 		while (iter.hasNext()) {
 			RDFNode node = iter.next();
