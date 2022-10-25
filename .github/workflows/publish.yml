@@ -1,0 +1,123 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+env:
+  GITHUB_WORKFLOW: dati-semantic-lodview
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [11]
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'adopt'
+      - name: caching
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Create Build Artifact
+        run: ./gradlew clean build
+      - name: SpotBugs Check
+        run: ./gradlew spotbugsMain spotbugsTest
+  # Dependency check is configured in the build.gradle file,
+  #  which includes quality gates and suppression rules.
+  owasp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: Dependency Check
+        run: ./gradlew dependencyCheckAnalyze
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker-security
+        uses: instrumenta/conftest-action@master
+        with:
+          files: Dockerfile
+          policy: dockerfile-security.rego
+  publish:
+    needs:
+      - security
+      - build
+      - owasp
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Log in to the Github Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]${GITHUB_REF##*/}"
+        id: extract_branch
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          labels: |
+            maintainer=Team Digitale
+            org.opencontainers.image.source.branch=${{ steps.extract_branch.outputs.branch }}
+          tags: |
+            type=raw,value={{date 'YYYYMMDD'}}-${{github.run_number}}-{{sha}}
+            type=raw, value=latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+  # This job triggers the update-config.yaml workflow on
+  #   the dati-semantic-kubernetes repository.
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    permissions:
+      contents: read
+      packages: write
+    needs:
+      - publish
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: build image
+        id: extractImage
+        run: |
+          IMAGE="$REGISTRY/$IMAGE_NAME"
+          TAG="$(date +'%Y%m%d')-${{github.run_number}}-$(git rev-parse --short HEAD)"
+          echo "##[set-output name=imageName;]${IMAGE}:${TAG}"
+      - uses: convictional/trigger-workflow-and-wait@v1.3.0
+        with:
+          owner: teamdigitale
+          repo: dati-semantic-kubernetes
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          workflow_file_name: update-config.yaml
+          ref: dev
+          wait_interval: 20
+          inputs: '{"serviceName": "dati-semantic-lodview", "imageWithNewTag": "${{ steps.extractImage.outputs.imageName }}"}'
