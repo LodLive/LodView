@@ -1,0 +1,36 @@
+/* **************************************** */
+/*  SPECIAL DIRECTIVES FOR PIXEL RATIO > 1  */
+/* **************************************** */
+@media ( -webkit-min-device-pixel-ratio: 2) , ( min-resolution: 192dpi) {
+    .sp {
+        background-image: url(../img/lodview-sprite@2x.png);
+    }
+
+    div#logoBanner div#logo {
+        background-image: url(../img/logo-header-lodview@2x.png);
+    }
+
+    footer #linkBack {
+        background-image: url(../img/logo-footer-lodview@2x.png);
+    }
+
+    div#directs .value > div:not (.value ), div#bnodes .valuecnt > div:not (.value ), div#inverses .value > div:not (.value ) {
+        background-image: url("img/separatoreCorto@2x.png");
+    }
+
+    div#directs .value > div.lang, div#bnodes .value > div.lang, div#inverses .value > div.lang {
+        background: none
+    }
+
+    #errorPage.error404 div#owl {
+        background-image: url(../img/owl404@2x.png);
+    }
+
+    #errorPage.error500 div#owl {
+        background-image: url(../img/owl500@2x.png);
+    }
+
+    #widgets > div#images > a {
+        background-image: url(../img/segnaposto-immagine@2x.png);
+    }
+}

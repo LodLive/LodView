@@ -1,0 +1,1031 @@
+/* ********************************************** */
+/* DO NOT CHANGE THIS FILE USE custom.css INSTEAD */
+/* ********************************************** */
+.sp {
+    background-image: url(../img/lodview-sprite.png);
+    background-size: 1000px 600px;
+}
+
+div#logoBanner div#logo {
+    background-size: 134px 40px;
+    background-image: url(../img/logo-header-lodview.png);
+    height: 80px;
+    background-position: left center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    width: 150px;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    line-height: 20px;
+    font-size: 14px;
+    background-color: #212121;
+}
+
+strong {
+    font-weight: 500;
+}
+
+.value div.fixed, .valuecnt div.fixed, #abstract .c2 {
+    max-width: 760px;
+    overflow-x: hidden;
+}
+
+label {
+    display: inline-block;
+}
+
+label a {
+    font-weight: 300;
+    font-size: 14px;
+}
+
+label a span {
+    font-weight: 500;
+}
+
+div#logoBanner {
+    height: 80px;
+    background-color: #fff;
+    padding: 0 24px;
+}
+
+hgroup {
+    display: block;
+    min-height: 210px;
+    color: #fff;
+    padding: 0 24px;
+}
+
+hgroup h1 {
+    font-size: 32px;
+    padding-top: 120px;
+    line-height: 32px;
+    font-weight: 300;
+    margin-right: 100px;
+}
+
+hgroup h1 span {
+    display: inline-block;
+    padding-right: 250px;
+}
+
+#seeOnLodlive a {
+    display: inline-block;
+    width: 19px;
+    height: 27px;
+}
+
+#seeOnLodlive {
+    background-position: -130px 0;
+    width: 19px;
+    height: 27px;
+    position: absolute;
+    top: 116px;
+    right: 24px;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+    filter: alpha(opacity=30);
+    opacity: 0.3;
+}
+
+#seeOnLodlive:hover {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+hgroup h2 > a.iri {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #fff;
+    margin-right: 8px;
+}
+
+hgroup h2 > a.iri:hover {
+    text-decoration: underline;
+}
+
+hgroup h2 > span.istance {
+    float: none;
+    display: inline-block;
+    margin-left: -8px;
+}
+
+
+hgroup h2 {
+    font-size: 16px;
+    padding: 8px 0 24px 0;
+    font-weight: 300;
+}
+
+hgroup h2 > span a {
+    color: #fff;
+    font-weight: 300;
+    display: inline-block;
+    margin-left: 8px;
+    margin-top: 2px;
+    /*text-transform: uppercase;*/
+    letter-spacing: .7;
+    font-size: 13px;
+}
+
+hgroup h2 > span a span {
+    color: #fff;
+    font-weight: 500;
+}
+
+hgroup h2 > span.istance a span.istanceOf {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+header div#abstract {
+    padding: 24px;
+    color: #fff;
+}
+
+header div#abstract .value a {
+    text-decoration: underline;
+    color: #fff;
+}
+
+header div#abstract .value a:hover {
+    text-decoration: none
+}
+
+header div#abstract label {
+    padding: 0 24px 0 0;
+}
+
+header div#abstract label a {
+    color: #fff;
+}
+
+header div#abstract label a span {
+    color: #fff;
+}
+
+aside {
+    display: block;
+    background-color: #eee;
+    color: #fff;
+    padding: 24px 24px 16px 24px;
+}
+
+#widgets > div#images > a:hover, #widgets > div#linking > a:hover {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+    filter: alpha(opacity=90);
+    opacity: 0.9;
+}
+
+#widgets > div#images > a {
+    min-width: 136px;
+    height: 136px;
+    text-align: left;
+    display: inline-block;
+    background-image: url(../img/segnaposto-immagine.png);
+    background-size: 48px 48px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+aside {
+    font-size: 0px
+}
+
+aside div.noImg {
+    width: 125px;
+    height: 125px;
+    display: inline-block;
+    background-position: 0 -105px;
+    background-size: 300px 250px;
+}
+
+aside div#linking, aside div#images, aside div#audio, aside div#video {
+    display: inline-block;
+}
+
+aside div#resourceMapCnt {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+aside div#images a img, aside div#linking a span, aside div#resourceMapCnt map, aside div#audio .audio {
+    height: 136px;
+    display: inline-block;
+    width: auto;
+}
+
+aside div#video {
+    height: 144px;
+}
+
+aside div#video * {
+    height: 136px;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+aside div#audio .audio {
+    height: 136px;
+    display: inline-block;
+    width: 136px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    background-position: -520px -65px;
+}
+
+aside div#linking {
+    margin-bottom: 8px;
+}
+
+aside div#linking a span {
+    width: 136px;
+    background-position: -280px -65px;
+}
+
+aside div#resourceMapCnt map {
+    width: 272px;
+    background-position: 0 -65px;
+}
+
+.leaflet-popup-content {
+    color: #000
+}
+
+.c1, .c3 {
+    position: absolute
+}
+
+h3 {
+    text-transform: uppercase;
+    letter-spacing: .7;
+    font-weight: 300;
+    color: #212121;
+    font-size: 11px;
+}
+
+div#directs {
+    padding: 24px;
+    background: #fff;
+    color: #212121;
+    line-height: 20px;
+    font-size: 14px;
+    overflow-x: hidden;
+}
+
+div#bnodes {
+    padding: 24px;
+    background: #eee;
+    color: #212121;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+div#inverses {
+    padding: 24px;
+    background: #d4d4d4;
+    color: #212121;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+.lloading {
+    background-image: url(../img/loading-new@2x.gif);
+    background-size: 22px 7px;
+    width: 22px;
+    height: 7px;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.lloadingb {
+    background-image: url(../img/loading-new-nero@2x.gif);
+    background-size: 22px 7px;
+    width: 22px;
+    height: 7px;
+    display: inline-block;
+    margin-left: 16px;
+}
+
+div#inverses .nextArrow {
+    display: inline-block;
+    width: 12px;
+    height: 14px;
+    margin-left: 8px;
+    background-position: -60px 3px;
+}
+
+div#inverses .prevArrow {
+    display: inline-block;
+    width: 12px;
+    height: 14px;
+    margin-left: 16px;
+    background-position: -45px 3px;
+}
+
+div#lodCloud {
+    padding: 24px 24px 16px 24px;
+    background: #fafafa;
+    color: #212121;
+    line-height: 16px;
+    font-size: 12px;
+    min-height: 64px;
+}
+
+div#lodCloud map {
+    background-position: -260px -210px;
+    display: inline-block;
+    width: 250px;
+    height: 250px;
+}
+
+div#lodCloud .connected div#counterBlock.content {
+    color: #fff;
+}
+
+div.toOneLine {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.value div, .valuecnt div {
+    min-height: 20px
+}
+
+.value div span.derivedTitle, .valuecnt div span.derivedTitle {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-repeat: no-repeat;
+}
+
+.value div span.derivedTitle tt, .valuecnt div span.derivedTitle tt {
+    margin: 5px 0 0 2px;
+    background-position: -45px -20px;
+    width: 11px;
+    display: inline-block;
+    height: 10px;
+}
+
+div#directs .value a span.derivedTitle, div#bnodes .value a span.derivedTitle, div#inverses .value a span.derivedTitle {
+    font-weight: 300;
+}
+
+.value div a:hover span.derivedTitle {
+    text-decoration: none;
+}
+
+div#directs .value > div:not(.value), div#bnodes .valuecnt > div:not(.value), div#inverses .value > div:not(.value) {
+    padding-bottom: 12px;
+    margin-top: 12px;
+    background-image: url(../img/separatoreCorto.png);
+    background-repeat: no-repeat;
+    background-size: 16px 1px;
+    background-position: bottom left;
+}
+
+div#directs .c2.multiInLineBlock, div#directs .c4.multiInLineBlock {
+    padding-bottom: 8.5px;
+    padding-top: 8.5px;
+}
+
+.multiInLine {
+    display: inline-block;
+    margin-right: 20px;
+    line-height: 27px;
+}
+
+div#directs .value > div:not(.value):first-child, div#bnodes .valuecnt > div:not(.value):first-child, div#inverses .value > div:not(.value):first-child, div#inverses .value > div:not(.value):nth-of-type(n+2):not(.toOneLine):not(.toMultiLine), div#bnodes .valuecnt > div:not(.value):nth-of-type(n+2):not(.toOneLine):not(.toMultiLine) {
+    margin-top: 0;
+}
+
+div#directs .value > div:not(.value):last-child, div#bnodes .valuecnt > div:not(.value):last-child, div#inverses .value > div:not(.value):last-child {
+    padding: 0;
+    background: none;
+}
+
+div#directs label, div#bnodes label, div#inverses label {
+    padding: 0 24px 0 0;
+}
+
+div#directs label a, div#bnodes label a, div#inverses label a {
+    color: #212121;
+}
+
+div#directs label a span, div#bnodes label a span, div#inverses label a span {
+    color: #212121;
+}
+
+div#directs .dType, div#bnodes .dType {
+    font-size: 14px;
+    font-weight: 300;
+    color: #9e9e9e;
+    position: absolute;
+    right: 24px;
+    text-align: right;
+    padding-left: 16px;
+    background-color: #fff;
+}
+
+div#bnodes .dType {
+    background-color: #eee;
+}
+
+div#directs span.clang, div#abstract span.clang, div#bnodes span.clang, div#bnodes span.clang {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: .7;
+    margin-right: 5px;
+    cursor: pointer;
+    margin-bottom: 12px;
+}
+
+div#directs span.clang.sel, div#abstract span.clang.sel, div#bnodes span.clang.sel {
+    text-decoration: underline;
+}
+
+div#directs .value a, div#directs .valuecnt a, div#bnodes .value a, div#bnodes .valuecnt a, div#inverses .value a, div#inverses .valuecnt a {
+    font-weight: 300;
+    font-size: 14px;
+    color: #212121;
+}
+
+div#directs .value a span, div#bnodes .value a span, div#inverses .value a span {
+    font-weight: 500;
+    color: #212121;
+}
+
+div#directs .value a:hover, div#bnodes .value a:hover, div#inverses .value a:hover, div#directs .valuecnt a:hover, div#bnodes .valuecnt a:hover, div#inverses .valuecnt a:hover {
+    text-decoration: underline;
+}
+
+div#directs .c2, div#directs .c4 {
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 12px;
+    padding-top: 12px;
+}
+
+div#bnodes .c2, div#bnodes .c4 {
+    border-bottom: 1px solid #d2d2d2;
+    padding-bottom: 12px;
+    padding-top: 12px;
+}
+
+div#inverses .c2, div#inverses .c4 {
+    padding-bottom: 12px;
+    padding-top: 12px;
+    border-bottom: 1px solid #b6b6b6;
+}
+
+div#inverses .c2 .toOneLine {
+    min-height: 40px;
+}
+
+div#inverses .c2.opened {
+    min-height: 648px;
+}
+
+div#bnodes .c2:last-child, div#directs .c2:last-child, div#inverses .c2:last-child, div#bnodes .c4:last-child, div#directs .c4:last-child, div#inverses .c4:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+    padding-top: 12px;
+}
+
+div#directs label:nth-child(1), div#bnodes label:nth-child(1), div#inverses label:nth-child(1) {
+    padding-top: 0;
+}
+
+div#directs label, div#bnodes label, div#inverses label {
+    padding-top: 12px;
+}
+
+div#directs .c2:nth-child(2), div#bnodes .c2:nth-child(2), div#inverses .c2:nth-child(2), div#directs .c4:nth-child(2), div#bnodes .c4:nth-child(2), div#inverses .c4:nth-child(2) {
+    padding-top: 0;
+}
+
+div#lodCloud h3 {
+    margin-bottom: 24px;
+}
+
+div#lodCloud .lloading {
+    position: absolute;
+    right: 22px;
+    top: 28px;
+}
+
+div#lodCloud .connected {
+    width: 250px;
+    display: inline-block;
+    margin-right: 16px;
+    vertical-align: top;
+    margin-bottom: 16px;
+}
+
+div#lodCloud .connected .content {
+    padding: 24px;
+    background: #e9e9e9;
+}
+
+div#lodCloud .connected .content :last-child {
+    margin-bottom: 0;
+}
+
+div#lodCloud .connected h5 {
+    font-weight: 500;
+}
+
+div#lodCloud .connected .more {
+    margin-top: 1px;
+    font-weight: 300;
+    letter-spacing: .7;
+    font-size: 11px;
+    text-transform: uppercase;
+    padding: 24px;
+    background: #e9e9e9;
+}
+
+div#lodCloud .connected a.link {
+    color: #212121;
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 24px;
+}
+
+div#lodCloud .connected a:hover {
+    text-decoration: underline;
+}
+
+div#lodCloud .connected span.imgCnt {
+    background-position: 0 -210px;
+    width: 250px;
+    display: block;
+}
+
+div#lodCloud .connected img.main {
+    width: 250px;
+    height: auto;
+    background: #ffffff;
+
+}
+
+.px1 {
+    width: 1px;
+    font-size: 1px;
+    line-height: 1px;
+}
+
+aside.empty, #bnodes.empty, #directs.empty, #inverses.empty, #abstract.empty {
+    padding: 0;
+    min-height: 10px;
+}
+
+#lodCloud.empty {
+    padding: 0;
+    min-height: 5px;
+}
+
+#inverses.empty {
+    padding: 0;
+    min-height: 20px;
+}
+
+footer {
+    min-height: 176px;
+    color: #fff;
+    padding: 24px;
+}
+
+#download {
+    float: left;
+    margin-bottom: 30px;
+}
+
+#download a#linkGit {
+    margin-top: 160px;
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .7;
+    color: #b4b4b4;
+    text-decoration: none;
+}
+
+#download a:hover {
+    text-decoration: underline
+}
+
+#endpoint {
+    position: relative;
+    top: -7px;
+    font-size: 12px;
+    line-height: 24px;
+}
+
+#endpoint {
+    float: right;
+    color: #fff;
+}
+
+#endpoint ul li {
+    min-height: 24px;
+}
+
+#endpoint ul {
+    list-style: none;
+}
+
+#endpoint a {
+    color: #fff;
+    cursor: pointer;
+}
+
+#endpoint a:hover {
+    text-decoration: underline
+}
+
+div#directs .value > div.lang, div#bnodes .value > div.lang, div#inverses .value > div.lang {
+    background: none;
+    padding-bottom: 0;
+    margin-top: 0
+}
+
+div#loadPanel {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    line-height: 30px;
+    height: 30px;
+    padding-left: 24px;
+    overflow: hidden;
+    z-index: 1004;
+}
+
+div#loadPanel.cfix {
+    padding-left: 100%;
+    margin-left: -300px
+}
+
+div#loadPanel span.ok {
+    width: 17px;
+    height: 14px;
+    display: inline-block;
+    margin-left: 6px;
+}
+
+div#loadPanel span.ok img {
+    display: none
+}
+
+div#loadPanel > p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    line-height: 30px;
+    font-size: 12px;
+    color: #fff;
+}
+
+#images .errorImg {
+    width: 136px;
+    height: 136px;
+    margin-right: 8px;
+}
+
+.connected .errorImg {
+    width: 250px;
+    height: 250px;
+}
+
+#errorPage hgroup h1 {
+    font-size: 150px;
+    font-weight: 100;
+    padding-left: 66px;
+    padding-top: 80px;
+}
+
+#errorPage.error404 div#owl {
+    background-image: url(../img/owl404.png);
+    background-size: 224px 283px;
+    width: 224px;
+    height: 283px;
+    position: absolute;
+    left: 660px;
+    top: 105px
+}
+
+#errorPage.error500 div#owl {
+    background-image: url(../img/owl500.png);
+    background-size: 224px 283px;
+    position: absolute;
+    width: 224px;
+    height: 283px;
+    left: 660px;
+    top: 105px
+}
+
+#errorPage div#abstract {
+    height: 65px;
+    padding: 0;
+}
+
+#errorPage div#bnodes {
+    font-size: 20px;
+    min-height: 186px;
+    padding: 0 24px 24px 90px;
+}
+
+#errorPage div#bnodes p {
+    font-size: 30px;
+    line-height: 40px;
+    padding-top: 60px;
+}
+
+footer {
+
+}
+
+footer #linkBack {
+    display: block;
+    background-size: 134px 25px;
+    background-image: url(../img/logo-footer-lodview.png);
+    background-position: 0 0;
+    height: 25px;
+    width: 134px;
+    background-repeat: no-repeat;
+}
+
+footer #linkBack:hover {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+    filter: alpha(opacity=6);
+    opacity: 0.6;
+}
+
+#navigator {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    margin-top: -32px;
+    z-index: 5;
+    width: 40px;
+    height: 78px;
+}
+
+#navigator div {
+    width: 40px;
+    height: 20px;
+    cursor: pointer;
+    margin-bottom: 1px;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=10);
+    opacity: 0.1;
+}
+
+#navigator div span {
+    display: none;
+}
+
+#navigator div.hover:hover {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=10);
+    opacity: 1;
+    position: static;
+}
+
+#navigator div.hover:hover span {
+    display: inline-block;
+    position: fixed;
+    right: 41px;
+    background-color: #222;
+    padding: 0 8px;
+    height: 20px;
+    color: #fff;
+    line-height: 20px;
+    font-size: 12px;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=10);
+    opacity: 1;
+}
+
+#navigator div a {
+    display: block;
+    width: 40px;
+    height: 20px;
+}
+
+#navigator div.down {
+    background-position: 0 -40px;
+}
+
+#navigator div.up {
+    background-position: 0 0;
+}
+
+#navigator div.top {
+    background-position: 0 -20px;
+}
+
+@media screen and (max-width: 768px) {
+    hgroup h1 span {
+        padding-right: 150px;
+    }
+}
+
+.iph {
+    width: 22px;
+    height: 20px;
+    position: absolute;
+    left: -20px;
+}
+
+.i {
+    background-position: -105px -35px;
+    width: 22px;
+    height: 20px;
+    position: absolute;
+    left: -20px;
+    z-index: 9;
+    display: none;
+    cursor: help;
+}
+
+.i span {
+    display: inline-block;
+    background-position: -105px -35px;
+    width: 11px;
+    height: 11px;
+    position: relative;
+    left: 4px;
+    top: 5px;
+    z-index: 9;
+}
+
+.tooltip {
+    display: none;
+    background-color: #212121;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    line-height: 15px;
+    font-size: 12px;
+    color: #fff;
+    padding: 10px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    position: absolute;
+    left: 8px;
+    margin-top: 22px;
+    width: 250px;
+    z-index: 9;
+}
+
+#license {
+    padding: 12px 0;
+    line-height: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    float: left;
+    width: 100%;
+    background: #fff;
+}
+
+#license div {
+    padding: 0 24px;
+}
+
+#license div a {
+    font-weight: 500;
+    color: #222222
+}
+
+#license div a:hover {
+    text-decoration: underline;
+}
+
+/* ********************************** */
+/*  CUSTOM FOOTER, HIDDEN BY DEFAULT  */
+/* ********************************** */
+#customFooter {
+    display: none;
+}
+
+/* useful to add information about the project partners (logo) */
+#customFooter #credits {
+    height: 86px;
+    background: #e9e9e9;
+}
+
+#customFooter #credits div {
+    padding: 24px 0 0 24px;
+}
+
+/* useful to add a custom navigation menu */
+#customFooter menu {
+    height: 43px;
+    background: #d4d4d4;
+}
+
+#customFooter menu li {
+    margin: 0 -8px 0 0;
+    padding: 0 0 0 24px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    display: inline-block;
+    line-height: 43px;
+}
+
+#customFooter menu li a {
+    color: #000;
+}
+
+#customFooter menu li a:hover {
+    text-decoration: underline;
+}
+
+/** image zoomer **/
+#hover {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #fff;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+    filter: alpha(opacity=90);
+    display: none;
+    z-index: 1006;
+}
+
+div.hover {
+    position: fixed;
+    z-index: 1007;
+}
+
+div.closemapzoom {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background-position: -120px -35px;
+    position: fixed;
+    right: 19px;
+    top: 19px;
+    cursor: pointer;
+
+}
+
+img.hover {
+    position: fixed;
+    z-index: 1007;
+    top: 100%;
+    left: 100%;
+    display: none;
+}
+
+.imgTools {
+    position: absolute;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+}
+
+.imgTools .zoom {
+    width: 29px;
+    height: 29px;
+    background-position: -430px -65px;
+    display: block;
+    cursor: pointer;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+    filter: alpha(opacity=60);
+    opacity: 0.6;
+}
+
+.imgTools .open:hover, .imgTools .zoom:hover {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+.imgTools .open {
+    margin-bottom: 5px;
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+    background-position: -430px -94px;
+    display: block;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+    filter: alpha(opacity=60);
+    opacity: 0.6;
+}

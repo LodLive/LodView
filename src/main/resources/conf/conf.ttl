@@ -1,0 +1,225 @@
+@prefix conf: <http://lodview.it/conf#> .
+@prefix meta: <http://example.org/metadata#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> . 
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix ocd: <http://dati.camera.it/ocd/> . 
+@prefix units: <http://dbpedia.org/units/> .
+@prefix geonames: <http://www.geonames.org/ontology#> .  
+@prefix void: <http://rdfs.org/ns/void#> . 
+@prefix dbpedia-owl: <http://dbpedia.org/ontology/> .
+@prefix yago: <http://dbpedia.org/class/yago/> .
+@prefix gml: <http://www.opengis.net/gml/> .
+@prefix dbpedia: <http://dbpedia.org/resource/> .
+@prefix dbpprop: <http://dbpedia.org/property/> .
+@prefix metalex: <http://www.metalex.eu/metalex/2008-05-02#> .
+@prefix frbr: <http://purl.org/vocab/frbr/core#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix schema-org: <http://schema.org/> .
+@prefix dwc: <http://rs.tdwg.org/dwc/terms/> .
+@prefix ibc: <http://dati.ibc.it/ibc/> .
+@prefix bio: <http://purl.org/vocab/bio/0.1/> .
+@prefix ods: <http://lod.xdams.org/ontologies/ods/> .
+@prefix shoah: <http://dati.cdec.it/lod/shoah/> . 
+@prefix bibo: <http://purl.org/ontology/bibo/> . 
+@prefix org: <http://www.w3.org/ns/org#> . 
+@prefix bbc: <http://www.bbc.co.uk/ontologies/coreconcepts/> .
+@prefix npg: <http://ns.nature.com/terms/> .
+@prefix prism21: <http://prismstandard.org/namespaces/basic/2.1/> .
+@prefix rso: <http://www.researchspace.org/ontology/> .
+@prefix crm: <http://erlangen-crm.org/current/> .
+@prefix bmuseum: <http://collection.britishmuseum.org/id/ontology/> .
+@prefix bbc: <http://www.bbc.co.uk/ontologies/> .
+@prefix po: <http://purl.org/ontology/po/> .
+@prefix lgdo: <http://linkedgeodata.org/ontology/capital> .
+@prefix oad: <http://lod.xdams.org/reload/oad/> .
+@prefix crm-owl: <http://purl.org/NET/crm-owl#> .
+@prefix aemetonto:	<http://aemet.linkeddata.es/ontology/> .
+@prefix bibleontology:	<http://bibleontology.com/property#> .
+@prefix cdoc:	<http://www.cidoc-crm.org/cidoc-crm#> .
+@prefix cc:	<http://creativecommons.org/ns#> .
+@prefix prov:	<http://www.w3.org/ns/prov#> .
+@prefix skos-xl:	<http://www.w3.org/2008/05/skos-xl#> .
+@prefix muninn:	<http://rdf.muninn-project.org/ontologies/documents#> .
+@prefix eac-cpf:	<http://archivi.ibc.regione.emilia-romagna.it/ontology/eac-cpf/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix claros: <http://purl.org/NET/Claros/vocab#> .
+@prefix crm120111: <http://erlangen-crm.org/120111/> .
+@prefix rel: <http://purl.org/vocab/relationship/> .
+
+
+<> a conf:Configuration;
+
+## first of all
+## 	IRIs namespace we use to replace the webapp base (eg. http://localhost:8080/lodview/), an
+##	installation on dbpedia domain should use <http://dbpedia.org/resource/> 
+	
+	conf:IRInamespace <https://w3id.org/italia>  ;
+
+## 	EndPoint
+
+	conf:endpoint <http://localhost:8890/sparql>;
+	conf:endpointType "virtuoso"; 	## 	just "virtuoso" is handled right now, this will add some "rawdata" 
+									##	options in the footer, leave this blank if you don't want these links
+
+########## give it a try opening http://localhost:8080/lodview/Rome
+
+
+## 	we don't like it so much, but you can set a prefix to activate 303 redirects
+##	to the HTML representation of the resources, live it blank if you want to 
+##  use the "pure content negotiation mode", WARNING use suffix OR prefix, not both
+	
+	conf:httpRedirectSuffix ".html"; ## or eg. ".html";
+	##conf:httpRedirectPrefix "/page/"; ## or eg. "";
+
+	##conf:httpRedirectExcludeList ""; 	## a comma separeted list of regex to match which resources will use "pure content negotiation mode"
+										## usually you have to leave this blank but if conf:redirectionStrategy is setted to "pubby" this could be
+										## useful (eg. dbpedia uses /resource --> /page but leaves /ontology --> /ontology)
+
+	conf:redirectionStrategy ""; ## set it to "pubby" to use exactly the dbpedia redirection behaviour
+
+
+
+##  mode configurations
+ 	
+	conf:contentEncoding "UTF-8";
+	
+	## base64 HTTP authentication to the endpoint 
+	conf:authUsername "";
+	conf:authPassword "";
+	
+	
+
+## 	default query used to get direct properties, you can add a "FROM" clause here,
+##	${IRI} will be replaced, it's always recommended to specify a limit for the query 
+##	the query can be seplified removing the last 2 unions to improve performance (usually not needed)
+
+	conf:defaultQueries """select distinct ?s ?p ?o { 
+		{<${IRI}> ?p ?o} 
+		UNION 
+		{<${IRI}> ?p1 ?s . FILTER(isBlank(?s)) . ?s ?p ?o} 
+		UNION 
+		{<${IRI}> ?p1 ?s1 .  FILTER(isBlank(?s1)) . ?s1 ?p2 ?s . FILTER(isBlank(?s)) . ?s ?p ?o}
+		UNION 
+		{<${IRI}> ?p1 ?s1 .  FILTER(isBlank(?s1)) . ?s1 ?p2 ?s2 . FILTER(isBlank(?s2)) . ?s2 ?p3 ?s . FILTER(isBlank(?s)) . ?s ?p ?o}		
+		} LIMIT 10000""" ;
+
+
+## 	default query used to get resource to be included in serializations different 
+##	from HTML, it's always recommended to specify a limit for the query 
+##	${IRI} will be replaced
+##	the query can be seplified removing the last 2 unions to improve performance (usually not needed)
+ 
+	conf:defaultRawDataQueries	"""select distinct ?s ?p ?o { 
+		{<${IRI}> ?p ?o} 
+		UNION 
+		{<${IRI}> ?p1 ?s . FILTER(isBlank(?s)) . ?s ?p ?o} 
+		UNION 
+		{<${IRI}> ?p1 ?s1 .  FILTER(isBlank(?s1)) . ?s1 ?p2 ?s . FILTER(isBlank(?s)) . ?s ?p ?o}
+		UNION 
+		{<${IRI}> ?p1 ?s1 .  FILTER(isBlank(?s1)) . ?s1 ?p2 ?s2 . FILTER(isBlank(?s2)) . ?s2 ?p3 ?s . FILTER(isBlank(?s)) . ?s ?p ?o}		
+		} LIMIT 10000""" ;
+
+
+##	default query used to extract inverse relations
+
+	conf:defaultInversesQueries "select distinct ?p {?p <${PROPERTY}> <${IRI}>.}  OFFSET ${STARTFROM} LIMIT 10"; 
+	conf:defaultInversesCountQueries "select (count(distinct ?s) AS ?o) ?p {?s ?p <${IRI}>. FILTER(!isBlank(?s))} GROUP BY ?p LIMIT 100";
+	conf:defaultInversesTest "ASK {?s ?p <${IRI}>}";
+
+##  define if inverse relations have to be automatically opened (open|close)
+	conf:defaultInverseBehaviour "close"; 
+
+########################################################################################
+########################		configuring the webapp			########################
+########################################################################################
+
+##	define how clients access your app, typically you have to specify your public domain
+##	if you are using a proxy, set it at <auto> for testing, an installation on dbpedia
+##	domain should use <http://dbpedia.org/resource/>
+
+	conf:publicUrlPrefix <auto>; ## or <auto>
+
+
+## solve IRI issues in particular environments (proxypass, etc.)
+
+	conf:forceIriEncoding "auto"; ## or "decode" or "encode"
+
+##	home link (accessible from the banner)
+
+	conf:homeUrl <http://remember_to_change_this_in_conf.ttl>;
+
+  	
+##	static resources publishing point, "staticResources/" is needed if you are going 
+##	to serve static content within the web application, probably  on a production  
+##	environment you have to change "http://localhost:8080/lodview/" to something like 
+##	"http://data.yourdomain.com/staticResources/", on a test environment you can set it
+##	at <auto>
+ 	
+	conf:staticResourceURL <auto>;
+	
+##  choosing the lower class in hierarchy to put it on the top right of the page
+##	put in mainOntologies the prefixes you need to filter the resource's classes
+##	you need also to add the ontology file in WEB-INF/ontologies
+##	leave conf:mainOntologies blank if you don't want lodlive do this job 
+
+##	conf:mainOntologiesPrefixes	 YOUR-PREFIX:;	
+
+##	document specific property used in the HTML resource page, it's possible to use
+##	prefixes or not
+
+	conf:typeProperties			rdf:type;
+	
+	conf:titleProperties		dc:title , dcterms:title, rdfs:label , <http://www.w3.org/2004/02/skos/core#prefLabel> , 
+								<http://www.w3.org/2008/05/skos-xl#prefLabel> , <http://www.w3.org/2009/08/skos-reference/skos.html#prefLabel> , 
+								gn:officialName , gn:name , rdf:value , foaf:surname , <http://purl.org/collections/nl/am/title> , <http://xmlns.com/foaf/0.1/name>;  
+								
+	conf:descriptionProperties	rdfs:comment , dc:description , dcterms:description , 
+								dc:description , skos:definition ,  <http://dbpedia.org/ontology/abstract>;
+								
+	conf:imageProperties		foaf:depiction , <http://erlangen-crm.org/120111/P138i_has_representation> , crm-owl:P138i_has_representation ,
+								<http://www.researchspace.org/ontology/FR138i_representation>;
+								
+	conf:longitudeProperties	geo:long;
+	conf:latitudeProperties		geo:lat;
+	conf:linkingProperties		owl:sameAs , skos:exactMatch , gn:locatedIn ,  <http://www.bbc.co.uk/ontologies/coreconcepts/sameAs>;
+
+	conf:videoProperties		<http://schema.org/VideoObject>;
+	conf:audioProperties		<http://schema.org/AudioObject>;
+
+##	preferred language for title and description ("auto" for delegate to the client)
+	
+	conf:preferredLanguage	"auto"; ## eg. "en" or "it"
+
+
+## interface colors, choose a pair or a list for random colors
+
+	conf:colorPair 	"#06c-#0059b3" ; 
+	
+#### or bind classes and colors
+## 	
+## 	conf:colorPair  conf:byClass;
+
+	
+## license information (will be added at the very end of the page)
+
+	conf:license	"" ; ## eg. "Licensed under <a href='https://creativecommons.org/licenses/by/4.0/'>Creative Commons Attribution 4.0 International</a> (CC BY 4.0)" ;	
+					
+##	just a marker to insert a point on the last row
+	
+	conf:last	".".
+			
+#### uncomment only if you have configured "colors by class"
+##
+##	<http://dbpedia.org/ontology/Person>		conf:hasColorPair	"#c3a116-#ac8c13".
+##	ontology:Place	conf:hasColorPair	"#715287-#624775". 
+##	<http://dbpedia.org/ontology/Work>		conf:hasColorPair	"#914848-#7d3e3e". 
+##	<http://dbpedia.org/ontology/Organisation>	conf:hasColorPair	"#6d8058-#5e6f4c". 
+##	<http://dbpedia.org/ontology/Event>	conf:hasColorPair	"#5b8a97-#4f7783". 
+##	<http://lodview.it/conf#otherClasses>	conf:hasColorPair	"#528775-#477565". 
