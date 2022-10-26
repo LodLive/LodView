@@ -46,6 +46,7 @@ dependencies {
 
 spotbugsMain {
     excludeFilter = file("${rootProject.projectDir}/config/spotbugs/exclude-filter.xml")
+
     reports {
         html {
             enabled = true

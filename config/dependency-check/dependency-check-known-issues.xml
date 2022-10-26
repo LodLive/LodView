@@ -27,4 +27,10 @@
    ]]></notes>
         <cve>CVE-2021-2471</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: spring_web-5.3.23.jar
+   ]]></notes>
+        <cve>CVE-2016-1000027</cve>
+    </suppress>
 </suppressions>
