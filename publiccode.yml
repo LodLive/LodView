@@ -71,4 +71,4 @@ platforms:
 releaseDate: '2021-12-25'
 softwareType: standalone/other
 url: 'https://github.com/teamdigitale/dati-semantic-lodview'
-logo: src/main/webapp/resources/img/logo-footer-lodview.png
+logo: src/main/resources/static/staticResources/img/logo-footer-lodview.png

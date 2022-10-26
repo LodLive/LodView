@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <suppress>
+        <notes><![CDATA[
+       file name: guava-28.2-jre.jar
+       ]]></notes>
+        <sha1>8ec9ed76528425762174f0011ce8f74ad845b756</sha1>
+        <cve>CVE-2020-8908</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: tomcat-embed-core-9.0.53.jar
+   ]]></notes>
+        <sha1>3343c5ebe9e66da2f75436569e371920e8db1d55</sha1>
+        <cve>CVE-2021-42340</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: tomcat-embed-websocket-9.0.53.jar
+   ]]></notes>
+        <sha1>0e73e461aa0da6a1779bba31f90011cfbd4e4233</sha1>
+        <cve>CVE-2021-42340</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: mysql-connector-java-8.0.26.jar
+   ]]></notes>
+        <cve>CVE-2021-2471</cve>
+    </suppress>
+</suppressions>
