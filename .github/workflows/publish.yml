@@ -116,7 +116,7 @@ jobs:
         with:
           owner: teamdigitale
           repo: dati-semantic-kubernetes
-          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          github_token: ${{ secrets.DATI_SEMANTIC_KUBERNETES_DEPLOY }}
           workflow_file_name: update-config.yaml
           ref: dev
           wait_interval: 20
