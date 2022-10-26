@@ -1,0 +1,20 @@
+#
+# Docker compose to kickstart a development environment
+# based on docker.
+#
+# Start the environment
+#
+#   $ docker-compose up -d dev
+#   $ docker attach -ti dati-semantic-lodview_dev_1
+#
+version: '3.9'
+services:
+  dev:
+    image: openjdk:11-jdk-slim
+    volumes:
+      - .:/code:z
+    working_dir: /code
+    entrypoint:
+    - /usr/bin/tail
+    - -f
+    - /dev/null
