@@ -1,7 +1,7 @@
-package it.innovaway.lodviewng.lodview.bean;
+package it.gov.innovazione.lodviewng.bean;
 
 
-import it.innovaway.lodviewng.lodview.utils.ResourceClassPathLoader;
+import it.gov.innovazione.lodviewng.utils.ResourceClassPathLoader;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.StringEscapeUtils;

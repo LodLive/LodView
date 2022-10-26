@@ -1,4 +1,4 @@
-package it.innovaway.lodviewng.lodview.conf;
+package it.gov.innovazione.lodviewng.conf;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

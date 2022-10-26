@@ -1,12 +1,12 @@
-package it.innovaway.lodviewng.lodview.builder;
+package it.gov.innovazione.lodviewng.builder;
 
 
-import it.innovaway.lodviewng.lodview.bean.OntologyBean;
-import it.innovaway.lodviewng.lodview.bean.ResultBean;
-import it.innovaway.lodviewng.lodview.bean.TripleBean;
-import it.innovaway.lodviewng.lodview.conf.ConfigurationBean;
-import it.innovaway.lodviewng.lodview.endpoint.SPARQLEndPoint;
-import it.innovaway.lodviewng.lodview.utils.Misc;
+import it.gov.innovazione.lodviewng.endpoint.SPARQLEndPoint;
+import it.gov.innovazione.lodviewng.bean.OntologyBean;
+import it.gov.innovazione.lodviewng.bean.ResultBean;
+import it.gov.innovazione.lodviewng.bean.TripleBean;
+import it.gov.innovazione.lodviewng.conf.ConfigurationBean;
+import it.gov.innovazione.lodviewng.utils.Misc;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.apache.jena.rdf.model.Model;

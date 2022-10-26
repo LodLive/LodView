@@ -1,6 +1,6 @@
-package it.innovaway.lodviewng.lodview.controllers;
+package it.gov.innovazione.lodviewng.controllers;
 
-import it.innovaway.lodviewng.lodview.conf.ConfigurationBean;
+import it.gov.innovazione.lodviewng.conf.ConfigurationBean;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

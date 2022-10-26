@@ -1,11 +1,11 @@
-package it.innovaway.lodviewng.lodview.utils;
+package it.gov.innovazione.lodviewng.utils;
 
 
-import it.innovaway.lodviewng.lodview.bean.OntologyBean;
-import it.innovaway.lodviewng.lodview.bean.PropertyBean;
-import it.innovaway.lodviewng.lodview.bean.ResultBean;
-import it.innovaway.lodviewng.lodview.bean.TripleBean;
-import it.innovaway.lodviewng.lodview.conf.ConfigurationBean;
+import it.gov.innovazione.lodviewng.bean.OntologyBean;
+import it.gov.innovazione.lodviewng.bean.PropertyBean;
+import it.gov.innovazione.lodviewng.bean.TripleBean;
+import it.gov.innovazione.lodviewng.bean.ResultBean;
+import it.gov.innovazione.lodviewng.conf.ConfigurationBean;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

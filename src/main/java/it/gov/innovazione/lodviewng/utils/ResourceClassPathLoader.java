@@ -1,4 +1,4 @@
-package it.innovaway.lodviewng.lodview.utils;
+package it.gov.innovazione.lodviewng.utils;
 
 
 import lombok.AccessLevel;

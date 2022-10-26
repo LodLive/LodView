@@ -1,7 +1,7 @@
-package it.innovaway.lodviewng.lodview.conf;
+package it.gov.innovazione.lodviewng.conf;
 
 
-import it.innovaway.lodviewng.lodview.utils.ResourceClassPathLoader;
+import it.gov.innovazione.lodviewng.utils.ResourceClassPathLoader;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

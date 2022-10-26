@@ -1,11 +1,11 @@
-package it.innovaway.lodviewng.lodview.endpoint;
+package it.gov.innovazione.lodviewng.endpoint;
 
 
-import it.innovaway.lodviewng.lodview.bean.OntologyBean;
-import it.innovaway.lodviewng.lodview.bean.PropertyBean;
-import it.innovaway.lodviewng.lodview.bean.TripleBean;
-import it.innovaway.lodviewng.lodview.conf.ConfigurationBean;
-import it.innovaway.lodviewng.lodview.utils.Misc;
+import it.gov.innovazione.lodviewng.bean.OntologyBean;
+import it.gov.innovazione.lodviewng.bean.PropertyBean;
+import it.gov.innovazione.lodviewng.bean.TripleBean;
+import it.gov.innovazione.lodviewng.conf.ConfigurationBean;
+import it.gov.innovazione.lodviewng.utils.Misc;
 import org.apache.jena.graph.Node;
 import org.apache.jena.http.auth.AuthEnv;
 import org.apache.jena.query.QueryExecution;

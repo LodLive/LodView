@@ -8,7 +8,7 @@
     document.write('</style>');
 </script>
 <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
-<script src="${conf.getStaticResourceURL()}vendor/jquery.min.js"></script>
+<script src="${conf.getStaticResourceURL()}vendor/jquery-1.12.4.min.js"></script>
 <meta property="og:title" content="${results.getTitle()} &mdash; LodView, giving data a new shape">
 <meta property="og:image" content="${conf.getStaticResourceURL()}img/lodview_sharer.png">
 <link rel="image_src" href="${conf.getStaticResourceURL()}img/lodview_sharer.png">
@@ -66,7 +66,7 @@
             src="${conf.getStaticResourceURL()}vendor/jplayercircle/js/jquery.transform.js"></script>
     <script type="text/javascript" src="${conf.getStaticResourceURL()}vendor/jplayercircle/js/jquery.grab.js"></script>
     <script type="text/javascript"
-            src="${conf.getStaticResourceURL()}vendor/jplayercircle/js/jquery.jplayer.js"></script>
+            src="${conf.getStaticResourceURL()}vendor/jplayercircle/js/jquery.jplayer.min.js"></script>
     <script type="text/javascript"
             src="${conf.getStaticResourceURL()}vendor/jplayercircle/js/mod.csstransforms.min.js"></script>
     <script type="text/javascript"

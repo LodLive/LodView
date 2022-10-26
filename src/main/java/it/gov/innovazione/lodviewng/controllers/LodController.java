@@ -1,9 +1,9 @@
-package it.innovaway.lodviewng.lodview.controllers;
+package it.gov.innovazione.lodviewng.controllers;
 
-import it.innovaway.lodviewng.lodview.bean.ResultBean;
-import it.innovaway.lodviewng.lodview.bean.TripleBean;
-import it.innovaway.lodviewng.lodview.builder.ResourceBuilder;
-import it.innovaway.lodviewng.lodview.conf.ConfigurationBean;
+import it.gov.innovazione.lodviewng.bean.ResultBean;
+import it.gov.innovazione.lodviewng.bean.TripleBean;
+import it.gov.innovazione.lodviewng.builder.ResourceBuilder;
+import it.gov.innovazione.lodviewng.conf.ConfigurationBean;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.StringEscapeUtils;

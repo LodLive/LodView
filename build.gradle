@@ -1,12 +1,12 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.4'
-    id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
     id "org.owasp.dependencycheck" version "7.3.0"
-    id 'com.github.spotbugs' version '4.5.1'
+    id 'com.github.spotbugs' version '5.0.13'
 }
 
-group = 'it.innovaway'
+group = 'it.gov.innovazione'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -21,11 +21,23 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.yaml'
+    }
+
     implementation 'org.apache.jena:apache-jena-libs:4.6.1'
+    constraints {
+        implementation ('com.google.protobuf:protobuf-java:3.21.8') {
+            because 'previous versions have security bugs'
+        }
+    }
+
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
     implementation 'org.apache.commons:commons-text:1.10.0'
-    implementation 'jstl:jstl:1.2'
+
+    implementation 'org.apache.taglibs:taglibs-standard-spec:1.2.5'
+    implementation 'org.apache.taglibs:taglibs-standard-impl:1.2.5'
+    implementation 'org.apache.taglibs:taglibs-standard-jstlel:1.2.5'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'

@@ -1,4 +1,4 @@
-package it.innovaway.lodviewng.lodview.bean;
+package it.gov.innovazione.lodviewng.bean;
 
 import lombok.Data;
 
