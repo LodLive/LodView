@@ -8,6 +8,7 @@ import it.innovaway.lodviewng.lodview.bean.TripleBean;
 import it.innovaway.lodviewng.lodview.conf.ConfigurationBean;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.RDFNode;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Slf4j
 public class Misc {
 
     public static String toNsResource(String iri, ConfigurationBean conf) {
@@ -105,8 +107,10 @@ public class Misc {
                 }
             }
             return r;
-
+        } catch (RuntimeException re) {
+            throw re;
         } catch (Exception e) {
+            log.warn("Unable to guess class: " + e);
         }
         return r;
     }

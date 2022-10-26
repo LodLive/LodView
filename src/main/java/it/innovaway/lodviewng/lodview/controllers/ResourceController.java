@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -337,11 +338,16 @@ public class ResourceController {
 
         @SuppressWarnings("unchecked")
         Map<String, Map<String, String>> rawdatalinks = (LinkedHashMap<String, Map<String, String>>) model.get("rawdatalinks");
-        for (String k : rawdatalinks.keySet()) {
-            for (String k1 : rawdatalinks.get(k).keySet()) {
-                res.addHeader("Link", "<" + rawdatalinks.get(k).get(k1) + ">; rel=\"alternate\"; type=\"application/rdf+xml\"; title=\"Structured Descriptor Document (" + k1 + ")\"");
-            }
-        }
+
+        rawdatalinks.values().stream()
+                .map(Map::entrySet)
+                .flatMap(Collection::stream)
+                .forEach(e ->
+                        res.addHeader(
+                                "Link", "<" + e.getValue() + ">;" +
+                                        " rel=\"alternate\"; type=\"application/rdf+xml\";" +
+                                        " title=\"Structured Descriptor Document (" + e.getKey() + ")\""));
+
         try {
             for (TripleBean t : r.getResources(r.getMainIRI()).get(r.getTypeProperty())) {
                 res.addHeader("Link", "<" + t.getProperty().getProperty() + ">; rel=\"type\"");

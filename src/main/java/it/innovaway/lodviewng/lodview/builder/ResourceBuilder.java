@@ -16,6 +16,7 @@ import org.apache.jena.riot.Lang;
 import org.springframework.context.MessageSource;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -144,7 +145,7 @@ public class ResourceBuilder {
 
         rdfWriter.write(model, baos, conf.getIRInamespace());
 
-        result = baos.toString();
+        result = baos.toString(StandardCharsets.UTF_8);
 
         return result;
     }
@@ -166,12 +167,12 @@ public class ResourceBuilder {
         rdfWriter.setProperty(SHOW_XML_DECLARATION, "true");
         rdfWriter.setProperty(RELATIVE_URIS, "");
 
-        result = baos.toString();
+        result = baos.toString(StandardCharsets.UTF_8);
 
         return result;
     }
 
-    public ResultBean buildPartialHtmlResource(String IRI, String[] abouts, Locale locale, ConfigurationBean conf, OntologyBean ontoBean, List<String> filterProperties) {
+    public ResultBean buildPartialHtmlResource(String iri, String[] abouts, Locale locale, ConfigurationBean conf, OntologyBean ontoBean, List<String> filterProperties) {
 
         SPARQLEndPoint se = new SPARQLEndPoint(conf, ontoBean, locale.getLanguage());
         ResultBean result = new ResultBean();
@@ -233,8 +234,9 @@ public class ResourceBuilder {
                 l.put(tripleBean.getProperty().getProperty(), al);
             }
         }
-        for (String about : l.keySet()) {
-            List<TripleBean> al = l.get(about);
+
+        for (Map.Entry<String, List<TripleBean>> about : l.entrySet()) {
+            List<TripleBean> al = about.getValue();
             boolean betterTitleMatch = false;
             TripleBean title = null;
             for (TripleBean tripleBean : al) {
@@ -249,7 +251,7 @@ public class ResourceBuilder {
                 literals.add(title);
             }
         }
-        result.setLiterals(IRI, literals);
+        result.setLiterals(iri, literals);
         return result;
     }
 

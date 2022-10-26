@@ -53,8 +53,8 @@ public class LinkedResourcesController {
             if (literals == null || literals.size() == 0) {
                 return ("<root error=\"true\"><title></title><msg>" + messageSource.getMessage("error.noLiteral", null, "no literal values where found", locale) + "</msg></root>");
             }
-            for (PropertyBean key : literals.keySet()) {
-                for (TripleBean tripleBean : literals.get(key)) {
+            for (Map.Entry<PropertyBean, List<TripleBean>> literal : literals.entrySet()) {
+                for (TripleBean tripleBean : literal.getValue()) {
                     result.append(RESOURCE_ABOUT)
                             .append(escapeXml11(tripleBean.getProperty().getProperty()))
                             .append(NSABOUT)
@@ -85,8 +85,8 @@ public class LinkedResourcesController {
                 ResultBean results = new ResourceBuilder(messageSource).buildHtmlInverseResource(IRI, locale, conf, ontoBean);
                 Map<PropertyBean, List<TripleBean>> resources = results.getResources(IRI);
                 if (resources != null) {
-                    for (PropertyBean key : resources.keySet()) {
-                        for (TripleBean tripleBean : resources.get(key)) {
+                    for (Map.Entry<PropertyBean, List<TripleBean>> resource : resources.entrySet()) {
+                        for (TripleBean tripleBean : resource.getValue()) {
                             if (tripleBean.getProperty().getProperty() == null || tripleBean.getProperty().getProperty().equals("")) {
                                 throw new Exception("no content");
                             }
@@ -113,8 +113,8 @@ public class LinkedResourcesController {
             try {
                 ResultBean results = new ResourceBuilder(messageSource).buildHtmlInverseResource(IRI, property, start, locale, conf, null);
                 Map<PropertyBean, List<TripleBean>> resources = results.getResources(IRI);
-                for (PropertyBean key : resources.keySet()) {
-                    for (TripleBean tripleBean : resources.get(key)) {
+                for (Map.Entry<PropertyBean, List<TripleBean>> resource : resources.entrySet()) {
+                    for (TripleBean tripleBean : resource.getValue()) {
                         result.append(RESOURCE_ABOUT).append(escapeXml11(tripleBean.getProperty().getProperty()))
                                 .append(NSABOUT).append(escapeXml11(tripleBean.getProperty().getNsProperty()))
                                 .append("\" propertyurl=\"").append(escapeXml11(tripleBean.getProperty().getPropertyUrl()))
