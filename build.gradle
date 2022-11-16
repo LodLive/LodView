@@ -51,7 +51,6 @@ spotbugsMain {
         html {
             enabled = true
             destination = file("$buildDir/reports/spotbugs/main/spotbugs.html")
-            stylesheet = 'fancy-hist.xsl'
         }
     }
 }
@@ -62,12 +61,13 @@ spotbugsTest {
         html {
             enabled = true
             destination = file("$buildDir/reports/spotbugs/test/spotbugs.html")
-            stylesheet = 'fancy-hist.xsl'
         }
     }
 }
 
 dependencyCheck {
+    skipConfigurations = ['spotbugs']
+
 //set up a quality gate for vulnerabilities with high severity level:
 //let's consider that a vulnerability has a high severity level if its CVSS score is higher than 7
 //the build is going to fail if vulnerabilities with high severity level found
