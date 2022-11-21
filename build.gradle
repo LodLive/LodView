@@ -30,7 +30,7 @@ dependencies {
 
     implementation 'org.apache.jena:apache-jena-libs:4.6.1'
     constraints {
-        implementation ('com.google.protobuf:protobuf-java:3.21.8') {
+        implementation ('com.google.protobuf:protobuf-java:3.21.9') {
             because 'previous versions have security bugs'
         }
     }
