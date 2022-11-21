@@ -4,6 +4,7 @@ plugins {
     id 'java'
     id "org.owasp.dependencycheck" version "7.3.0"
     id 'com.github.spotbugs' version '5.0.13'
+    id 'war'
 }
 
 group = 'it.gov.innovazione'
@@ -24,6 +25,8 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.yaml'
     }
+
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 
     implementation 'org.apache.jena:apache-jena-libs:4.6.1'
     constraints {
@@ -87,9 +90,9 @@ gradle.taskGraph.whenReady { graph ->
     }
 }
 
-bootJar {
+bootWar {
     enabled = true
-    archiveName("lodview.jar")
+    archiveName("lodview.war")
 }
 
 tasks.named('test') {
