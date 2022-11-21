@@ -1,0 +1,124 @@
+@prefix conf: <http://localhost:8080/#> .
+@prefix meta: <http://example.org/metadata#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> . 
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix ocd: <http://dati.camera.it/ocd/> . 
+@prefix units: <http://dbpedia.org/units/> .
+@prefix geonames: <http://www.geonames.org/ontology#> .  
+@prefix void:     <http://rdfs.org/ns/void#> . 
+@prefix dbpedia-owl: <http://dbpedia.org/ontology/> .
+@prefix yago: <http://dbpedia.org/class/yago/> .
+@prefix gml: <http://www.opengis.net/gml/> .
+@prefix dbpedia: <http://dbpedia.org/resource/> .
+@prefix dbpprop: <http://dbpedia.org/property/> .
+@prefix metalex: <http://www.metalex.eu/metalex/2008-05-02#> .
+@prefix frbr: <http://purl.org/vocab/frbr/core#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix schema-org: <http://schema.org/> .
+@prefix dwc:<http://rs.tdwg.org/dwc/terms/> .
+@prefix ibc:<http://dati.ibc.it/ibc/> .
+@prefix bio:<http://purl.org/vocab/bio/0.1/> .
+@prefix ods:<http://lod.xdams.org/ontologies/ods/> .
+@prefix shoah:<http://cdec.opendams.org/lod/shoah/> . 
+@prefix bibo:<http://purl.org/ontology/bibo/> . 
+@prefix org:<http://www.w3.org/ns/org#> . 
+@prefix bbc:<http://www.bbc.co.uk/ontologies/coreconcepts/> .
+
+<> a conf:Configuration;
+
+## 	EndPoint
+
+	conf:contentEncoding "UTF-8";
+	
+
+## 	default query used to get direct properties, you can add a "FROM" clause here,
+##	${IRI} will be replaced, it's always recommended to specify a limit for the query 
+
+	conf:defaultQueries "select distinct * {<${IRI}> ?p ?o}    LIMIT 10000"; 
+
+
+## 	default query used to get resource to be included in serializations different 
+##	from HTML, it's always recommended to specify a limit for the query 
+##	${IRI} will be replaced
+ 
+	conf:defaultRawDataQueries	"""select distinct * { {<${IRI}> ?p ?o} 
+								UNION 
+								{<${IRI}> ?p1 ?s . ?s ?p ?o FILTER(isBlank(?s))}
+								}	LIMIT 10000""" ;
+
+## skip domains that are probably offline
+
+    conf:skipDomains 	"ace.dbpedia.org" , "af.dbpedia.org" , "als.dbpedia.org" , "am.dbpedia.org" , "an.dbpedia.org" , 
+						"ang.dbpedia.org" , "ar.dbpedia.org" , "arc.dbpedia.org" , "arz.dbpedia.org" , "ast.dbpedia.org" , 
+						"ay.dbpedia.org" , "az.dbpedia.org" , "ba.dbpedia.org" , "bar.dbpedia.org" , "bat_smg.dbpedia.org" , 
+						"bcl.dbpedia.org" , "be.dbpedia.org" , "be_x_old.dbpedia.org" , "bg.dbpedia.org" , "bi.dbpedia.org" , 
+						"bn.dbpedia.org" , "bo.dbpedia.org" , "br.dbpedia.org" , "bs.dbpedia.org" , "bxr.dbpedia.org" , 
+						"ca.dbpedia.org" , "cbk_zam.dbpedia.org" , "ce.dbpedia.org" , "ceb.dbpedia.org" , "chy.dbpedia.org" , 
+						"ckb.dbpedia.org" , "co.dbpedia.org" , "crh.dbpedia.org" , "csb.dbpedia.org" , "cu.dbpedia.org" , 
+						"cv.dbpedia.org" , "cy.dbpedia.org" , "da.dbpedia.org" , "diq.dbpedia.org" , "dsb.dbpedia.org" , 
+						"ee.dbpedia.org" , "eo.dbpedia.org" , "et.dbpedia.org" , "ext.dbpedia.org" , "fa.dbpedia.org" , 
+						"fi.dbpedia.org" , "fiu_vro.dbpedia.org" , "fo.dbpedia.org" , "frp.dbpedia.org" , "frr.dbpedia.org" , 
+						"fur.dbpedia.org" , "fy.dbpedia.org" , "ga.dbpedia.org" , "gag.dbpedia.org" , "gan.dbpedia.org" , 
+						"gd.dbpedia.org" , "gl.dbpedia.org" , "gn.dbpedia.org" , "got.dbpedia.org" , "gv.dbpedia.org" , 
+						"he.dbpedia.org" , "hi.dbpedia.org" , "hif.dbpedia.org" , "hr.dbpedia.org" , "hsb.dbpedia.org" , 
+						"ht.dbpedia.org" , "hu.dbpedia.org" , "hy.dbpedia.org" , "ia.dbpedia.org" , "ie.dbpedia.org" , 
+						"ilo.dbpedia.org" , "io.dbpedia.org" , "is.dbpedia.org" , "jbo.dbpedia.org" , "jv.dbpedia.org" , 
+						"ka.dbpedia.org" , "kaa.dbpedia.org" , "kg.dbpedia.org" , "kk.dbpedia.org" , "kl.dbpedia.org" , 
+						"km.dbpedia.org" , "kn.dbpedia.org" , "krc.dbpedia.org" , "ku.dbpedia.org" , "kv.dbpedia.org" , 
+						"kw.dbpedia.org" , "la.dbpedia.org" , "lad.dbpedia.org" , "lb.dbpedia.org" , "lez.dbpedia.org" , 
+						"li.dbpedia.org" , "lij.dbpedia.org" , "lmo.dbpedia.org" , "ln.dbpedia.org" , "lt.dbpedia.org" , 
+						"lv.dbpedia.org" , "mdf.dbpedia.org" , "mg.dbpedia.org" , "mhr.dbpedia.org" , "mi.dbpedia.org" , 
+						"mk.dbpedia.org" , "ml.dbpedia.org" , "mn.dbpedia.org" , "mr.dbpedia.org" , "ms.dbpedia.org" , 
+						"mt.dbpedia.org" , "mwl.dbpedia.org" , "my.dbpedia.org" , "na.dbpedia.org" , "nah.dbpedia.org" , 
+						"nap.dbpedia.org" , "nds.dbpedia.org" , "nds_nl.dbpedia.org" , "ne.dbpedia.org" , "new.dbpedia.org" , 
+						"nn.dbpedia.org" , "no.dbpedia.org" , "nov.dbpedia.org" , "nrm.dbpedia.org" , "oc.dbpedia.org" , 
+						"or.dbpedia.org" , "os.dbpedia.org" , "pa.dbpedia.org" , "pap.dbpedia.org" , "pcd.dbpedia.org" , 
+						"pdc.dbpedia.org" , "pms.dbpedia.org" , "pnb.dbpedia.org" , "pnt.dbpedia.org" , "qu.dbpedia.org" , 
+						"rm.dbpedia.org" , "rn.dbpedia.org" , "ro.dbpedia.org" , "roa_rup.dbpedia.org" , "roa_tara.dbpedia.org" , 
+						"ru.dbpedia.org" , "rue.dbpedia.org" , "rw.dbpedia.org" , "sa.dbpedia.org" , "sah.dbpedia.org" , 
+						"sc.dbpedia.org" , "scn.dbpedia.org" , "sco.dbpedia.org" , "se.dbpedia.org" , "sg.dbpedia.org" , 
+						"sh.dbpedia.org" , "si.dbpedia.org" , "simple.dbpedia.org" , "sk.dbpedia.org" , "sl.dbpedia.org" , 
+						"so.dbpedia.org" , "sq.dbpedia.org" , "sr.dbpedia.org" , "srn.dbpedia.org" , "stq.dbpedia.org" , 
+						"su.dbpedia.org" , "sv.dbpedia.org" , "sw.dbpedia.org" , "szl.dbpedia.org" , "ta.dbpedia.org" , 
+						"te.dbpedia.org" , "tg.dbpedia.org" , "th.dbpedia.org" , "tk.dbpedia.org" , "tl.dbpedia.org" , 
+						"tpi.dbpedia.org" , "tr.dbpedia.org" , "tt.dbpedia.org" , "ty.dbpedia.org" , "udm.dbpedia.org" , 
+						"ug.dbpedia.org" , "uk.dbpedia.org" , "ur.dbpedia.org" , "uz.dbpedia.org" , "ve.dbpedia.org" , 
+						"vec.dbpedia.org" , "vep.dbpedia.org" , "vi.dbpedia.org" , "vls.dbpedia.org" , "vo.dbpedia.org" , 
+						"war.dbpedia.org" , "wo.dbpedia.org" , "wuu.dbpedia.org" , "xmf.dbpedia.org" , "yi.dbpedia.org" , 
+						"yo.dbpedia.org" , "zea.dbpedia.org" , "zh.dbpedia.org" , "zh_classical.dbpedia.org" , "zh_min_nan.dbpedia.org" , 
+						"zh_yue.dbpedia.org" , "eml.dbpedia.org" , "ksh.dbpedia.org" , "pfl.dbpedia.org" , "zh-yue.dbpedia.org" , 
+						"zh-min-nan.dbpedia.org" , "be-x-old.dbpedia.org" , "bat-smg.dbpedia.org" ;
+
+
+########################################################################################
+########################		configuring the webapp			########################
+########################################################################################
+
+
+##	document specific property used in the HTML resource page, it's possible to use
+##	prefixes or not
+
+	conf:typeProperties			rdf:type;
+	conf:titleProperties		dc:title , dcterms:title, rdfs:label , <http://www.w3.org/2004/02/skos/core#prefLabel> ,  <http://www.w3.org/2008/05/skos-xl#prefLabel> , <http://www.w3.org/2009/08/skos-reference/skos.html#prefLabel> ,  gn:officialName , gn:name , rdf:value , foaf:surname , <http://purl.org/collections/nl/am/title>  , <http://purl.uniprot.org/core/scientificName>, schema-org:name, <http://xmlns.com/foaf/0.1/name>;
+	conf:descriptionProperties	rdfs:comment , skos:definition , dc:description , dcterms:description , dbpedia-owl:abstract ;
+	conf:imageProperties		foaf:depiction;
+	conf:longitudeProperties	geo:long;
+	conf:latitudeProperties		geo:lat;
+	conf:linkingProperties		owl:sameAs , skos:exactMatch , dbpedia-owl:wikiPageRedirects;
+
+
+##	preferred language for title and description ("auto" for delegate to the client)
+	
+	conf:preferredLanguage	"auto"; ## eg. "en" or "it"
+
+
+##	just a marker to insert a point on the last row
+	
+	conf:last	"." .

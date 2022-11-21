@@ -1,0 +1,74 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+applicationSuite: NDC
+categories:
+  - data-analytics
+  - data-collection
+  - digital-asset-management
+description:
+  it:
+    features:
+      - viewer
+    genericName: dati-semantic-lodview
+    longDescription: |-
+      Questo repository contiene il visualizzatore di asset semantici
+      (ontologie e vocabolari controllati)
+      per il National Data Catalog for Semantic Interoperability.
+
+      Il viewer è un fork aggiornato di https://github.com/LodLive/LodView/ e 
+      visualizza gli asset semantici richiesti interrogando un server SparQL da configurare
+      in fase di deployment.
+                                                                           
+      Permette inoltre di convertire in JSON-LD ed altri formati le informazioni
+      recuperate da SparQL.
+    shortDescription: Visualizzatore di ontologie e vocabolari per il repository semantico del NDC
+developmentStatus: beta
+intendedAudience:
+  scope:
+    - government
+    - research
+    - science-and-technology
+isBasedOn:
+  - https://github.com/LodLive/LodView/
+it:
+  conforme:
+    gdpr: false
+    lineeGuidaDesign: false
+    misureMinimeSicurezza: false
+    modelloInteroperabilita: true
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: false
+    pagopa: false
+    spid: false
+  riuso:
+    codiceIPA: pcm
+legal:
+  license: MIT
+  mainCopyrightOwner: Dipartimento per la Trasformazione Digitale
+  repoOwner: Dipartimento per la Trasformazione Digitale
+localisation:
+  availableLanguages:
+    - en
+  localisationReady: false
+maintenance:
+  contacts:
+    - affiliation: ISTAT
+      email: polizzi@istat.it
+      name: Marco Polizzi
+  contractors:
+    - name: ISTAT
+      until: '2026-12-31'
+  type: contract
+name: LodView
+platforms:
+  - linux
+  - web
+releaseDate: '2021-12-25'
+softwareType: standalone/other
+url: 'https://github.com/teamdigitale/dati-semantic-lodview'
+logo: src/main/resources/static/staticResources/img/logo-footer-lodview.png
