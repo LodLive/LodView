@@ -19,6 +19,7 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,6 +58,8 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	private Map<String, String> colorPairMatcher = null;
 
 	Random rand = new Random();
+	
+	private Dotenv dotenv = Dotenv.load();
 
 	public ConfigurationBean() throws IOException, Exception {
 
@@ -153,7 +156,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 	}
 
 	private String getSingleConfValue(String prop, String defaultValue) {
-		String value = System.getenv("LodView"+prop);
+		String value = dotenv.get("LodView"+prop);
 		if(value!=null) {return value;}
 		NodeIterator iter = confModel.listObjectsOfProperty(confModel.createProperty(confModel.getNsPrefixURI("conf"), prop));
 		while (iter.hasNext()) {

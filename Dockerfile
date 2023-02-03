@@ -1,5 +1,7 @@
 FROM maven:3-jdk-11 AS builder
 WORKDIR /app
+COPY pom.xml /app
+RUN mvn dependency:resolve -Dmaven.test.skip=true
 COPY . /app
 RUN mvn compile war:war
 
