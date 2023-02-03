@@ -1,10 +1,11 @@
-FROM maven:3-jdk-8 AS builder
+FROM maven:3-jdk-11 AS builder
 WORKDIR /app
 COPY pom.xml /app
 RUN mvn dependency:resolve -Dmaven.test.skip=true
 COPY . /app
 RUN mvn compile war:war
 
+# Tomcat 10 needs further changes, see https://tomcat.apache.org/migration-10.html
 FROM tomcat:9
 LABEL maintainer=adrian.gschwend@zazuko.com
 ENV CATALINA_OPTS="-XX:+UseSerialGC"
