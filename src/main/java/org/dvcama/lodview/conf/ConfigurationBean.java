@@ -18,7 +18,7 @@ import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
-
+import io.github.cdimascio.dotenv.Dotenv;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +59,7 @@ public class ConfigurationBean implements ServletContextAware, Cloneable {
 
 	Random rand = new Random();
 	
-	private Dotenv dotenv = Dotenv.load();
+	private Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 
 	public ConfigurationBean() throws IOException, Exception {
 
